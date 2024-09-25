@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.top-32 {
+    top: 32%;
+}
+
+@media(min-width: 1271px) {
+    .max-w-image-text {
+        max-width: 400px;
+    }
+}
+
+@media(min-width: 771px) and (max-width: 1270px) {
+    .max-w-image-text {
+        max-width: 350px;
+    }
+}
+
+@media only screen and (min-width: 771px) {
+    .clip-path {
+        clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
+    }
+}
+
+.clip-path-card {
+    clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
+}
+
