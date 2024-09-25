@@ -8,6 +8,9 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/kontakt', 'contact')->name('contact');
 });
 
+Route::get('/prihlaseni', fn() => redirect()->route('homepage'))->name('show-login-page');
+Route::get('/registrace', fn() => redirect()->route('homepage'))->name('show-registration-page');
+
 /*Route::controller(AuthController::class)->group(function () {
     Route::get('/prihlaseni', 'showLoginPage')->name('show-login-page');
     Route::get('/registrace', 'showRegistrationPage')->name('show-registration-page');

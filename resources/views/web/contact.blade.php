@@ -1,4 +1,4 @@
-<x-web::layouts.app :title="$title">
+<x-web.layouts.app :title="$title">
     <div class="bg-white py-24 sm:py-32 lg:mx-20 mx-6">
         <div class="mx-auto  px-6 lg:px-8">
             <div class="mx-auto space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">
@@ -7,7 +7,7 @@
                         <h2 class="text-5xl text-brand-darker font-bold tracking-tight text-gray-900 text-center">Kontaktní osoby</h2>
                     </div>
                     <div class="">
-                        <x-web::small-conteiner class="bg-white  ">
+                        <x-web.small-conteiner class="bg-white  ">
                             <div class="flex flex-col sm:flex-row items-center shadow-lg space-y-2">
                                 <div class="bg-brand z-30 w-full sm:w-1/2 clip-path py-3 sm:py-16 sm:pr-8 2xl:pr-0 space-y-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -50,8 +50,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </x-web::small-conteiner>
-                        <x-web::small-conteiner class="bg-white">
+                        </x-web.small-conteiner>
+                        <x-web.small-conteiner class="bg-white">
                             <div class="flex flex-col sm:flex-row items-center shadow-lg">
                                 <div class="bg-brand z-30 w-full sm:w-1/2 clip-path py-3 sm:py-16 sm:pr-8 space-y-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -94,7 +94,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </x-web::small-conteiner>
+                        </x-web.small-conteiner>
 
                     </div>
                 </div>
@@ -109,4 +109,4 @@
             </div>
         </div>
     </div>
-</x-web::layouts.app>
+</x-web.layouts.app>

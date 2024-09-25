@@ -1,3 +1,6 @@
+@props([
+    'title' => ''
+])
 <!doctype html>
 <html lang="cs">
 <head>
@@ -10,12 +13,13 @@
     <title>{{ "Kuželna Veselí: ". ($title ?? "") }}</title>
 </head>
 <body>
-<x-web::page-sections.header/>
+<x-web.page-sections.header/>
 <main class="min-h-screen space-y-20">
     {{ $slot }}
 </main>
 
-<x-web::page-sections.footer/>
+<x-web.page-sections.footer/>
 @vite('resources/js/app.js')
+@livewireScripts
 </body>
 </html>

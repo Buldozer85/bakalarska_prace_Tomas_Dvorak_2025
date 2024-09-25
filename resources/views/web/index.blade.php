@@ -1,4 +1,4 @@
-<x-web::layouts.app title="Hlavní strana">
+<x-web.layouts.app title="Hlavní strana">
     <div class="relative">
         <div class="bg-black opacity-50 absolute w-full h-full z-20 top-0"></div>
         <div class="bg-brand z-30 bottom-0 w-full md:top-0 md:h-full md:w-1/3 absolute clip-path py-8">
@@ -13,7 +13,7 @@
 
     <div
         class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-40 sm:mt-20 lg:mx-20 lg:max-w-none lg:grid-cols-3">
-        <x-web::small-conteiner>
+        <x-web.small-conteiner>
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="mx-auto w-10 h-10 2xl:w-12 2xl:h-12">
@@ -34,11 +34,11 @@
             </p>
 
             <x-slot:button>
-                <x-web::button class="text-lg 2xl:text-xl px-10" type="secondary">Zde</x-web::button>
+                <x-web.button class="text-lg 2xl:text-xl px-10" type="secondary">Zde</x-web.button>
             </x-slot:button>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
 
-        <x-web::small-conteiner>
+        <x-web.small-conteiner>
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="mx-auto w-10 h-10 2xl:w-12 2xl:h-12">
@@ -59,11 +59,11 @@
             </p>
 
             <x-slot:button>
-                <x-web::button class="text-lg 2xl:text-xl px-10" type="secondary">Zde</x-web::button>
+                <x-web.button class="text-lg 2xl:text-xl px-10" type="secondary">Zde</x-web.button>
             </x-slot:button>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
 
-        <x-web::small-conteiner>
+        <x-web.small-conteiner>
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="w-10 h-10 2xl:w-12 2xl:h-12 mx-auto">
@@ -83,9 +83,9 @@
             </p>
 
             <x-slot:button>
-                <x-web::button class="text-lg 2xl:text-xl px-10" type="secondary">Zde</x-web::button>
+                <x-web.button class="text-lg 2xl:text-xl px-10" type="secondary">Zde</x-web.button>
             </x-slot:button>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
     </div>
 
     <h1 class="text-4xl font-bold text-center">Zázemí kuželny</h1>
@@ -209,19 +209,19 @@
     <h1 class="text-4xl font-bold text-center">Ceník pronájmu herny</h1>
 
     <div class="md:mx-auto max-w-2xl mx-6">
-        <x-web::small-conteiner>
+        <x-web.small-conteiner>
             <h3 class="text-4xl font-bold">Cena za jednu 1 hod</h3>
             <p class="text-4xl font-bold">
                 100,- Kč
             </p>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
     </div>
 
     <h1 class="text-4xl font-bold text-center">Základní informace</h1>
 
     <div
         class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-60 sm:mt-20 lg:mx-20 lg:max-w-none lg:grid-cols-2">
-        <x-web::small-conteiner>
+        <x-web.small-conteiner>
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="w-10 h-10 2xl:w-12 2xl:h-12 mx-auto">
@@ -241,9 +241,9 @@
             <p class="text-lg 2xl:text-xl">
                 9:00 - 20:00
             </p>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
 
-        <x-web::small-conteiner>
+        <x-web.small-conteiner>
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="w-10 h-10 2xl:w-12 2xl:h-12 mx-auto mt-6">
@@ -256,9 +256,9 @@
             <h2 class="text-2xl 2xl:text-3xl font-bold mt-6">
                 Zázaz vstupu se zvířaty
             </h2>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
 
-        <x-web::small-conteiner>
+        <x-web.small-conteiner>
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="w-10 h-10 2xl:w-12 2xl:h-12 mx-auto mt-6">
@@ -271,9 +271,9 @@
             <h2 class="text-2xl 2xl:text-3xl font-bold mt-6">
                 Vstup do herny jen se souhlasem pověřené osoby
             </h2>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
 
-        <x-web::small-conteiner>
+        <x-web.small-conteiner>
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="w-10 h-10 2xl:w-12 2xl:h-12 mx-auto mt-6">
@@ -287,14 +287,14 @@
                 Převzetí klíčů nutno předem domluvit
                 s pověřenou osobou
             </h2>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
     </div>
 
     <h1 class="text-4xl font-bold text-center">Pověřené osoby</h1>
 
     <div
         class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-60 sm:mt-20 lg:mx-20 lg:max-w-none lg:grid-cols-2 py-12">
-        <x-web::small-conteiner class="bg-white  ">
+        <x-web.small-conteiner class="bg-white  ">
             <div class="flex flex-col sm:flex-row items-center shadow-lg space-y-2">
                 <div class="bg-brand z-30 w-full sm:w-1/2 clip-path py-3 sm:py-16 sm:pr-8 2xl:pr-0 space-y-4">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -337,9 +337,9 @@
                     </div>
                 </div>
             </div>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
 
-        <x-web::small-conteiner class="bg-white">
+        <x-web.small-conteiner class="bg-white">
             <div class="flex flex-col sm:flex-row items-center shadow-lg">
                 <div class="bg-brand z-30 w-full sm:w-1/2 clip-path py-3 sm:py-16 sm:pr-8 space-y-4">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -382,7 +382,7 @@
                     </div>
                 </div>
             </div>
-        </x-web::small-conteiner>
+        </x-web.small-conteiner>
     </div>
 
-</x-web::layouts.app>
+</x-web.layouts.app>
