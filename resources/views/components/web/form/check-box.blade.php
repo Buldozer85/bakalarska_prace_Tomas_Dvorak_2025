@@ -1,9 +1,10 @@
+@props([
+    'name',
+    'id',
+    'required' => false
+])
 <div class="flex flex-col">
-    @error($name)
-    <x-web.error-message>
-        {{ $message }}
-    </x-web.error-message>
-    @enderror
+
     <div class="relative flex items-start">
         <div class="flex h-6 items-center">
             <input id="{{ $id }}" name="{{ $name }}" type="checkbox"
@@ -15,5 +16,10 @@
             </div>
         @endif
     </div>
+    @error($name)
+    <x-web.error-message>
+        {{ $message }}
+    </x-web.error-message>
+    @enderror
 </div>
 

@@ -1,5 +1,5 @@
 <div class="relative">
-    <button type="button" class="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" @click="isOpenUserMenu = !isOpenUserMenu" aria-expanded="false">
+    <button type="button" class="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 bg-brand bg-brand text-white rounded-md py-2 px-3 text-sm font-semibold shadow-sm hover:bg-brand-darker focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-brand-darker" @click="isOpenUserMenu = !isOpenUserMenu" aria-expanded="false">
         @isset($icon)
             {{ $icon }}
         @endisset
@@ -10,16 +10,6 @@
         </svg>
     </button>
 
-    <!--
-      Flyout menu, show/hide based on flyout menu state.
-
-      Entering: "transition ease-out duration-200"
-        From: "opacity-0 translate-y-1"
-        To: "opacity-100 translate-y-0"
-      Leaving: "transition ease-in duration-150"
-        From: "opacity-100 translate-y-0"
-        To: "opacity-0 translate-y-1"
-    -->
     <div class="absolute left-1/2  mt-5 flex w-screen max-w-min -translate-x-1/2 px-4 z-50" x-show="isOpenUserMenu">
         <div class="w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
             {{ $slot }}

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,5 +27,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+            return (new MailMessage)
+                ->subject('Ověření e-mailové adresy')
+                ->greeting('Dobrý den,')
+                ->line('Pro potvrzení Vaší e-mailové adresy klikněte na tlačítko níže.')
+                ->action('Ověřit e-mailovou adresu', $url)
+                ->salutation('S pozdravem tým Kuželny Veselí');
+        });
+
+        ResetPassword::createUrlUsing(function (User $user, string $token) {
+            return route('password.reset', $token);
+
+        });
     }
 }
