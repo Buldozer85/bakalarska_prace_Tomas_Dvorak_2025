@@ -5,11 +5,12 @@
     'label' => '',
     'autoComplete' => false,
     'required' => false,
-    'value' => ''
+    'value' => '',
+    'whiteText' => false
 ])
 <div>
     @if(!empty($label))
-        <label for="{{ $id }}" class="block text-sm font-medium leading-6 text-gray-900">{{ $label }}</label>
+        <label for="{{ $id }}" class="block text-sm font-medium leading-6 text-gray-900 @if($whiteText) !text-white @endif">{{ $label }}</label>
     @endif
     @error($name)
         <x-web.error-message>

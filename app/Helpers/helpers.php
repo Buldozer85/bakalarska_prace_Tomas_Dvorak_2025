@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,5 +35,12 @@ if(!function_exists('monthInInflection')) {
         }
 
         return $months[$index];
+    }
+}
+
+if(!function_exists('inPast')) {
+    function inPast(Carbon $firstDate, Carbon $secondDate): bool
+    {
+       return $firstDate->lt($secondDate);
     }
 }

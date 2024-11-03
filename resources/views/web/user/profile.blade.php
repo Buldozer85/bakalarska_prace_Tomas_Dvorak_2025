@@ -4,7 +4,11 @@
 @endphp
 <x-web.layouts.app title="Profil">
     <x-web.layouts.dashboard>
-        <h1 class="text-3xl text-black font-bold border-b-4 border-brand-darker text-center mt-4 mx-4 max-w-[200px]">{{ $today->day . '. ' . monthInInflection($today->month - 1)  . ' '. $today->year}}</h1>
+        <div class="flex justify-between items-center">
+            <h1 class="text-3xl text-black font-bold border-b-4 border-brand-darker text-center mt-4 mx-4 max-w-[200px]">{{ $today->day . '. ' . monthInInflection($today->month - 1)  . ' '. $today->year}}</h1>
+            <x-web.button :route="route('homepage')">Zpět na web</x-web.button>
+        </div>
+
         <div class=" max-w-7xl  mt-20 space-y-8 flex flex-row justify-between">
             <div class="space-y-4">
                 <div class="max-w-3xl flex flex-row items-baseline">

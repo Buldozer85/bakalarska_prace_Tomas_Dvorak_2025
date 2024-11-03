@@ -16,6 +16,9 @@ Route::controller(PageController::class)->group(function () {
 
     Route::get('/kontakt', 'contact')
         ->name('contact');
+
+    Route::get('/rezervace', 'reservation')
+        ->name('reservation');
 });
 
 

@@ -3,8 +3,8 @@
     isOpenMenu: false,
     isOpenUserMenu: false
 }">
-    <nav class="mx-auto flex max-w-nav items-center justify-between p-6 lg:px-8" aria-label="Global">
-        <div class="flex lg:flex-1">
+    <nav class="mx-auto flex max-w-nav items-center justify-between p-6 lg:px-8 gap-x-4" aria-label="Global">
+        <div class="flex xl:flex-1">
             <a href="#" class="-m-1.5 p-1.5">
                 <img class="h-12 w-auto" src="{{ asset("images/logo.png") }}">
             </a>
@@ -17,16 +17,16 @@
                 </svg>
             </button>
         </div>
-        <div class="hidden lg:flex lg:gap-x-12">
-            <x-web.button class="leading-6" :route="route('homepage')">Domů</x-web.button>
-            <x-web.button class="leading-6" :route="route('homepage')">Rezervace</x-web.button>
-            <x-web.button class="leading-6" :route="route('contact')">Kontakt</x-web.button>
-            <x-web.button class="leading-6" :route="route('contact')">Kuželkářská liga</x-web.button>
+        <div class="hidden lg:flex gap-x-4 xl:flex-[2] xl:gap-x-12 items-stretch">
+            <x-web.button class="leading-6 flex-1" :route="route('homepage')">Domů</x-web.button>
+            <x-web.button class="leading-6 flex-1" :route="route('reservation')">Rezervace</x-web.button>
+            <x-web.button class="leading-6 flex-1" :route="route('contact')">Kontakt</x-web.button>
+            <x-web.button class="leading-6 flex-1" :route="route('contact')">Kuželkářská liga</x-web.button>
         </div>
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end flex items-center lg:gap-x-12">
+        <div class="hidden lg:flex xl:flex-1 lg:justify-end flex items-center gap-x-4 xl:gap-x-12">
             @guest
-                <x-web.button class="leading-6" :route="route('show-login-page')">Přihlášení</x-web.button>
-                <x-web.button class="leading-6" display-bg type="primary" :route="route('show-registration-page')">Registrace</x-web.button>
+                <x-web.button type="black" class="leading-6 flex-1 max-w-[150px]" :route="route('show-login-page')">Přihlásit se</x-web.button>
+                <x-web.button class="leading-6 flex-1 max-w-[150px]" display-bg type="yellow" :route="route('show-registration-page')">Zaregistrujte se!</x-web.button>
             @endguest
 
             @auth
@@ -38,10 +38,10 @@
                         </svg>
                     </x-slot:icon>
                     <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Profil</a>
-                    <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Moje rezervace</a>
-                    <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Moje liga</a>
-                    <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Změna rezervace</a>
-                    <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Změna hesla</a>
+                    <a href="{{ route('profile.my-reservations') }}" class="block p-2 hover:text-brand-darker">Moje rezervace</a>
+                    <a href="{{ route('profile.my-league') }}" class="block p-2 hover:text-brand-darker">Moje liga</a>
+                    <a href="{{ route('profile.edit-information') }}" class="block p-2 hover:text-brand-darker">Změna údajů</a>
+                    <a href="{{ route('profile.change-password.show') }}" class="block p-2 hover:text-brand-darker">Změna hesla</a>
                     <a href="{{ route('logout') }}" class="block p-2 hover:text-brand-darker">Odhlásit se</a>
                 </x-web.flyout-menu>
             @endauth
