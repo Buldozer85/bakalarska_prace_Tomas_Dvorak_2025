@@ -21,7 +21,7 @@
             <x-web.button class="leading-6 flex-1" :route="route('homepage')">Domů</x-web.button>
             <x-web.button class="leading-6 flex-1" :route="route('reservation')">Rezervace</x-web.button>
             <x-web.button class="leading-6 flex-1" :route="route('contact')">Kontakt</x-web.button>
-            <x-web.button class="leading-6 flex-1" :route="route('contact')">Kuželkářská liga</x-web.button>
+            <x-web.button class="leading-6 flex-1" :route="route('league')">Kuželkářská liga</x-web.button>
         </div>
         <div class="hidden lg:flex xl:flex-1 lg:justify-end flex items-center gap-x-4 xl:gap-x-12">
             @guest
@@ -70,10 +70,10 @@
                     <div class="space-y-2 py-6">
                         <a href="{{ route('homepage') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
 
-                        <a href="#" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Rezervace</a>
+                        <a href="{{ route('reservation') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Rezervace</a>
 
                         <a href="{{ route('contact') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kontakt</a>
-                        <a href="{{ route('contact') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kuželkářská liga</a>
+                        <a href="{{ route('league') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kuželkářská liga</a>
 
                     </div>
                     <div class="py-6">

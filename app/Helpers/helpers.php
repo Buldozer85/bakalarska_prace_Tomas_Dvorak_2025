@@ -38,6 +38,19 @@ if(!function_exists('monthInInflection')) {
     }
 }
 
+if(!function_exists('daysOfWeek')) {
+    function daysOfWeek(int $index): ?string
+    {
+        $days = ['PO', 'ÚT', 'ST', 'ČT', 'PÁ', 'SO', 'NE'];
+
+        if(!array_key_exists($index, $days)) {
+            return null;
+        }
+
+        return $days[$index];
+    }
+}
+
 if(!function_exists('inPast')) {
     function inPast(Carbon $firstDate, Carbon $secondDate): bool
     {

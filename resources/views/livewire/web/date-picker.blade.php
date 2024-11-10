@@ -1,4 +1,4 @@
-<div class="flex-1 flex justify-end" x-data="{
+<div class="flex-1 flex justify-center lg:justify-end" x-data="{
     selectedDate: '{{$selectDate->format('j.n.Y')}}',
     setDatePicker(date) {
         this.selectedDate = date
@@ -15,7 +15,7 @@
     },
     openedPicker: false
 }">
-    <div class="relative max-w-sm cursor-pointer" @click="openedPicker = !openedPicker">
+    <div class="relative w-full lg:max-w-sm cursor-pointer" @click="openedPicker = !openedPicker">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg class="w-3 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                  viewBox="0 0 20 20">
@@ -25,13 +25,13 @@
         </div>
 
         <div id="datepicker"
-             class="bg-brand-black border border-gray-300 text-white text-sm rounded-lg block w-full ps-10 p-2.5"
+             class="bg-brand-black border border-gray-300 text-white text-sm rounded-lg block w-full text-center lg:text-left lg:ps-10 p-2.5"
              x-text="selectedDate"></div>
     </div>
 
 
 
-    <div class="space-y-2 text-xl bg-brand-black rounded-lg max-w-[350px] p-8 text-white absolute top-[50px]"
+    <div class="space-y-2 text-xl bg-brand-black rounded-lg max-w-[350px] p-8 text-white absolute top-[100px] lg:top-[50px]"
          x-show="openedPicker" @click.away="openedPicker = false">
         <div class="flex flex-row justify-between font-bold w-full mx-auto">
             @if(!$this->pastMonth($this->date->copy()->subMonth(), \Carbon\Carbon::now()))

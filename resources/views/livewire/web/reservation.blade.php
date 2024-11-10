@@ -1,8 +1,15 @@
 <div>
     <div class="relative overflow-x-auto space-y-4 overflow-hidden">
-        <div class="flex items-center justify-end">
+        <div class="flex items-center justify-between gap-x-4">
+            @auth
+                <x-web.button class="!text-lg flex-1" type="yellow">Vytvořit rezervaci</x-web.button>
+            @endauth
 
-            <div class=" flex flex-row justify-end space-x-12 font-bold flex-[2]">
+            @guest
+                <div class="flex-1"></div>
+                @endguest
+
+            <div class=" flex flex-row justify-center gap-x-12 font-bold flex-[2]">
                 @if(!inPast($this->firstDayOfWeek, $this->currentWeekFirstDay))
                 <svg wire:click="decreaseWeek" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 cursor-pointer">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
@@ -16,7 +23,11 @@
 
             </div>
 
-            <livewire:web.date-picker/>
+            <div class="max-w-[250px] flex-1">
+                <livewire:web.date-picker/>
+            </div>
+
+
         </div>
 
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-hidden rounded-md">
@@ -72,6 +83,8 @@
             @endfor
             </tbody>
         </table>
+
+
     </div>
 
 </div>

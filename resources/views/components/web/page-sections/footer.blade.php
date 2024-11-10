@@ -6,7 +6,7 @@
             </div>
 
             <div class="pb-6">
-                <a href="#" class="text-sm leading-6 text-white hover:text-gray-900">Rezervace</a>
+                <a href="{{ route('reservation') }}" class="text-sm leading-6 text-white hover:text-gray-900">Rezervace</a>
             </div>
 
             <div class="pb-6">
@@ -14,7 +14,7 @@
             </div>
 
             <div class="pb-6">
-                <a href="{{ route('contact') }}" class="text-sm leading-6 text-white hover:text-slate-100">Kuželkářská liga</a>
+                <a href="{{ route('league') }}" class="text-sm leading-6 text-white hover:text-slate-100">Kuželkářská liga</a>
             </div>
 
             @guest
@@ -34,6 +34,6 @@
             @endauth
         </nav>
 
-        <p class="mt-10 text-center text-xs leading-5 text-white">&copy; {{ Date("Y") }} Tomáš Dvořák</p>
+        <p class="mt-10 text-center text-xs leading-5 text-white">&copy; Tomáš Dvořák {{ Date("Y") }}</p>
     </div>
 </footer>

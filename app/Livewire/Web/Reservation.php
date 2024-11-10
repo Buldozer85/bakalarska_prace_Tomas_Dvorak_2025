@@ -20,6 +20,8 @@ class Reservation extends Component
     #[Locked]
     public ?bool $readOnly;
 
+    public ?string $backButtonAction;
+
     public function __construct()
     {
         $this->firstDayOfWeek =  Carbon::now()->startOfWeek();
@@ -28,9 +30,10 @@ class Reservation extends Component
 
     }
 
-    public function mount(?bool $readOnly)
+    public function mount(?bool $readOnly, ?string $backButtonAction = null)
     {
      $this->readOnly = $readOnly ?? false;
+     $this->backButtonAction = $backButtonAction;
     }
 
     public function render()

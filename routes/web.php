@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\ProfileController;
+use App\Http\Controllers\Web\ReservationController;
 use App\Http\Middleware\Web\UnverifiedMiddleware;
+use App\Livewire\Web\MakeReservation;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 
@@ -19,7 +21,11 @@ Route::controller(PageController::class)->group(function () {
 
     Route::get('/rezervace', 'reservation')
         ->name('reservation');
+
+    Route::get('/kuzelkarska-liga', 'league')
+        ->name('league');
 });
+
 
 
 
@@ -88,6 +94,10 @@ Route::controller(ProfileController::class)
 Route::get('/test',  function () {
     return view('web.auth.email-verification');
 });
+
+Route::get('/rezervace/{id}/uspesne-vytvorena', [ReservationController::class, 'success']);
+
+Route::get('/rezervace/vytvorit', MakeReservation::class);
 /*
 Route::middleware('auth')->group(function () {
     Route::controller(UsersController::class)->group(function () {
