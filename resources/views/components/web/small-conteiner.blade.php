@@ -1,4 +1,15 @@
-<div {{ $attributes->merge(["class" => "bg-brand text-white text-center py-10 space-y-4 rounded-md px-4"]) }}>
+@props([
+    'color' => ''
+])
+
+@php
+    $style = match ($color) {
+        'black' => 'bg-brand-black text-white',
+        default => 'bg-brand text-white'
+    };
+@endphp
+
+<div {{ $attributes->merge(["class" => $style . " text-center py-10 space-y-8 rounded-md px-16"]) }}>
     @isset($icon)
         {{ $icon }}
     @endisset

@@ -3,8 +3,8 @@
     isOpenMenu: false,
     isOpenUserMenu: false
 }">
-    <nav class="mx-auto flex max-w-nav items-center justify-between p-6 lg:px-8" aria-label="Global">
-        <div class="flex lg:flex-1">
+    <nav class="mx-auto flex max-w-nav items-center justify-between p-6 lg:px-8 gap-x-4" aria-label="Global">
+        <div class="flex xl:flex-1">
             <a href="#" class="-m-1.5 p-1.5">
                 <img class="h-12 w-auto" src="{{ asset("images/logo.png") }}">
             </a>
@@ -17,28 +17,31 @@
                 </svg>
             </button>
         </div>
-        <div class="hidden lg:flex lg:gap-x-12">
-            <x-web.button class="leading-6" :route="route('homepage')">Domů</x-web.button>
-            <x-web.button class="leading-6" :route="route('homepage')">Rezervace</x-web.button>
-            <x-web.button class="leading-6" :route="route('contact')">Kontakt</x-web.button>
-            <x-web.button class="leading-6" :route="route('contact')">Kuželkářská liga</x-web.button>
+        <div class="hidden lg:flex gap-x-4 xl:flex-[2] xl:gap-x-12 items-stretch">
+            <x-web.button class="leading-6 flex-1" :route="route('homepage')">Domů</x-web.button>
+            <x-web.button class="leading-6 flex-1" :route="route('reservation')">Rezervace</x-web.button>
+            <x-web.button class="leading-6 flex-1" :route="route('contact')">Kontakt</x-web.button>
+            <x-web.button class="leading-6 flex-1" :route="route('league')">Kuželkářská liga</x-web.button>
         </div>
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end flex items-center lg:gap-x-12">
+        <div class="hidden lg:flex xl:flex-1 lg:justify-end flex items-center gap-x-4 xl:gap-x-12">
             @guest
-                <x-web.button class="leading-6" :route="route('show-login-page')">Přihlášení</x-web.button>
-                <x-web.button class="leading-6" display-bg type="primary" :route="route('show-registration-page')">Registrace</x-web.button>
+                <x-web.button type="black" class="leading-6 flex-1 max-w-[150px]" :route="route('show-login-page')">Přihlásit se</x-web.button>
+                <x-web.button class="leading-6 flex-1 max-w-[150px]" display-bg type="yellow" :route="route('show-registration-page')">Zaregistrujte se!</x-web.button>
             @endguest
 
             @auth
 
-                <x-web.flyout-menu name="{{ Auth::user()->full_name }}">
+                <x-web.flyout-menu name="{{ user()->full_name }}">
                     <x-slot:icon>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                             <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
                         </svg>
                     </x-slot:icon>
-                    <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Účet</a>
-                    <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Historie rezervací</a>
+                    <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Profil</a>
+                    <a href="{{ route('profile.my-reservations') }}" class="block p-2 hover:text-brand-darker">Moje rezervace</a>
+                    <a href="{{ route('profile.my-league') }}" class="block p-2 hover:text-brand-darker">Moje liga</a>
+                    <a href="{{ route('profile.edit-information') }}" class="block p-2 hover:text-brand-darker">Změna údajů</a>
+                    <a href="{{ route('profile.change-password.show') }}" class="block p-2 hover:text-brand-darker">Změna hesla</a>
                     <a href="{{ route('logout') }}" class="block p-2 hover:text-brand-darker">Odhlásit se</a>
                 </x-web.flyout-menu>
             @endauth
@@ -67,10 +70,10 @@
                     <div class="space-y-2 py-6">
                         <a href="{{ route('homepage') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
 
-                        <a href="#" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Rezervace</a>
+                        <a href="{{ route('reservation') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Rezervace</a>
 
                         <a href="{{ route('contact') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kontakt</a>
-                        <a href="{{ route('contact') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kuželkářská liga</a>
+                        <a href="{{ route('league') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kuželkářská liga</a>
 
                     </div>
                     <div class="py-6">
