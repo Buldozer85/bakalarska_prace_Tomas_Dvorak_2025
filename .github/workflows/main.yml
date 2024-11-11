@@ -49,17 +49,19 @@ jobs:
           envkey_DB_DATABASE: ${{ secrets.DB_DATABSE }}
           envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
           envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          envkey_APP_NAME: "Kuželna Veselí"
+          envkey_APP_NAME: 'Kuželna Veselí'
           envkey_APP_ENV: test
           envkey_APP_TIMEZONE: UTC
-          envkey_APP_URL: "http://kuzelna_veseli_v2.test"
+          envkey_APP_URL: 'http://kuzelna_veseli_v2.test'
           envkey_MAIL_MAILER: smtp
           envkey_MAIL_HOST: sandbox.smtp.mailtrap.io
           envkey_MAIL_PORT: 2525
           envkey_MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
           envkey_MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-          envkey_MAIL_FROM_ADDRESS: "info@kuzelnaveseli.cz"
-          envkey_MAIL_FROM_NAME: "Kuželna Veselí"
+          envkey_MAIL_FROM_ADDRESS: 'info@kuzelnaveseli.cz'
+          envkey_MAIL_FROM_NAME: 'Kuželna Veselí'
+
+      - run: echo .env
 
       - name: "Prepare laravel application"
         run: "php artisan key:generate &&
