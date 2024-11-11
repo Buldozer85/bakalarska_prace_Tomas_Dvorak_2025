@@ -6,13 +6,6 @@ jobs:
     name: "Test code"
     runs-on: ubuntu-22.04
     environment: "test"
-    env:
-       DB_CONNECTION=mysql
-       DB_HOST=127.0.0.1
-       DB_PORT=3306
-       DB_DATABASE= ${{ secrets.DB_DATABSE }}
-       DB_USERNAME= ${{ secrets.DB_USERNAME }}
-       DB_PASSWORD= ${{ secrets.DB_PASSWORD }}
     services:
       db:
         image: mariadb:lts
