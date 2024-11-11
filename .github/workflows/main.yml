@@ -10,7 +10,7 @@ jobs:
       db:
         image: mariadb:lts
         ports:
-          - 3306
+          - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
           MYSQL_DATABASE: ${{ secrets.DB_NAME }}
@@ -79,9 +79,10 @@ jobs:
           iconv -f UTF-8 -t UTF-8//TRANSLIT .env -o .env
 
       - name: "Prepare laravel application"
-        run: "php artisan key:generate &&
-              php artisan migrate --seed &&
-              php artisan storage:link"
+        run: |
+          php artisan key:generate
+          php artisan migrate --seed
+          php artisan storage:link"
 
       - name: "Build assets"
         run: "npm ci npm && run build"
