@@ -5,18 +5,21 @@ namespace App\Livewire\Web;
 use Carbon\Carbon;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
-use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 class Reservation extends Component
 {
     #[Locked]
     public Carbon $firstDayOfWeek;
+
     #[Locked]
     public Carbon $lastDayOfWeek;
+
     #[Locked]
     public Carbon $currentWeekFirstDay;
-    protected String $selectedDate = '';
+
+    protected string $selectedDate = '';
+
     #[Locked]
     public ?bool $readOnly;
 
@@ -24,16 +27,16 @@ class Reservation extends Component
 
     public function __construct()
     {
-        $this->firstDayOfWeek =  Carbon::now()->startOfWeek();
-        $this->lastDayOfWeek =  Carbon::now()->endOfWeek();
+        $this->firstDayOfWeek = Carbon::now()->startOfWeek();
+        $this->lastDayOfWeek = Carbon::now()->endOfWeek();
         $this->currentWeekFirstDay = Carbon::now();
 
     }
 
     public function mount(?bool $readOnly, ?string $backButtonAction = null)
     {
-     $this->readOnly = $readOnly ?? false;
-     $this->backButtonAction = $backButtonAction;
+        $this->readOnly = $readOnly ?? false;
+        $this->backButtonAction = $backButtonAction;
     }
 
     public function render()
@@ -49,7 +52,7 @@ class Reservation extends Component
 
     public function decreaseWeek(): void
     {
-        if(inPast($this->firstDayOfWeek, $this->currentWeekFirstDay)) {
+        if (inPast($this->firstDayOfWeek, $this->currentWeekFirstDay)) {
             return;
         }
 

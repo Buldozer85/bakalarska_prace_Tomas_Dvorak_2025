@@ -9,12 +9,12 @@ use Livewire\Component;
 
 class ReservationMobile extends Component
 {
-
     #[Locked]
     public Carbon $selectedDay;
 
     #[Locked]
     public bool $readOnly;
+
     public function render()
     {
         return view('livewire.web.reservation-mobile');
@@ -29,7 +29,6 @@ class ReservationMobile extends Component
     {
         $this->selectedDay = Carbon::now();
     }
-
 
     public function addDay(): void
     {

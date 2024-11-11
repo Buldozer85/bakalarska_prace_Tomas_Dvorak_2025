@@ -30,11 +30,11 @@ class AuthController extends Controller
         $user = User::query()
             ->where('email', $request->email)->first();
 
-        if(is_null($user)) {
+        if (is_null($user)) {
             return back()->withErrors(['email' => 'Uživatel s daným e-mailem neexistuje']);
         }
 
-        if(!Hash::check($request->password, $user->password)) {
+        if (! Hash::check($request->password, $user->password)) {
             return back()->withErrors(['password' => 'Zadali jste nesprávné heslo']);
         }
 
@@ -51,7 +51,7 @@ class AuthController extends Controller
 
     public function register(RegisterUserRequest $request): RedirectResponse
     {
-        $user = new User();
+        $user = new User;
 
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
@@ -123,7 +123,7 @@ class AuthController extends Controller
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user, string $password) {
                 $user->forceFill([
-                    'password' => Hash::make($password)
+                    'password' => Hash::make($password),
                 ]);
 
                 $user->save();

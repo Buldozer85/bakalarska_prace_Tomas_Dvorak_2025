@@ -10,7 +10,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string']
+            'password' => ['required', 'string'],
         ];
     }
 
@@ -22,11 +22,11 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-          'email.required' => 'Email je povinný',
-          'email.string' => 'Email musí být řetězec',
-          'email.email' => 'Zadaný email je v nesprávném formátu',
-          'password.required' => 'Heslo je povinné',
-          'password.string' => 'Heslo musí být řetězec'
+            'email.required' => 'Email je povinný',
+            'email.string' => 'Email musí být řetězec',
+            'email.email' => 'Zadaný email je v nesprávném formátu',
+            'password.required' => 'Heslo je povinné',
+            'password.string' => 'Heslo musí být řetězec',
         ];
     }
 }

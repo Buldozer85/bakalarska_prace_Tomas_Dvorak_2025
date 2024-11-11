@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

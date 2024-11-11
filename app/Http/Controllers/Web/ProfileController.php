@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\ChangePasswordRequest;
 use App\Http\Requests\Web\UpdateProfileInformationRequest;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 

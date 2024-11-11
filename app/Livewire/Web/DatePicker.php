@@ -3,18 +3,16 @@
 namespace App\Livewire\Web;
 
 use Carbon\Carbon;
-use Livewire\Attributes\Modelable;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 class DatePicker extends Component
 {
     public Carbon $selectDate;
+
     public Carbon $date;
+
     public Carbon $firstDayOfCalendar;
-
-
 
     public function __construct()
     {
@@ -32,9 +30,8 @@ class DatePicker extends Component
 
     public function label(): string
     {
-        return month($this->date->month - 1) . ' ' . $this->date->year;
+        return month($this->date->month - 1).' '.$this->date->year;
     }
-
 
     public function addMonth(): void
     {
@@ -45,13 +42,14 @@ class DatePicker extends Component
 
     public function decreaseMonth(): void
     {
-        if($this->pastMonth($this->date->copy()->subMonth(), Carbon::now())) {
+        if ($this->pastMonth($this->date->copy()->subMonth(), Carbon::now())) {
             return;
         }
         $this->date->subMonth();
         $this->firstDayOfCalendar->subMonth();
         $this->setFirstDayOfCalendar();
     }
+
     #[Renderless]
     public function printDay()
     {
@@ -67,7 +65,6 @@ class DatePicker extends Component
     {
         return "{$this->firstDayOfCalendar->format('j')}.{$this->firstDayOfCalendar->format('n')}.{$this->firstDayOfCalendar->year}";
     }
-
 
     #[Renderless]
     protected function setFirstDayOfCalendar(): void
@@ -92,6 +89,4 @@ class DatePicker extends Component
     {
         $this->reset();
     }
-
-
 }

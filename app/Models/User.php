@@ -24,7 +24,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $full_name
  *
  **/
-class User extends Authenticatable implements  MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -65,6 +65,6 @@ class User extends Authenticatable implements  MustVerifyEmail
 
     public function fullName(): Attribute
     {
-        return Attribute::make(get: fn() => $this->first_name . ' ' . $this->last_name);
+        return Attribute::make(get: fn () => $this->first_name.' '.$this->last_name);
     }
 }
