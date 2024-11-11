@@ -61,7 +61,7 @@ jobs:
           envkey_MAIL_FROM_ADDRESS: 'info@kuzelnaveseli.cz'
           envkey_MAIL_FROM_NAME: 'Kuželna Veselí'
 
-      - run: echo .env
+      - run: cat .env
 
       - name: "Prepare laravel application"
         run: "php artisan key:generate &&
