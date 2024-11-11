@@ -40,26 +40,26 @@ jobs:
       - name: "Install composer dependencies"
         run: "composer install -n --prefer-dist"
 
-      - name: "Create .env file"
-        uses: SpicyPizza/create-envfile@v2.0
-        with:
-          envkey_DB_CONNECTION: mysql
-          envkey_DB_HOST: 127.0.0.1
-          envkey_DB_PORT: 3306
-          envkey_DB_DATABASE: ${{ secrets.DB_DATABSE }}
-          envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          envkey_APP_NAME: 'Kuželna Veselí'
-          envkey_APP_ENV: test
-          envkey_APP_TIMEZONE: UTC
-          envkey_APP_URL: 'http://kuzelna_veseli_v2.test'
-          envkey_MAIL_MAILER: smtp
-          envkey_MAIL_HOST: sandbox.smtp.mailtrap.io
-          envkey_MAIL_PORT: 2525
-          envkey_MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
-          envkey_MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-          envkey_MAIL_FROM_ADDRESS: 'info@kuzelnaveseli.cz'
-          envkey_MAIL_FROM_NAME: 'Kuželna Veselí'
+
+      - name: "Create .env"
+        run: |
+        echo 'DB_CONNECTION: mysql' >> .env
+        echo 'DB_HOST: 127.0.0.1' >> .env
+        echo 'DB_DATABASE: ${{ secrets.DB_DATABASE }}' >> .env
+        echo 'DB_USERNAME: ${{ secrets.DB_USERNAME }}' >> .env
+        echo 'DB_PASSWORD: ${{ secrets.DB_PASSWORD }}' >> .env
+        echo 'DB_PORT: 3306' >> .env
+        echo "APP_NAME: 'Kuželna Veselí'" >> .env
+        echo 'APP_ENV: test' >> .env
+        echo 'MAIL_MAILER: smtp' >> .env
+        echo 'MAIL_HOST: sandbox.smtp.mailtrap.io' >> .env
+        echo 'MAIL_PORT: 2525' >> .env
+        echo 'MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}' >> .env
+        echo 'MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}' >> .env
+        echo 'MAIL_FROM_ADDRESS: info@kuzelnaveseli.cz' >> .env
+        echo "MAIL_FROM_NAME: 'Kuželna Veselí'" >> .env
+
+
 
       - run: cat .env
 
