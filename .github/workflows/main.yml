@@ -75,6 +75,7 @@ jobs:
           echo 'MAIL_PASSWORD: "${{ secrets.MAIL_PASSWORD }}"' >> .env
           echo 'MAIL_FROM_ADDRESS: "info@kuzelnaveseli.cz"' >> .env
           echo 'MAIL_FROM_NAME: "Kuželna Veselí"' >> .env
+          iconv -f UTF-8 -t UTF-8//TRANSLIT .env -o .env
 
       - name: "Prepare laravel application"
         run: "php artisan key:generate &&
