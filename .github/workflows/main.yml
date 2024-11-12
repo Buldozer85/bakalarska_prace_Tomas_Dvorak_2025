@@ -83,7 +83,7 @@ jobs:
           php artisan config:clear
           php artisan key:generate
           php artisan migrate --seed
-          php artisan storage:link"
+          php artisan storage:link
 
       - name: "Build assets"
         run: "npm ci npm && run build"
