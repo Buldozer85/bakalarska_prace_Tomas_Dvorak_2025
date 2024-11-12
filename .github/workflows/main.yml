@@ -13,7 +13,7 @@ jobs:
           - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.DB_NAME }}
+          MYSQL_DATABASE: ${{ secrets.DB_DATABASE }}
     steps:
       - name: "Create .env"
         run: |
@@ -80,6 +80,7 @@ jobs:
 
       - name: "Prepare laravel application"
         run: |
+          php artisan optimize
           php artisan key:generate
           php artisan migrate --seed
           php artisan storage:link"
