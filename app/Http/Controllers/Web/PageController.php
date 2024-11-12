@@ -22,7 +22,6 @@ class PageController extends Controller
         return view('web.reservation');
     }
 
-
     public function league(): View
     {
         return view('web.league');

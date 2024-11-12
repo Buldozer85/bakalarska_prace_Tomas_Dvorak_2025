@@ -1,16 +1,12 @@
 <?php
 
 use App\Http\Controllers\Web\AuthController;
+use App\Http\Controllers\Web\PageController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\ReservationController;
 use App\Http\Middleware\Web\UnverifiedMiddleware;
 use App\Livewire\Web\MakeReservation;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\PageController;
 
 Route::controller(PageController::class)->group(function () {
     Route::get('/', 'index')
@@ -25,9 +21,6 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/kuzelkarska-liga', 'league')
         ->name('league');
 });
-
-
-
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/prihlaseni', 'index')
@@ -81,17 +74,16 @@ Route::controller(ProfileController::class)
     ->prefix('/profil')
     ->middleware(['auth', 'verified'])
     ->group(function () {
-    Route::get('/', 'index')->name('profile');
-    Route::get('/zmena-osobnich-udaju', 'editInformation')->name('profile.edit-information');
-    Route::get('/zmena-hesla', 'editPassword')->name('profile.change-password.show');
-    Route::get('/moje-rezervace', 'myReservations')->name('profile.my-reservations');
-    Route::post('/update-information', 'changeInformation')->name('profile.update-information');
-    Route::post('/change-password', 'changePassword')->name('profile.change-password');
-    Route::get('/moje-liga', 'myLeague')->name('profile.my-league');
-});
+        Route::get('/', 'index')->name('profile');
+        Route::get('/zmena-osobnich-udaju', 'editInformation')->name('profile.edit-information');
+        Route::get('/zmena-hesla', 'editPassword')->name('profile.change-password.show');
+        Route::get('/moje-rezervace', 'myReservations')->name('profile.my-reservations');
+        Route::post('/update-information', 'changeInformation')->name('profile.update-information');
+        Route::post('/change-password', 'changePassword')->name('profile.change-password');
+        Route::get('/moje-liga', 'myLeague')->name('profile.my-league');
+    });
 
-
-Route::get('/test',  function () {
+Route::get('/test', function () {
     return view('web.auth.email-verification');
 });
 

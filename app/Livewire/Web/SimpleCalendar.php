@@ -8,6 +8,7 @@ use Livewire\Component;
 class SimpleCalendar extends Component
 {
     public Carbon $date;
+
     public Carbon $firstDayOfCalendar;
 
     public function boot(): void
@@ -24,7 +25,7 @@ class SimpleCalendar extends Component
 
     public function label(): string
     {
-        return month($this->date->month - 1) . ' ' . $this->date->year;
+        return month($this->date->month - 1).' '.$this->date->year;
     }
 
     public function addMonth(): void
@@ -54,7 +55,6 @@ class SimpleCalendar extends Component
     {
         return "{$this->firstDayOfCalendar->format('j')}.{$this->firstDayOfCalendar->format('n')}.{$this->firstDayOfCalendar->year}";
     }
-
 
     protected function setFirstDayOfCalendar(): void
     {

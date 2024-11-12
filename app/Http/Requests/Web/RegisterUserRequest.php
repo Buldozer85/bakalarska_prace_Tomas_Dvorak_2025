@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Web;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RegisterUserRequest extends FormRequest
 {
@@ -13,7 +12,7 @@ class RegisterUserRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:254', 'unique:users'],
-            'phone' => ['required','string'],
+            'phone' => ['required', 'string'],
             'password' => ['required', 'confirmed'],
             'password_confirmation' => ['required', 'same:password'],
             'gdpr_agreement' => ['required'],
@@ -46,7 +45,7 @@ class RegisterUserRequest extends FormRequest
             'password.confirmed' => 'Hesla se neshodují',
             'password_confirmation.required' => 'Heslo znovu je povinné',
             'password_confirmation.same' => 'Hesla se neshodují',
-            'gdpr_agreement.required' => 'Pro registraci musíte souhlasit s podmínkami'
+            'gdpr_agreement.required' => 'Pro registraci musíte souhlasit s podmínkami',
         ];
     }
 }

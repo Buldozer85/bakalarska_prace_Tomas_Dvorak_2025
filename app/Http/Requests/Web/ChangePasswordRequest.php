@@ -24,7 +24,7 @@ class ChangePasswordRequest extends FormRequest
         return [
             'password.confirmed' => 'Hesla se neshodují',
             'password.required' => 'Heslo je povinné',
-            'password_confirmation.required_with' => 'Pro změnu hesla je nutno zadat heslo znovu'
+            'password_confirmation.required_with' => 'Pro změnu hesla je nutno zadat heslo znovu',
         ];
     }
 }
