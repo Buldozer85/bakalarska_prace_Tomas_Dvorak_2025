@@ -86,7 +86,7 @@ jobs:
           php artisan storage:link
 
       - name: "Build assets"
-        run: "npm ci npm && run build"
+        run: "npm ci npm && npm run build"
 
       - name: "Run laravel server"
         run: "php artisan serve"
