@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 /**
  * @property string $first_name
@@ -24,6 +25,8 @@ use Illuminate\Notifications\Notifiable;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property string $full_name
+ * @property bool $is_admin
+ * @property string $initials
  *
  **/
 class User extends Authenticatable implements MustVerifyEmail
@@ -78,5 +81,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function isAdmin(): Attribute
+    {
+        return Attribute::make(get: fn () => in_array($this->role, Roles::adminGroup()));
+    }
+
+    public function initials(): Attribute
+    {
+        return Attribute::make(get: fn () => Str::upper(Str::take($this->first_name, 1).Str::take($this->last_name, 1)));
     }
 }
