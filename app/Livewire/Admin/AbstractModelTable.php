@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,12 +11,15 @@ use Illuminate\Foundation\Application;
 use Illuminate\View\View as ClassicView;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 abstract class AbstractModelTable extends Component
 {
+    use WithPagination;
+
     protected string $model = Model::class;
 
-    protected int $perPage = 10;
+    public int $perPage = 10;
 
     protected string $view;
 
@@ -24,6 +28,9 @@ abstract class AbstractModelTable extends Component
 
     #[Locked]
     public string $sortDirection = 'asc';
+
+    #[Locked]
+    public array $perPageOptions = [1 => 1, 10 => 10, 25 => 25, 50 => 50, 100 => 100, 200 => 200, 500 => 500, 1000 => 1000];
 
     public function render(): Factory|View|Application|ClassicView
     {
@@ -38,5 +45,21 @@ abstract class AbstractModelTable extends Component
     protected function query(): Builder
     {
         return $this->basicQuery();
+    }
+
+    public function delete(int $id): void
+    {
+        $user = User::findOrFail($id);
+
+        $user->delete();
+    }
+
+    public function setSortBy(string $sortBy): void
+    {
+        $this->sortBy = $sortBy;
+        $this->sortDirection = match ($this->sortDirection) {
+            'asc' => 'desc',
+            'desc' => 'asc',
+        };
     }
 }

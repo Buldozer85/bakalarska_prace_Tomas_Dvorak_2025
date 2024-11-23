@@ -12,11 +12,11 @@
     @if(!empty($label))
         <label for="{{ $id }}" class="block text-sm font-medium leading-6 text-gray-900 @if($whiteText) !text-white @endif">{{ $label }}</label>
     @endif
-    @error($name)
-        <x-web.error-message>
+        @error($name)
+        <x-admin.error-message>
             {{ $message }}
-        </x-web.error-message>
-    @enderror
+        </x-admin.error-message>
+        @enderror
     <div class="mt-2">
         <input id="{{ $id }}"
                name="{{ $name }}"

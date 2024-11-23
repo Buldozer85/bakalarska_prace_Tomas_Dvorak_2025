@@ -2,8 +2,11 @@
 
 namespace App\Livewire\Admin;
 
+use App\Enums\Roles;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
+use Livewire\Attributes\Validate;
 
 class UserModelTable extends AbstractModelTable
 {
@@ -11,12 +14,16 @@ class UserModelTable extends AbstractModelTable
 
     protected string $view = 'livewire.admin.user-model-table';
 
+    #[Validate('string', message: 'Jméno musí být text')]
     public string $first_name = '';
 
+    #[Validate('string', message: 'Příjmení musí být text')]
     public string $last_name = '';
 
+    #[Validate('string', message: 'E-mail musí být text')]
     public string $email = '';
 
+    #[Validate('string', message: 'Telefon musí být text')]
     public string $phone = '';
 
     public string $role = 'unselected';
@@ -68,13 +75,5 @@ class UserModelTable extends AbstractModelTable
         $this->sortDirection = 'asc';
     }
 
-    public function setSortBy(string $sortBy): void
-    {
 
-        $this->sortBy = $sortBy;
-        $this->sortDirection = match ($this->sortDirection) {
-            'asc' => 'desc',
-            'desc' => 'asc',
-        };
-    }
 }
