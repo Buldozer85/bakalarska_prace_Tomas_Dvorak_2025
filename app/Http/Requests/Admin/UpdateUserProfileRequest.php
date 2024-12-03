@@ -12,7 +12,7 @@ class UpdateUserProfileRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:254', Rule::unique('users', 'email')->ignore($this->user->id)],
+            'email' => ['required', 'email', 'max:254', Rule::unique('users', 'email')->ignore(user()->id)],
             'phone' => ['required', 'string', 'max:255'],
             'password' => ['nullable', 'string', 'confirmed'],
             'password_confirmation' => ['nullable', 'string', 'required_with:password'],

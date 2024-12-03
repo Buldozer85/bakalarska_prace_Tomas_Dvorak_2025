@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -49,9 +48,9 @@ abstract class AbstractModelTable extends Component
 
     public function delete(int $id): void
     {
-        $user = User::findOrFail($id);
+        $model = $this->model::findOrFail($id);
 
-        $user->delete();
+        $model->delete();
     }
 
     public function setSortBy(string $sortBy): void
@@ -62,4 +61,6 @@ abstract class AbstractModelTable extends Component
             'desc' => 'asc',
         };
     }
+
+    abstract public function resetFilters(): void;
 }

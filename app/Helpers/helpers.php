@@ -57,3 +57,10 @@ if (! function_exists('inPast')) {
         return $firstDate->lt($secondDate);
     }
 }
+
+if (! function_exists('flash')) {
+    function flash(string $message, $type = 'success'): void
+    {
+        session()->flash('flashMessage', ['message' => $message, 'type' => $type]);
+    }
+}

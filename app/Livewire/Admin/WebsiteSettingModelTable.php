@@ -4,7 +4,6 @@ namespace App\Livewire\Admin;
 
 use App\Models\WebsiteSetting;
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\Attributes\Rule;
 use Livewire\Attributes\Validate;
 
 class WebsiteSettingModelTable extends AbstractModelTable
@@ -23,10 +22,10 @@ class WebsiteSettingModelTable extends AbstractModelTable
     {
         return $this->basicQuery()
             ->when(! empty($this->key), function (Builder $builder) {
-                $builder->where('key', 'like', $this->key .'%');
+                $builder->where('key', 'like', $this->key.'%');
             })
             ->when(! empty($this->value), function (Builder $builder) {
-                $builder->where('value', 'like', $this->value .'%');
+                $builder->where('value', 'like', $this->value.'%');
             });
     }
 

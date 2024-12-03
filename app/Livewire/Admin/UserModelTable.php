@@ -2,10 +2,8 @@
 
 namespace App\Livewire\Admin;
 
-use App\Enums\Roles;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 
 class UserModelTable extends AbstractModelTable
@@ -74,6 +72,4 @@ class UserModelTable extends AbstractModelTable
         $this->sortBy = 'id';
         $this->sortDirection = 'asc';
     }
-
-
 }
