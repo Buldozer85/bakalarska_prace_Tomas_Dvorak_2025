@@ -22,12 +22,16 @@ class ReservationModelTable extends AbstractModelTable
 
     public string $type = '';
 
+    #[Validate('string', message: 'Rezervovatel musí být řetězec')]
     public string $reservation_name = '';
 
+    #[Validate('string', message: 'Telefon musí být řetězec')]
     public string $phone = '';
 
+    #[Validate('in:unselected,waiting,confirmed,cancelled', message: 'Status obsahuje neznámou hodnotu')]
     public string $status = 'unselected';
 
+    #[Validate('in:0,1,2', message: 'Na firmu obsahuje neznámou hodnotu')]
     public int $on_company = 2;
 
     protected function query(): Builder

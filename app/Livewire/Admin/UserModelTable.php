@@ -24,8 +24,10 @@ class UserModelTable extends AbstractModelTable
     #[Validate('string', message: 'Telefon musí být text')]
     public string $phone = '';
 
+    #[Validate('in:administrator,user,services_administrator,league_administrator,unselected', message: 'Role obsahuje neznámou hodnotu')]
     public string $role = 'unselected';
 
+    #[Validate('in:0,1,2', message: 'Ověřený e-mail obsahuje neznámou hodnotu')]
     public int $email_verified_at = 2;
 
     protected function query(): Builder

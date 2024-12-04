@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\ReservationArea;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\Rule;
 
 class ReservationAreaModelTable extends AbstractModelTable
 {
@@ -11,10 +12,13 @@ class ReservationAreaModelTable extends AbstractModelTable
 
     protected string $view = 'livewire.admin.reservation-area-model-table';
 
+    #[Rule('string', message: 'Klíč musí být řetězěc')]
     public string $key = '';
 
+    #[Rule('string', message: 'Název musí být řetězěc')]
     public string $name = '';
 
+    #[Rule('in:0,1,2', message: 'Aktivní obsahuje nesprávnou hodnotu')]
     public int $is_active = 2;
 
     protected function query(): Builder
