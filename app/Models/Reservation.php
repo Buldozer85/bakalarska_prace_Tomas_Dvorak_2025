@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,6 +21,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $note
  * @property bool $with_areal
  * @property string $type
+ * @property string $from_to
+ * @property bool $on_company
+ * @property string $status
  */
 class Reservation extends Model
 {
@@ -55,5 +59,19 @@ class Reservation extends Model
     public function documents(): HasMany
     {
         return $this->hasMany(ReservationDocuments::class);
+    }
+
+    public function fromTo(): Attribute
+    {
+        return Attribute::make(get: function () {
+            return $this->slot_from->format('G:i').' - '.$this->slot_to->format('G:i');
+        });
+    }
+
+    public function status(): Attribute
+    {
+        return Attribute::make(get: function () {
+            return ''; // TODO
+        });
     }
 }
