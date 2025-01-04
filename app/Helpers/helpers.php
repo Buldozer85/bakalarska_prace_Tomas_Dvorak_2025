@@ -64,3 +64,34 @@ if (! function_exists('flash')) {
         session()->flash('flashMessage', ['message' => $message, 'type' => $type]);
     }
 }
+
+if (! function_exists('makeInitials')) {
+    function makeInitials(string $name): ?string
+    {
+        $exploded = explode(' ', $name);
+
+        if (empty($exploded)) {
+            return null;
+        }
+
+        if (count($exploded) > 2) {
+            return mb_strtoupper(Str::take($exploded[0], 1).Str::take($exploded[2], 1));
+        }
+
+        return mb_strtoupper(Str::take($exploded[0], 1).Str::take($exploded[1], 1));
+    }
+}
+
+if (! function_exists('unseenMessages')) {
+    function unseenMessages(): int
+    {
+        return \App\Models\Message::query()
+            ->whereNull('viewed')
+            ->when(user()->is_admin, function ($query) {
+                return $query->where('sender_email', '!=', config('mail.from.address'));
+            })
+            ->when(! user()->is_admin, function ($query) {
+                return $query->where('sender_email', '!=', user()->email);
+            })->count();
+    }
+}

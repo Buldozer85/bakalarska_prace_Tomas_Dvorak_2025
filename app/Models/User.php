@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -81,6 +82,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function conversations(): BelongsToMany
+    {
+        return $this->belongsToMany(Conversation::class, 'messages', 'sender_id', 'conversation_id');
     }
 
     public function isAdmin(): Attribute

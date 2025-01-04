@@ -1,7 +1,8 @@
 @props([
     'route' => null,
     'type' => '',
-    'size' => ''
+    'size' => '',
+    'submit' => false
 ])
 @php
     $style = match ($type) {
@@ -24,7 +25,7 @@
         {{ $slot }}
     </a>
 @else
-    <button {{ $attributes->merge(['class' => 'text-sm text-decoration-none text-center font-bold text-black cursor-pointer '. $style . ' ' . $size]) }}>
+    <button @if($submit) type="submit" @endif {{ $attributes->merge(['class' => 'text-sm text-decoration-none text-center font-bold text-black cursor-pointer '. $style . ' ' . $size]) }}>
         {{ $slot }}
     </button>
 @endif

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ConversationController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ReservationAreaController;
 use App\Http\Controllers\Admin\ReservationController;
@@ -52,10 +53,14 @@ Route::middleware(AdministrationAccessMiddleware::class)->group(function () {
         Route::get('/', 'index')->name('dashboard');
     });*/
     Route::get('/odhlasit-se', [AuthController::class, 'logout'])->name('logout');
+
+    Route::controller(ConversationController::class)->group(function () {
+        Route::get('/konverzace', 'index')->name('conversations.index');
+        Route::get('/konverzace/{conversation}', 'detail')->name('conversations.detail');
+    });
 });
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/prihlaseni', 'loginPage')->name('login-page');
     Route::post('login', 'login')->name('login');
-
 });

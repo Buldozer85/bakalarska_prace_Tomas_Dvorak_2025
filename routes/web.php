@@ -90,6 +90,10 @@ Route::get('/test', function () {
 Route::get('/rezervace/{id}/uspesne-vytvorena', [ReservationController::class, 'success']);
 
 Route::get('/rezervace/vytvorit', MakeReservation::class);
+
+Route::controller(\App\Http\Controllers\Web\MessageController::class)->group(function () {
+    Route::post('/kontakt/odeslat-dotaz', 'send')->name('contact.message.send');
+});
 /*
 Route::middleware('auth')->group(function () {
     Route::controller(UsersController::class)->group(function () {
