@@ -33,4 +33,10 @@ class Message extends Model
     {
         return $this->belongsTo(Conversation::class);
     }
+
+    public function markAsViewed(): void
+    {
+        $this->viewed = Carbon::now();
+        $this->save();
+    }
 }

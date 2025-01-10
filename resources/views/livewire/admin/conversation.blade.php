@@ -1,10 +1,10 @@
-<div>
+<div class="mx-2">
     <div class="flex flex-col gap-y-12 mx-auto max-w-[1400px] min-h-[900px]">
-        @foreach($conversation->messages as $message)
+        @foreach($messages as $message)
 
             @switch($message->sender_email)
                 @case(config('mail.from.address'))
-                     <div class="flex flex-row">
+                     <div class="flex flex-col md:flex-row">
                         <div class="flex-[4) w-full">
                             <x-admin.message is-admin :message="$message">
                                 <x-admin.message-bubble color="bg-brand text-white" name="{{ config('app.name') }}"/>
@@ -13,10 +13,10 @@
                      </div>
                     @break
                 @default
-                    <div class="flex flex-row">
-                    <div class="flex-[4] w-[420px]">
+                    <div class="flex flex-col md:flex-row">
+                    <div class="flex-[4] w-full">
                         <x-admin.message :message="$message">
-                            <x-admin.message-bubble color="bg-brand-black text-white" name="{{ $message->conversation->from_name }}"/>
+                            <x-admin.message-bubble color="bg-brand-black text-white" name="{{ $conversation->from_name }}"/>
                         </x-admin.message>
                     </div>
                     </div>
@@ -24,6 +24,8 @@
             @endswitch
 
         @endforeach
+{!!  $messagesLinks !!}
+
     </div>
 
     <div class="max-w-[1400px] mx-auto mt-12">

@@ -6,7 +6,7 @@
 ])
 
 
-<li class="flex justify-between gap-x-6 py-5">
+<li class="flex justify-between gap-x-6 py-5 items-center">
         <div class="flex min-w-0 gap-x-4">
             <x-admin.message-bubble name="{{ $name }}"/>
             <div class="min-w-0 flex-auto">
@@ -25,5 +25,6 @@
 
             <x-admin.button :route="route('administration.conversations.detail', $id)">Zobrazit</x-admin.button>
         </div>
+    <x-admin.button class="sm:hidden" :route="route('administration.conversations.detail', $id)">Zobrazit</x-admin.button>
 </li>
 

@@ -81,6 +81,7 @@ Route::controller(ProfileController::class)
         Route::post('/update-information', 'changeInformation')->name('profile.update-information');
         Route::post('/change-password', 'changePassword')->name('profile.change-password');
         Route::get('/moje-liga', 'myLeague')->name('profile.my-league');
+        Route::get('/konverzace', 'conversations')->name('profile.conversations');
     });
 
 Route::get('/test', function () {

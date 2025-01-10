@@ -3,7 +3,7 @@
     'id',
     'label' => ''
 ])
-<div>
+<div class="w-full">
     <label for="{{ $id }}" class="block mb-2 text-sm font-medium text-gray-900">{{ $label }}</label>
     @error($name)
     <x-web.error-message>

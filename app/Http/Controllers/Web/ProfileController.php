@@ -57,4 +57,9 @@ class ProfileController extends Controller
 
         return redirect()->back();
     }
+
+    public function conversations()
+    {
+        return view('web.user.conversations.detail');
+    }
 }

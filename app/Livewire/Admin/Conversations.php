@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Conversation;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Message;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,11 +11,18 @@ class Conversations extends Component
 {
     use WithPagination;
 
-    public function query(): \Illuminate\Database\Eloquent\Builder|\LaravelIdea\Helper\App\Models\_IH_Conversation_QB
+    public function query()
     {
-        return Conversation::query()->with('messages')->whereHas('messages', function (Builder $query) {
-            return $query->orderBy('viewed')->orderBy('sent', 'desc');
-        });
+        return Conversation::query()
+            ->with('messages') // Načtení relace messages (pro případné další použití)
+            ->whereHas('messages') // Zajištění, že konverzace má alespoň jednu zprávu
+            ->addSelect(['last_sent' => Message::select('sent') // Přidání sloupce `sent` pro řazení
+                ->whereColumn('messages.conversation_id', 'conversations.id') // Propojení tabulek
+                ->orderBy('sent', 'desc') // Nejnovější hodnota `sent`
+                ->limit(1), // Pouze jedna hodnota
+            ])
+            ->orderBy('last_sent', 'desc'); // Řazení podle posledního `sent`
+
     }
 
     public function render()

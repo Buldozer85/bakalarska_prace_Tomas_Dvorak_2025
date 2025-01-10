@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property string $from_name
@@ -29,8 +29,8 @@ class Conversation extends Model
             });
     }
 
-    public function users(): BelongsToMany
+    public function conversationStarterUser(): HasOne
     {
-        return $this->belongsToMany(User::class, 'messages', 'conversation_id', 'sender_id');
+        return $this->hasOne(User::class, 'email', 'from_email');
     }
 }
