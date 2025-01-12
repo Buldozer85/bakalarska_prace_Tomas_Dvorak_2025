@@ -7,6 +7,7 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\ServiceProvider;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local')) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
+        }
+
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
         }
     }
 
