@@ -39,12 +39,7 @@
             </div>
 
             <div class="md:flex-1 ">
-                <form class="space-y-4">
-                    <x-web.form.input label="Jméno" name="name" id="name" white-text required />
-                    <x-web.form.input label="E-mail" name="email" id="email" white-text required />
-                    <x-web.textarea name="message" label="Váš dotaz" id="message" white-text/>
-                    <x-web.button class="w-full" type="white">Odeslat</x-web.button>
-                </form>
+               <livewire:web.contact-form/>
             </div>
         </div>
     </div>

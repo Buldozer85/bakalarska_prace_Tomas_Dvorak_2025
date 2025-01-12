@@ -83,6 +83,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Reservation::class);
     }
 
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'from_email', 'email')->with('messages');
+    }
+
     public function isAdmin(): Attribute
     {
         return Attribute::make(get: fn () => in_array($this->role, Roles::adminGroup()));

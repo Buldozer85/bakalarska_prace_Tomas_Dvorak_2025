@@ -68,17 +68,34 @@
             <div class="mt-6 flow-root">
                 <div class="-my-6 divide-y divide-gray-500/10">
                     <div class="space-y-2 py-6">
-                        <a href="{{ route('homepage') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
+                        @auth
+                            <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Profil</a>
+                            <a href="{{ route('profile.my-reservations') }}" class="block p-2 hover:text-brand-darker">Moje rezervace</a>
+                            <a href="{{ route('profile.my-league') }}" class="block p-2 hover:text-brand-darker">Moje liga</a>
+                            <a href="{{ route('profile.edit-information') }}" class="block p-2 hover:text-brand-darker">Změna údajů</a>
+                            <a href="{{ route('profile.change-password.show') }}" class="block p-2 hover:text-brand-darker">Změna hesla</a>
 
-                        <a href="{{ route('reservation') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Rezervace</a>
+                        @endauth
 
-                        <a href="{{ route('contact') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kontakt</a>
-                        <a href="{{ route('league') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kuželkářská liga</a>
+                        @guest
+                                <a href="{{ route('homepage') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Domů</a>
+
+                                <a href="{{ route('reservation') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Rezervace</a>
+
+                                <a href="{{ route('contact') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kontakt</a>
+                                <a href="{{ route('league') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Kuželkářská liga</a>
+                        @endguest
+
 
                     </div>
                     <div class="py-6">
+                        @guest
                         <a href="#" class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Přihlášení</a>
                         <a href="#" class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Registrace</a>
+                        @endguest
+                        @auth
+                                <a href="{{ route('logout') }}" class="block p-2 hover:text-brand-darker">Odhlásit se</a>
+                            @endauth
                     </div>
                 </div>
             </div>

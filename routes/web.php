@@ -81,6 +81,7 @@ Route::controller(ProfileController::class)
         Route::post('/update-information', 'changeInformation')->name('profile.update-information');
         Route::post('/change-password', 'changePassword')->name('profile.change-password');
         Route::get('/moje-liga', 'myLeague')->name('profile.my-league');
+        Route::get('/konverzace', 'conversations')->name('profile.conversations');
     });
 
 Route::get('/test', function () {
@@ -90,6 +91,10 @@ Route::get('/test', function () {
 Route::get('/rezervace/{id}/uspesne-vytvorena', [ReservationController::class, 'success']);
 
 Route::get('/rezervace/vytvorit', MakeReservation::class);
+
+Route::controller(\App\Http\Controllers\Web\MessageController::class)->group(function () {
+    Route::post('/kontakt/odeslat-dotaz', 'send')->name('contact.message.send');
+});
 /*
 Route::middleware('auth')->group(function () {
     Route::controller(UsersController::class)->group(function () {
