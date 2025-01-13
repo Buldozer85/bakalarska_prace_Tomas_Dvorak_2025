@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(TelescopeServiceProvider::class);
         }
 
-        if (config('app.env') !== 'local') {
+        if (!$this->app->environment('local')) {
             URL::forceScheme('https');
         }
     }

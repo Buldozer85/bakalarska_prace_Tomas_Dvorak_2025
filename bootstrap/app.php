@@ -18,8 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->redirectGuestsTo('/prihlaseni');
-        $middleware->trustProxies(at: '*', headers: \Symfony\Component\HttpFoundation\Request::HEADER_FORWARDED);
+        $middleware->redirectGuestsTo('/prihlaseni')->trustProxies('*');
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
