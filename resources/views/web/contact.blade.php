@@ -32,10 +32,10 @@
             </div>
         </div>
 
-        <div class="bg-brand flex flex-col md:flex-row md:items-center py-36 md:py-0 px-12 xl:px-36 md:h-[800px] max-md:space-y-4">
+        <div class="bg-brand flex flex-col md:flex-row md:items-center py-36 md:py-0 px-12 xl:px-36 md:h-[800px] max-md:space-y-4 gap-x-4">
 
             <div class="md:flex-1">
-                <h2 class="text-white text-2xl md:text-5xl text-center md:text-left font-bold !leading-snug">Napadl Vás nějaký dotaz?</h2>
+                <h2 class="text-white text-2xl md:text-3xl xl:text-5xl text-center md:text-left font-bold !leading-snug">Napadl Vás nějaký dotaz?</h2>
             </div>
 
             <div class="md:flex-1 ">

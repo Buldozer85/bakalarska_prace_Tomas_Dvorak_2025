@@ -124,7 +124,7 @@
 
     <h1 class="text-4xl font-bold text-center text-brand mx-6">Ceník pronájmu herny</h1>
 
-    <div class="md:mx-auto max-w-2xl mx-6">
+    <div class="md:mx-auto max-w-2xl mx-6 w-full">
         <x-web.small-conteiner>
             <h3 class="xl:text-4xl text-2xl font-bold">Cena za jednu 1 hod</h3>
             <p class="xl:text-4xl text-2xl font-normal">
@@ -136,7 +136,7 @@
     <h1 class="text-4xl font-bold text-center text-brand mx-6">Základní informace</h1>
 
     <div
-        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-60 sm:mt-20 lg:mx-20 lg:max-w-none lg:grid-cols-2">
+        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-60 sm:mt-20 lg:max-w-none lg:grid-cols-2">
         <x-web.small-conteiner color="black">
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -209,7 +209,7 @@
     <h1 class="text-4xl font-bold text-center text-brand mx-6">Pověřené osoby</h1>
 
     <div
-        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-60 sm:mt-20 lg:mx-20 lg:max-w-none 2xl:grid-cols-2 py-12">
+        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 2xl:gap-60 sm:mt-20 lg:max-w-none 2xl:grid-cols-2 py-12">
             <x-web.contact-card name="Jiří Jeřábek" description="Správce kuželny" phone="+420 724 410 275" email="kuzelnaveseli@centrum.cz"/>
             <x-web.contact-card name="Pavel Danihelka" description="Zástupce správce kuželny" phone="+420 777 575 750" email="kuzelnaveseli@centrum.cz"/>
     </div>
