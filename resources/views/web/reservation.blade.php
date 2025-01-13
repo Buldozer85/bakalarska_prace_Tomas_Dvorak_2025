@@ -1,4 +1,4 @@
-<x-web.layouts.app title="Rezervace">
+<x-web.layouts.app page="reservations" title="Rezervace">
     <div class="max-w-nav mx-auto lg:px-8 pb-32 max-lg:pt-12">
         <div class="flex flex-col lg:flex-row lg:items-center ">
             <div class="flex-1 max-lg:space-y-8">
@@ -19,7 +19,7 @@
                         <livewire:web.reservation :read-only="true"></livewire:web.reservation>
                     </div>
 
-                    <div class="lg:hidden">
+                    <div class="lg:hidden mx-6">
                         <livewire:web.reservation-mobile :read-only="true"/>
                     </div>
 
@@ -29,10 +29,8 @@
             <h2 class="text-center text-brand text-4xl lg:text-5xl font-bold ">A kolik Vás to bude stát?</h2>
 
             <h3 class="text-center text-3xl text-brand-brown-red">Areál</h3>
-
-            <div class="isolate mx-6 mx-auto lg:mx-6 xl:mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:max-w-[1200px] lg:grid-cols-3">
                 <x-web.pricing/>
-            </div>
+
 
             <h3 class="text-center text-3xl text-brand-brown-red">Herna</h3>
 

@@ -4,7 +4,7 @@
     'phone',
     'email'
 ])
-<div class="flex flex-col sm:flex-row items-center shadow-lg space-y-2">
+<div class="flex flex-col sm:flex-row items-center shadow-lg space-y-2 lg:w-[650px] lg:mx-auto">
     <div class="bg-brand z-30 w-full sm:w-1/2 clip-path py-3 sm:py-16 sm:pr-8 2xl:pr-0 space-y-4 h-full text-white text-center">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
              class="w-10 h-10 2xl:w-12 2xl:h-12 mx-auto ">

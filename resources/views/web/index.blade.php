@@ -1,7 +1,7 @@
-<x-web.layouts.app title="Hlavní strana">
+<x-web.layouts.app page="home" title="Hlavní strana">
     <div class="relative">
         <div class="bg-black opacity-50 absolute w-full h-full z-20 top-0"></div>
-        <div class="bg-brand z-30 bottom-0 w-full md:top-0 md:h-full md:w-1/3 absolute clip-path py-8">
+        <div class="hidden md:block bg-brand z-30 bottom-0 w-full md:top-0 md:h-full md:w-1/3 absolute clip-path py-8">
             <div class="md:relative md:top-60 text-center md:pr-10 md:space-y-8 max-w-image-text m-auto ">
                 <h1 class="text-white !leading-snug font-bold top-1/2 text-5xl 2xl:text-7xl text-left hidden md:block">
                     Kuželna Veselí</h1>
@@ -9,8 +9,8 @@
             </div>
         </div>
 
-        <div class="bg-homepage-image bg-cover bg-center w-full relative py-96">
-            <h1 class="text-white mx-auto text-6xl z-50 relative px-12 md:hidden font-bold !leading-snug">Vítejte na stránkách Kuželny Veselí</h1>
+        <div class="bg-homepage-image bg-cover bg-center w-full relative py-36 md:py-96">
+            <h1 class="text-white mx-auto max-md:text-center text-3xl md:text-6xl z-50 relative px-12 md:hidden font-bold leading-[2] md:!leading-snug">Vítejte na stránkách Kuželny&nbsp;Veselí</h1>
         </div>
     </div>
 
@@ -91,127 +91,40 @@
         </x-web.small-conteiner>
     </div>
 
-    <h1 class="text-4xl font-bold text-center text-brand">Zázemí kuželny</h1>
+    <h1 class="text-4xl font-bold text-center text-brand mx-6">Zázemí kuželny</h1>
 
     <div class="lg:mx-20 mx-6">
-        <ul role="list" class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
+        <ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
             <li class="relative">
-                <div
-                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                    <img src="{{ asset("images/1.jpg") }}" alt=""
-                         class="pointer-events-none object-cover group-hover:opacity-75">
-                    <button type="button" class="absolute inset-0 focus:outline-none">
-                        <span class="sr-only">View details for IMG_4985.HEIC</span>
-                    </button>
-                </div>
+                <x-web.gallery-image :image="asset('images/1.jpg')" alt="Obrázek kuželny 1" sr="1.jpg"/>
             </li>
 
             <li class="relative">
-                <div
-                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                    <img src="{{ asset("images/2.jpg") }}" alt=""
-                         class="pointer-events-none object-cover group-hover:opacity-75">
-                    <button type="button" class="absolute inset-0 focus:outline-none">
-                        <span class="sr-only">View details for IMG_4985.HEIC</span>
-                    </button>
-                </div>
+                <x-web.gallery-image :image="asset('images/2.jpg')" alt="Obrázek kuželny 2" sr="2.jpg"/>
             </li>
 
             <li class="relative">
-                <div
-                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                    <img src="{{ asset("images/3.jpg") }}" alt=""
-                         class="pointer-events-none object-cover group-hover:opacity-75">
-                    <button type="button" class="absolute inset-0 focus:outline-none">
-                        <span class="sr-only">View details for IMG_4985.HEIC</span>
-                    </button>
-                </div>
+                <x-web.gallery-image :image="asset('images/3.jpg')" alt="Obrázek kuželny 3" sr="3.jpg"/>
             </li>
 
             <li class="relative">
-                <div
-                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                    <img src="{{ asset("images/4.jpg") }}" alt=""
-                         class="pointer-events-none object-cover group-hover:opacity-75">
-                    <button type="button" class="absolute inset-0 focus:outline-none">
-                        <span class="sr-only">View details for IMG_4985.HEIC</span>
-                    </button>
-                </div>
+                <x-web.gallery-image :image="asset('images/4.jpg')" alt="Obrázek kuželny 4" sr="4.jpg"/>
             </li>
 
             <li class="relative">
-                <div
-                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                    <img src="{{ asset("images/6.jpg") }}" alt=""
-                         class="pointer-events-none object-cover group-hover:opacity-75">
-                    <button type="button" class="absolute inset-0 focus:outline-none">
-                        <span class="sr-only">View details for IMG_4985.HEIC</span>
-                    </button>
-                </div>
+                <x-web.gallery-image :image="asset('images/6.jpg')" alt="Obrázek kuželny 6" sr="6.jpg"/>
             </li>
         </ul>
     </div>
 
-    <h1 class="text-4xl font-bold text-center text-brand text-brand">Ceník pronájmu areálu</h1>
+    <h1 class="text-4xl font-bold text-center text-brand mx-6">Ceník pronájmu areálu</h1>
 
 
-    <div
-        class="isolate mx-6 mx-auto lg:mx-6 xl:mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:max-w-[1200px] lg:grid-cols-3">
-        <div
-            class="flex flex-col justify-between rounded-3xl p-8 ring-1 ring-white xl:p-10 lg:mt-8 lg:rounded-r-none bg-brand-black">
-            <div>
-                <div class="flex items-center justify-center gap-x-4 mt-6">
-                    <h3 id="tier-freelancer" class="text-4xl text-center font-bold leading-8 text-brand-yellow">Krátkodobý</h3>
-                </div>
-                <p class="mt-12 flex items-baseline gap-x-1 text-center justify-center">
-                    <span class="text-2xl font-normal tracking-tight text-white text-center">+ do 2 hodin</span>
-                </p>
-                <h4 class="text-4xl font-bold tracking-tight text-white mt-16 text-center">200,- Kč</h4>
-                <p class="mt-16 flex items-baseline gap-x-1 text-center justify-center">
-                    <span class="text-2xl font-normal tracking-tight text-white">+ kuželník 50,- Kč</span>
-                    <span class="text-sm font-normal leading-6 text-white text-center">/hodinu</span>
-                </p>
-            </div>
-        </div>
+   <x-web.pricing/>
 
-        <div
-            class="flex flex-col justify-between rounded-3xl bg-brand p-8 ring-1 ring-white xl:p-10 lg:z-10 lg:rounded-b-none shadow-2xl">
-            <div>
-                <div class="flex items-center justify-center gap-x-4 mt-6">
-                    <h3 id="tier-startup" class="text-4xl font-bold leading-8 text-white">Celodenní</h3>
-                </div>
-                <p class="mt-12 flex items-baseline gap-x-1 text-center justify-center">
-                    <span class="text-2xl font-normal tracking-tight text-white text-center">+ od 2 do 24 hodin</span>
-                </p>
-                <h4 class="text-4xl font-bold tracking-tight text-white mt-16 text-center">500,- Kč</h4>
-                <p class="mt-16 flex items-baseline gap-x-1 text-center justify-center">
-                    <span class="text-2xl font-normal tracking-tight text-white">+ kuželník 50,- Kč</span>
-                    <span class="text-sm font-normal leading-6 text-white text-center">/hodinu</span>
-                </p>
-            </div>
-        </div>
+    <h1 class="text-4xl font-bold text-center text-brand mx-6">Ceník pronájmu herny</h1>
 
-        <div
-            class="flex flex-col justify-between rounded-3xl bg-brand-black p-8 ring-1 ring-white xl:p-10 lg:mt-8 lg:rounded-l-none">
-            <div>
-                <div class="flex items-center justify-center gap-x-4 mt-6">
-                    <h3 id="tier-enterprise" class="text-4xl font-bold leading-8 text-brand-yellow">Komerční akce</h3>
-                </div>
-                <p class="mt-12 flex items-baseline gap-x-1 text-center justify-center">
-                    <span class="text-2xl font-normal tracking-tight text-white text-center">+ od 2 do 24 hodin</span>
-                </p>
-                <h4 class="text-4xl font-bold tracking-tight text-white mt-16 text-center">1000,- Kč</h4>
-                <p class="mt-16 flex items-baseline gap-x-1 text-center justify-center">
-                    <span class="text-2xl font-normal tracking-tight text-white">+ kuželník 50,- Kč</span>
-                    <span class="text-sm font-normal leading-6 text-white text-center">/hodinu</span>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <h1 class="text-4xl font-bold text-center text-brand">Ceník pronájmu herny</h1>
-
-    <div class="md:mx-auto max-w-2xl mx-6">
+    <div class="md:mx-auto max-w-2xl w-full">
         <x-web.small-conteiner>
             <h3 class="xl:text-4xl text-2xl font-bold">Cena za jednu 1 hod</h3>
             <p class="xl:text-4xl text-2xl font-normal">
@@ -220,10 +133,10 @@
         </x-web.small-conteiner>
     </div>
 
-    <h1 class="text-4xl font-bold text-center text-brand">Základní informace</h1>
+    <h1 class="text-4xl font-bold text-center text-brand mx-6">Základní informace</h1>
 
     <div
-        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-60 sm:mt-20 lg:mx-20 lg:max-w-none lg:grid-cols-2">
+        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-60 sm:mt-20 lg:max-w-none lg:grid-cols-2">
         <x-web.small-conteiner color="black">
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -293,10 +206,10 @@
         </x-web.small-conteiner>
     </div>
 
-    <h1 class="text-4xl font-bold text-center text-brand">Pověřené osoby</h1>
+    <h1 class="text-4xl font-bold text-center text-brand mx-6">Pověřené osoby</h1>
 
     <div
-        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-60 sm:mt-20 lg:mx-20 lg:max-w-none 2xl:grid-cols-2 py-12">
+        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 2xl:gap-60 sm:mt-20 lg:max-w-none 2xl:grid-cols-2 py-12">
             <x-web.contact-card name="Jiří Jeřábek" description="Správce kuželny" phone="+420 724 410 275" email="kuzelnaveseli@centrum.cz"/>
             <x-web.contact-card name="Pavel Danihelka" description="Zástupce správce kuželny" phone="+420 777 575 750" email="kuzelnaveseli@centrum.cz"/>
     </div>
