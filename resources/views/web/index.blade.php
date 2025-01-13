@@ -124,7 +124,7 @@
 
     <h1 class="text-4xl font-bold text-center text-brand mx-6">Ceník pronájmu herny</h1>
 
-    <div class="md:mx-auto max-w-2xl mx-6 w-full">
+    <div class="md:mx-auto max-w-2xl w-full">
         <x-web.small-conteiner>
             <h3 class="xl:text-4xl text-2xl font-bold">Cena za jednu 1 hod</h3>
             <p class="xl:text-4xl text-2xl font-normal">
