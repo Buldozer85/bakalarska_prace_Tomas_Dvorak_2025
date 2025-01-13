@@ -1,4 +1,4 @@
-<x-web.layouts.app title="Kuželkářská liga">
+<x-web.layouts.app page="league" title="Kuželkářská liga">
 <div class="max-w-nav mx-auto mt-12">
     <div class="flex flex-row justify-center md:justify-between items-center mx-8">
         <div class="space-y-8 flex flex-col justify-center">

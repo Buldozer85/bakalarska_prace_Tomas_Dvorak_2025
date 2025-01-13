@@ -1,4 +1,4 @@
-<x-web.layouts.app :title="$title">
+<x-web.layouts.app page="contact" :title="$title">
     <div class="bg-white mx-auto max-w-nav space-y-12 pb-32">
         <div class="flex flex-row items-center">
             <div class="flex-1 space-y-4 max-md:flex max-md:flex-col max-md:justify-center max-md:mt-12 mx-8">

@@ -1,5 +1,6 @@
 @props([
-    'title' => ''
+    'title' => '',
+    'page' => ''
 ])
 <!doctype html>
 <html lang="cs">
@@ -13,7 +14,7 @@
     <title>{{ "Kuželna Veselí: ". ($title ?? "") }}</title>
 </head>
 <body>
-<x-web.page-sections.header/>
+<x-web.page-sections.header current-page="{{ $page }}"/>
 <main class="min-h-screen space-y-20">
     {{ $slot }}
 </main>
