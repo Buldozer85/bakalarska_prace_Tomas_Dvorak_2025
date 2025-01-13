@@ -1,7 +1,7 @@
 <x-web.layouts.app page="login" title="Přihlášení">
     <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 lg:h-[1200px]">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Přihlaste se ke svému účtu</h2>
+            <h2 class="mx-6 md:mx-0 mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Přihlaste se ke svému účtu</h2>
         </div>
 
         <div class="mt-8 mx-6 sm:mx-auto sm:w-full sm:max-w-md">
