@@ -84,13 +84,9 @@ Route::controller(ProfileController::class)
         Route::get('/konverzace', 'conversations')->name('profile.conversations');
     });
 
-Route::get('/test', function () {
-    return view('web.auth.email-verification');
-});
-
 Route::get('/rezervace/{id}/uspesne-vytvorena', [ReservationController::class, 'success']);
 
-Route::get('/rezervace/vytvorit', MakeReservation::class);
+Route::get('/rezervace/vytvorit', MakeReservation::class)->name('reservation.show-create');
 
 Route::controller(\App\Http\Controllers\Web\MessageController::class)->group(function () {
     Route::post('/kontakt/odeslat-dotaz', 'send')->name('contact.message.send');

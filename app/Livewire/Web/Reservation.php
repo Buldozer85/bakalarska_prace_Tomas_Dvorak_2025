@@ -25,6 +25,8 @@ class Reservation extends Component
 
     public ?string $backButtonAction;
 
+    public bool $showCreateButton;
+
     public function __construct()
     {
         $this->firstDayOfWeek = Carbon::now()->startOfWeek();
@@ -33,10 +35,11 @@ class Reservation extends Component
 
     }
 
-    public function mount(?bool $readOnly, ?string $backButtonAction = null)
+    public function mount(?bool $readOnly, ?string $backButtonAction = null, bool $showCreateButton = true): void
     {
         $this->readOnly = $readOnly ?? false;
         $this->backButtonAction = $backButtonAction;
+        $this->showCreateButton = $showCreateButton;
     }
 
     public function render()
@@ -67,4 +70,6 @@ class Reservation extends Component
         $this->lastDayOfWeek = $this->firstDayOfWeek->copy()->endOfWeek();
         $this->selectedDate = $date;
     }
+
+    public function addTime(Carbon $time): void {}
 }

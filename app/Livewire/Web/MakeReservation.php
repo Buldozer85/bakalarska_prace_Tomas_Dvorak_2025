@@ -2,9 +2,12 @@
 
 namespace App\Livewire\Web;
 
+use App\Models\ReservationArea;
+use App\Models\ReservationTemp;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
@@ -47,6 +50,24 @@ class MakeReservation extends Component
 
     public Collection $reservationTimes;
 
+    #[Locked]
+    public Carbon $firstDayOfWeek;
+
+    #[Locked]
+    public Carbon $lastDayOfWeek;
+
+    #[Locked]
+    public Carbon $currentWeekFirstDay;
+
+    protected string $selectedDate = '';
+
+    #[Locked]
+    public ?bool $readOnly;
+
+    public ?string $backButtonAction;
+
+    public ?Carbon $reservationTemporaryEndDate = null;
+
     #[Layout('components.web.layouts.app')]
     #[Title('Vytvoření rezervace')]
     public function render()
@@ -54,9 +75,31 @@ class MakeReservation extends Component
         return view('livewire.web.make-reservation');
     }
 
-    public function mount()
+    public function mount(?bool $readOnly, ?string $backButtonAction = null)
     {
         $this->reservationTimes = new Collection;
+        $this->readOnly = $readOnly ?? false;
+        $this->backButtonAction = $backButtonAction;
+        if (! is_null(user()->temporaryReservation)) {
+            $tmpReservation = user()->temporaryReservation;
+            $this->reservationTemporaryEndDate = $tmpReservation->created_at->addMinutes(15);
+            $this->reservation_date = $tmpReservation->date;
+
+            for ($i = $tmpReservation->slot_from->hour; $i < $tmpReservation->slot_to->hour; $i++) {
+                $this->reservationTimes->add($this->reservation_date->copy()->hour($i)->minutes(0));
+            }
+            $this->reservationTimes = $this->reservationTimes->sortBy(fn ($time1) => $time1);
+            $this->dispatch('start-timer')->to(Summary::class);
+        }
+
+    }
+
+    public function __construct()
+    {
+        $this->firstDayOfWeek = Carbon::now()->startOfWeek();
+        $this->lastDayOfWeek = Carbon::now()->endOfWeek();
+        $this->currentWeekFirstDay = Carbon::now();
+
     }
 
     public function getSelectedStep(): int
@@ -123,5 +166,73 @@ class MakeReservation extends Component
             ! is_null($this->reservation_date) &&
           $company;
 
+    }
+
+    public function increaseWeek(): void
+    {
+        $this->firstDayOfWeek->addWeek();
+        $this->lastDayOfWeek = $this->firstDayOfWeek->copy()->endOfWeek();
+    }
+
+    public function decreaseWeek(): void
+    {
+        if (inPast($this->firstDayOfWeek, $this->currentWeekFirstDay)) {
+            return;
+        }
+
+        $this->firstDayOfWeek->subWeek();
+        $this->lastDayOfWeek = $this->firstDayOfWeek->copy()->endOfWeek();
+    }
+
+    #[On('dateSelected')]
+    public function setDate($date): void
+    {
+        $this->firstDayOfWeek = Carbon::parse($date)->startOfWeek();
+        $this->lastDayOfWeek = $this->firstDayOfWeek->copy()->endOfWeek();
+        $this->selectedDate = $date;
+    }
+
+    public function addTime(string $time): void
+    {
+        $time = Carbon::parse($time);
+        if (is_null($this->reservation_date) || round($this->reservation_date->diffInDays($time)) > 0) {
+            $this->reservationTimes = collect();
+            $this->reservation_date = $time->copy();
+        }
+
+        if (! $this->reservationTimes->contains($time)) {
+            $this->reservationTimes->add($time);
+        } else {
+
+            $this->reservationTimes->forget($this->reservationTimes->search($time));
+        }
+
+        $this->reservationTimes = $this->reservationTimes->sortBy(fn ($time1) => $time1);
+
+        $tmp = user()->temporaryReservation;
+
+        if (is_null($tmp)) {
+            $tmp = new ReservationTemp;
+        }
+
+        $tmp->slot_from = $this->reservationTimes->first();
+        $tmp->slot_to = $this->reservationTimes->last();
+        $tmp->slot_to = $tmp->slot_to->addHour();
+        $tmp->date = $this->reservation_date;
+        $tmp->user_id = user()->id;
+        $tmp->reservation_area_id = ReservationArea::first()->id; // TODO: Complete ID of reservation area. It is for general purpose. For this app. It is enough
+        $tmp->save();
+
+        $this->reservationTemporaryEndDate = $tmp->created_at->addMinutes(15);
+        $this->dispatch('start-timer')->to(Summary::class);
+    }
+
+    public function getRemainingReservationTime()
+    {
+        $decimalMinutes = abs($this->reservationTemporaryStartDate->diffInMinutes(Carbon::now()));
+        $minutes = floor($decimalMinutes);
+        $seconds = round(($decimalMinutes - $minutes) * 60);
+
+        return Carbon::now()->minutes($minutes)->second($seconds);
     }
 }

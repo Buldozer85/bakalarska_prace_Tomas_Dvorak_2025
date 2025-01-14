@@ -1,26 +1,18 @@
-@props([
-    'date' => '',
-    'from' => '',
-    'to' => '',
-    'remaining' => ''
-
-])
-<div {{ $attributes->merge(['class' => 'bg-brand-black rounded-md text-white w-full flex-1 p-12 space-y-8']) }} x-data="{
-            expiry: '{{ $remaining }}',
+<div class="bg-brand-black rounded-md text-white w-full flex-1 p-12 space-y-8 max-lg:order-first" x-data="{
+            expiry: ($wire.entangle('expiry').live == null) ? '' : $wire.entangle('expiry').live,
             remaining:null,
             initTimer() {
-             console.log('tesz')
+
                 this.setRemaining()
                 setInterval(() => {
                     this.setRemaining();
-                    console.log('tesz')
                 }, 1000);
 
 
             },
             setRemaining() {
-console.log('tesz')
-            const timeExpiry = new Date(this.expiry)
+
+             const timeExpiry = new Date(this.expiry)
              const diff = timeExpiry.getTime() - new Date().getTime();
              this.remaining =  parseInt(diff / 1000);
             },
@@ -46,18 +38,17 @@ console.log('tesz')
                 }
             },
 
+}" x-init="$wire.on('start-timer', function() {
+	initTimer()
+}); expiry ? initTimer() : ''">
 
-
-
-
-}" x-on:start-timer.window="initTimer()">
     <h2 class="font-bold text-2xl">Souhrn</h2>
-    @if(!empty($remaining))
-        <p x-show="expiry">Rezervace platná: <span x-text="time().minutes"></span>:<span x-text="time().seconds"></span></p>
+    @if(!empty($expiry))
+        <p>Rezervace platná: <span x-text="time().minutes"></span>:<span x-text="time().seconds"></span></p>
     @endif
-    <p><span class="font-bold">Datum:</span></p>
-    <p><span class="font-bold">Od - Do:</span></p>
-    <p><span class="font-bold">Čas celkem:</span></p>
+    <p><span class="font-bold">Datum: </span> {{ $date->format('j.n.Y') }}</p>
+    <p class="font-normal"><span class="font-bold">Od - Do: </span>{{ $from->format('G:i') }} - {{ $to->format('G:i') }}</p>
+    <p><span class="font-bold">Čas celkem: {{ round($from->diffInHours($to)) }} h</span></p>
 
     <div class="flex flex-row gap-x-4">
         <x-web.button class="flex-1" type="danger">Zrušit!</x-web.button>
@@ -71,4 +62,6 @@ console.log('tesz')
         </x-web.button>
 
     </div>
+
 </div>
+

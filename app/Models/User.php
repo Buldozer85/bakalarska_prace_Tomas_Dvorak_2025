@@ -97,4 +97,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Attribute::make(get: fn () => Str::upper(Str::take($this->first_name, 1).Str::take($this->last_name, 1)));
     }
+
+    public function temporaryReservation(): HasOne
+    {
+        return $this->hasOne(ReservationTemp::class);
+    }
 }
