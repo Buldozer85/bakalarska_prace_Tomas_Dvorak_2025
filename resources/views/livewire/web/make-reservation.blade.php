@@ -11,7 +11,7 @@
                             label="Potvrzení rezervace" number="3"/>
     </div>
     @if($selectedStep !== 1)
-        <div class="max-w-nav">
+        <div class="max-w-nav mx-6">
             <x-web.button class="flex flex-row gap-x-4 items-center" type="black" wire:click="previousStep">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                      stroke="currentColor" class="size-6">
@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <div class="flex flex-col lg:flex-row gap-x-12 max-xl:space-y-12">
+    <div class="flex flex-col lg:flex-row gap-x-12 max-xl:space-y-12 mx-6">
         @switch($this->getSelectedStep())
             @case(2)
 
@@ -35,9 +35,7 @@
                         <x-web.form.input wire:model.blur="email" id="email" label="E-mail" name="email"/>
                         <x-web.form.input wire:model.blur="phone" id="phone" label="Telefon" name="phone"/>
 
-                        <select>
-                            <option>ZDe budou kat</option>
-                        </select>
+                        <x-web.form.select wire:model.blur="reservation_type"  :options="\App\Enums\ReservationTypes::select()" name="reservation_type" id="reservation_type" label="Kategorie"/>
                     </div>
 
                     <x-web.form.check-box wire:model.live="on_company" color="yellow" name="on_company" id="on_company">
@@ -62,27 +60,19 @@
                                          wire:model.blur="note"></x-web.form.textarea>
 
                 </div>
-                <x-web.reservations.summary/>
+
                 @break
             @case(3)
                 <div class="shadow-lg p-12 max-w-nav flex-1 mx-auto space-y-12">
                     <h2 class="text-brand-black font-bold text-center text-2xl">Souhrn rezervace</h2>
-                    <div class="grid grid-cols-3 space-y-4">
-                        <x-web.attribute-value label="Jméno">John Doe</x-web.attribute-value>
-                        <x-web.attribute-value label="E-mail">hh@hh.cz</x-web.attribute-value>
-                        <x-web.attribute-value label="Telefon">777666555</x-web.attribute-value>
-                        <x-web.attribute-value label="Typ rezervace">Komerční</x-web.attribute-value>
-                        <x-web.attribute-value label="Na firmu">Ne</x-web.attribute-value>
+                    <div class="grid grid-cols-3 gap-y-4">
+                        <x-web.attribute-value label="Jméno">{{ $first_name }}</x-web.attribute-value>
+                        <x-web.attribute-value label="E-mail">{{ $email }}</x-web.attribute-value>
+                        <x-web.attribute-value label="Telefon">{{ $phone }}</x-web.attribute-value>
+                        <x-web.attribute-value label="Typ rezervace">{{ \App\Enums\ReservationTypes::labelByKey($reservation_type) }}</x-web.attribute-value>
+                        <x-web.attribute-value label="Na firmu">{{ $on_company ? 'Ano' : 'Ne' }}</x-web.attribute-value>
 
                     </div>
-                    {{-- <div class="grid grid-cols-3">
-                         <x-web.attribute-value label="Jméno">{{ /**/ }}</x-web.attribute-value>
-                         <x-web.attribute-value label="E-mail">{{ $email }}</x-web.attribute-value>
-                         <x-web.attribute-value label="Telefon">{{ $phone }}</x-web.attribute-value>
-                         <x-web.attribute-value label="Typ rezervace">{{ $reservation_type }}</x-web.attribute-value>
-                         <x-web.attribute-value label="Na firmu">{{  }}</x-web.attribute-value>
-
-                     </div>
 
                  @if($on_company)
                          <div class="grid grid-cols-3">
@@ -96,9 +86,9 @@
 
                      <div class="grid grid-cols-3">
                          <x-web.attribute-value label="Datum rezervace">{{ $reservation_date->format('j.n.Y') }}</x-web.attribute-value>
-                         <x-web.attribute-value label="Začátek rezervace">{{  '' }}</x-web.attribute-value>
-                         <x-web.attribute-value label="Konec rezervace">{{ '' }}</x-web.attribute-value>
-                     </div>--}}
+                         <x-web.attribute-value label="Začátek rezervace">{{  $reservationTimes->first()->format('G:i') }}</x-web.attribute-value>
+                         <x-web.attribute-value label="Konec rezervace">{{ $reservationTimes->last()->copy()->addHour()->format('G:i') }}</x-web.attribute-value>
+                     </div>
 
                     <x-web.attribute-value label="Poznámka">{{ $note }}</x-web.attribute-value>
 
@@ -106,7 +96,6 @@
                         správnost svých údajů
                     </x-web.form.check-box>
 
-                    <x-web.button type="yellow">Dokončit</x-web.button>
                 </div>
                 @break
             @default
@@ -191,7 +180,7 @@
 
                                             @else
                                                 <x-web.reservation.tablecell
-                                                    :type="($reservationTimes->contains($time)) ? 'selected' : 'empty'"
+                                                    :type="$this->getTimeSlotStatus($time)"
                                                     wire:click="addTime('{{$time}}')" :read-only="$readOnly"
                                                     id="{{ $ii }}-cell"></x-web.reservation.tablecell>
                                                 @php
@@ -221,11 +210,9 @@
                 <div class="lg:hidden">
                     <livewire:web.reservation-mobile :read-only="false"/>
                 </div>
-<livewire:web.summary :expiry="$this->reservationTemporaryEndDate" :from="$this->reservationTimes->first()" :to="$this->reservationTimes->last()->copy()->addHour()" :date="\Carbon\Carbon::now()"/>
-
                 @break
         @endswitch
-
+            <livewire:web.summary :current-step="$this->getSelectedStep()" :expiry="$this->reservationTemporaryEndDate" :from="$this->reservationTimes->first()" :to="$this->reservationTimes->last()?->copy()->addHour()" :date="$this->reservation_date"/>
 
     </div>
 

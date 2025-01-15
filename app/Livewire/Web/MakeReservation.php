@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Web;
 
+use App\Enums\ReservationTypes;
 use App\Models\ReservationArea;
 use App\Models\ReservationTemp;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
@@ -80,6 +82,13 @@ class MakeReservation extends Component
         $this->reservationTimes = new Collection;
         $this->readOnly = $readOnly ?? false;
         $this->backButtonAction = $backButtonAction;
+
+        $this->first_name = user()->first_name;
+        $this->last_name = user()->last_name;
+        $this->phone = user()->phone;
+        $this->email = user()->email;
+        $this->reservation_type = ReservationTypes::TRACK->value;
+
         if (! is_null(user()->temporaryReservation)) {
             $tmpReservation = user()->temporaryReservation;
             $this->reservationTemporaryEndDate = $tmpReservation->created_at->addMinutes(15);
@@ -92,6 +101,11 @@ class MakeReservation extends Component
             $this->dispatch('start-timer')->to(Summary::class);
         }
 
+        if (session()->has('reservation.step') && ! is_null($this->reservationTimes->first())) {
+            $this->selectedStep = session('reservation.step');
+        } else {
+            session()->put('reservation.step', 1);
+        }
     }
 
     public function __construct()
@@ -116,6 +130,7 @@ class MakeReservation extends Component
         }
 
         $this->selectedStep = $selectedStep;
+        session()->put('reservation.step', $this->selectedStep);
     }
 
     public function nextStep(): void
@@ -126,6 +141,7 @@ class MakeReservation extends Component
             }
         }
         $this->selectedStep++;
+        session()->put('reservation.step', $this->selectedStep);
     }
 
     #[On('backButtonTriggered')]
@@ -136,6 +152,7 @@ class MakeReservation extends Component
         }
 
         $this->selectedStep--;
+        session()->put('reservation.step', $this->selectedStep);
     }
 
     public function fullName(): string
@@ -195,16 +212,35 @@ class MakeReservation extends Component
     public function addTime(string $time): void
     {
         $time = Carbon::parse($time);
-        if (is_null($this->reservation_date) || round($this->reservation_date->diffInDays($time)) > 0) {
+
+        $dbReservation = \App\Models\Reservation::query()->whereDate('date', $time)->where(function (Builder $query) use ($time) { // TODO: It could require ajustment IDK how much strict this comparision is
+            $query->whereDate('slot_to', '=', $time)->orWhereDate('slot_from', '=', $time);
+        });
+
+        if (! is_null($dbReservation->first())) {
+            return;
+        }
+
+        if (round($time->diffInDays(Carbon::now())) >= 0) {
+            return;
+        }
+
+        if (is_null($this->reservation_date) || floor($this->reservation_date->diffInDays($time)) > 0) {
             $this->reservationTimes = collect();
             $this->reservation_date = $time->copy();
         }
 
         if (! $this->reservationTimes->contains($time)) {
+            if ($this->reservationTimes->count() > 0 && $this->reservationTimes->last()->diffInHours($time) > 1) {
+                $tmpDate = $this->reservationTimes->last()->copy();
+
+                for ($i = $tmpDate->hour + 1; $i < $time->hour; $i++) {
+                    $this->reservationTimes->add($tmpDate->copy()->hour($i)->minutes(0));
+                }
+            }
             $this->reservationTimes->add($time);
         } else {
-
-            $this->reservationTimes->forget($this->reservationTimes->search($time));
+            $this->handleTimeSlotRemoving($time);
         }
 
         $this->reservationTimes = $this->reservationTimes->sortBy(fn ($time1) => $time1);
@@ -213,6 +249,12 @@ class MakeReservation extends Component
 
         if (is_null($tmp)) {
             $tmp = new ReservationTemp;
+        }
+
+        if (is_null($this->reservationTimes->first()) && ! is_null($tmp->id)) {
+            $this->deleteSelectedReservation($tmp);
+
+            return;
         }
 
         $tmp->slot_from = $this->reservationTimes->first();
@@ -227,12 +269,66 @@ class MakeReservation extends Component
         $this->dispatch('start-timer')->to(Summary::class);
     }
 
-    public function getRemainingReservationTime()
+    public function getTimeSlotStatus(Carbon $slot): string
     {
-        $decimalMinutes = abs($this->reservationTemporaryStartDate->diffInMinutes(Carbon::now()));
-        $minutes = floor($decimalMinutes);
-        $seconds = round(($decimalMinutes - $minutes) * 60);
+        $dbReservation = \App\Models\Reservation::query()->whereDate('date', $slot)->where(function (Builder $query) use ($slot) { // TODO: It could require ajustment IDK how much strict this comparision is
+            $query->whereDate('slot_to', '=', $slot)->orWhereDate('slot_from', '=', $slot);
+        });
 
-        return Carbon::now()->minutes($minutes)->second($seconds);
+        if (! is_null($dbReservation->first())) {
+            return 'reserved';
+        }
+
+        if ($this->reservationTimes->contains($slot)) {
+            return 'selected';
+        }
+
+        if (round($slot->diffInDays(Carbon::now())) >= 0) {
+            return 'unavailable';
+        }
+
+        return 'empty';
+    }
+
+    private function handleTimeSlotRemoving(Carbon $time): void
+    {
+        if ($this->reservationTimes->count() == 1) {
+            $this->reservationTimes = collect();
+
+            return;
+        }
+
+        if ($this->reservationTimes->first() == $time || $this->reservationTimes->last() == $time) {
+            $this->reservationTimes->forget($this->reservationTimes->search($time));
+
+            return;
+        }
+
+        $endDate = $this->reservationTimes->last();
+        $time->addHour();
+
+        $timesToForget = $this->reservationTimes->filter(function (Carbon $timeI) use ($time, $endDate) {
+            return $timeI->between($time, $endDate);
+        });
+
+        foreach ($timesToForget as $timeToForget) {
+            $this->reservationTimes->forget($this->reservationTimes->search($timeToForget));
+        }
+
+        $tmp = user()->temporaryReservation;
+        $tmp->slot_to = $time;
+        $tmp->save();
+    }
+
+    public function deleteSelectedReservation(?ReservationTemp $tmp): void
+    {
+        if (is_null($tmp)) {
+            return;
+        }
+
+        $tmp->delete();
+        $this->reservationTemporaryEndDate = null;
+        $this->reservation_date = null;
+        $this->reservationTimes = collect();
     }
 }

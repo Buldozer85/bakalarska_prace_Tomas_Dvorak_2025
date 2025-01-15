@@ -9,16 +9,19 @@ use Livewire\Component;
 class Summary extends Component
 {
     #[Reactive]
-    public Carbon $date;
+    public ?Carbon $date;
 
     #[Reactive]
-    public Carbon $from;
+    public ?Carbon $from;
 
     #[Reactive]
-    public Carbon $to;
+    public ?Carbon $to;
 
     #[Reactive]
     public ?Carbon $expiry;
+
+    #[Reactive]
+    public int $currentStep;
 
     public function render()
     {

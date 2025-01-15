@@ -86,7 +86,7 @@ Route::controller(ProfileController::class)
 
 Route::get('/rezervace/{id}/uspesne-vytvorena', [ReservationController::class, 'success']);
 
-Route::get('/rezervace/vytvorit', MakeReservation::class)->name('reservation.show-create');
+Route::get('/rezervace/vytvorit', MakeReservation::class)->middleware('auth')->name('reservation.show-create');
 
 Route::controller(\App\Http\Controllers\Web\MessageController::class)->group(function () {
     Route::post('/kontakt/odeslat-dotaz', 'send')->name('contact.message.send');
