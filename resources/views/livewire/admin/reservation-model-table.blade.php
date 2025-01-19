@@ -18,6 +18,10 @@
                 ID
             </x-admin.table-header>
 
+            <x-admin.table-header column="user_id" :sort-direction="$sortDirection" :sort-by="$sortBy">
+                Uživatel
+            </x-admin.table-header>
+
             <x-admin.table-header column="email" :sort-direction="$sortDirection" :sort-by="$sortBy">
                 Datum
             </x-admin.table-header>
@@ -54,40 +58,42 @@
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ $reservation->id }}
                 </th>
-                <td class="px-6 py-4">
+                <td class="px-2 py-4">
+                    {{ $reservation->user->email }}
+                </td>
+                <td class="px-2 py-4">
                     {{ $reservation->date->format('j.n.Y') }}
                 </td>
-                <td class="px-6 py-4">
+
+                <td class="px-2 py-4">
                     {{ $reservation->from_to }}
                 </td>
-                <td class="px-6 py-4">
-                    {{ $reservation->type }}
+                <td class="px-2 py-4">
+                    {{ $reservation->type->label() }}
                 </td>
-                <td class="px-6 py-4">
-                    {{ $reservation->user->full_name }}
-                </td>
-
-                <td class="px-6 py-4">
-                    {{ $reservation->phone }}
+                <td class="px-2 py-4">
+                    {{ $reservation->customerInformation->full_name }}
                 </td>
 
-                <td class="px-6 py-4">
-                    {{ $reservation->on_company ? 'Ano' : 'Ne' }}
+                <td class="px-2 py-4">
+                    {{ $reservation->customerInformation->phone }}
                 </td>
 
-                <td class="px-6 py-4">
-                    {{ is_null($user->email_verified_at) ? 'Ne' : 'Ano' }}
+                <td class="px-2 py-4">
+                    {{ $reservation->on_company_label }}
                 </td>
-                <td class="px-6 py-4">
+
+
+                <td class="px-2 py-4">
                     <div class="flex flex-row gap-x-4 items-center">
                         <div class="flex flex-row items-center gap-x-2">
-                            <a href="{{ route('administration.users.user.detail', $user->id) }}" class="font-medium text-brand">Upravit</a>
+                            <a href="{{ route('administration.reservation.detail', $reservation->id) }}" class="font-medium text-brand">Upravit</a>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-brand">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                             </svg>
                         </div>
 
-                        <div class="flex flex-row items-center gap-x-2 cursor-pointer" @click="model.id = '{{ $user->id}}'; model.name = '{{ $user->full_name}}'" data-modal-target="deleteUserModal" data-modal-toggle="deleteUserModal">
+                        <div class="flex flex-row items-center gap-x-2 cursor-pointer" @click="model.id = '{{ $reservation->id}}'; model.name = ''" data-modal-target="deleteUserModal" data-modal-toggle="deleteUserModal">
                             <a class="font-medium text-brand-reserved cursor-pointer">Smazat</a>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-brand-reserved">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -103,40 +109,48 @@
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             </th>
-            <td class="px-6 py-4">
+
+            <td class="px-2 py-4">
+                <x-admin.form.input wire:model.live="user" name="user" id="user" placeholder="Uživatel"></x-admin.form.input>
+            </td>
+
+
+            <td class="px-2 py-4">
                 <x-admin.form.input wire:model.live="date" type="date" name="date" id="date" placeholder="Datum"></x-admin.form.input>
             </td>
-            <td class=" py-4 flex flex-row items-center gap-x-2">
+
+
+            <td class="px-2 py-4 flex flex-row items-center gap-x-2">
                 <div class="py-4">
                     <x-admin.form.input type="number" min="0" wire:model.live.debounce="slot_from" name="slot_from" id="slot_from" placeholder="Od"></x-admin.form.input>
 
                 </div>
                 -
-                <div class="py-4">
+                <div class="px-2 py-4">
                     <x-admin.form.input type="number" min="{{ $slot_from ?? 0 }}" wire:model.live="slot_to" name="slot_to" id="slot_to" placeholder="Do"></x-admin.form.input>
                 </div>
             </td>
-            <td class="px-6 py-4">
+            <td class="px-2 py-4">
                 <x-admin.form.select name="email_verified_at" id="email_verified_at" name="email_verified_at" wire:model.live="email_verified_at" :options="['Ne', 'Ano', 'Ano/Ne']" :selected="2"></x-admin.form.select>
             </td>
-            <td class="px-6 py-4">
+            <td class="px-2 py-4">
                 <x-admin.form.input wire:model.live="reservation_name" name="reservation_name" id="reservation_name" placeholder="Rezervovatel"></x-admin.form.input>
             </td>
 
 
 
-            <td class="px-6 py-4">
+            <td class="px-2 py-4">
                 <x-admin.form.input wire:model.live="phone" name="phone" id="phone" placeholder="Telefon"></x-admin.form.input>
             </td>
-            <td class="px-6 py-4">
+            <td class="px-2 py-4">
                 <x-admin.form.select name="on_company" id="on_company" name="on_company" wire:model.live="on_company" :options="['Ne', 'Ano', 'Ano/Ne']" :selected="2"></x-admin.form.select>
             </td>
 
 
-            <td class="px-6 py-4">
+            <td class="px-2 py-4">
                 <x-admin.form.select name="status" id="status" name="status" wire:model.live="status" :options="['unselected' => 'Vybrat status', 'confirmed' => 'Potvrzená', 'cancelled' => 'Zrušená', 'waiting' => 'Čeká na zpracování']" :selected="2"></x-admin.form.select>
             </td>
-            <td class="px-6 py-4">
+            <td class="px-2 py-4">
                 <x-web.button wire:click.prevent="resetFilters" class="w-full" type="black">Resetovat filtr</x-web.button>
             </td>
         </tr>

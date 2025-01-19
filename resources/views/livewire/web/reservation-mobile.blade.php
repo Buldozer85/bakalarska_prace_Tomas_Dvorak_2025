@@ -38,8 +38,6 @@
 
             $interval = abs($timeEnd->hour - $time->hour);
 
-            $ii = 0; /* Smazat bude nejake id */
-
         @endphp
         @for($j = 0; $j <= $interval; $j++)
             <tr class="bg-white border">
@@ -49,18 +47,15 @@
                         <td class="px-6 py-4 border text-center font-bold text-brand-black font-bold">
                             {{ $time->format('H:i') }}
                         </td>
-
-                        @php
-                            $time->addHour()
-                        @endphp
                     @else
-                        <x-web.reservation.tablecell :read-only="$readOnly" id="{{ $ii }}-cell"/>
-                        @php
-                            $ii++;
-                        @endphp
+                        <x-web.reservation.tablecell :type="$this->getTimeSlotStatus($time)" :read-only="$readOnly" id="{{ $time->format('d-m-Y-G-i') }}-cell"/>
                     @endif
+
                 @endfor
             </tr>
+            @php
+                $time->addHour()
+            @endphp
         @endfor
         </tbody>
     </table>

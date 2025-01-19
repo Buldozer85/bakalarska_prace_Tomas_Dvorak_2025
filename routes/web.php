@@ -84,7 +84,7 @@ Route::controller(ProfileController::class)
         Route::get('/konverzace', 'conversations')->name('profile.conversations');
     });
 
-Route::get('/rezervace/{id}/uspesne-vytvorena', [ReservationController::class, 'success']);
+Route::get('/rezervace/{reservation}/uspesne-vytvorena', [ReservationController::class, 'success'])->name('reservation.success-page');
 
 Route::get('/rezervace/vytvorit', MakeReservation::class)->middleware('auth')->name('reservation.show-create');
 

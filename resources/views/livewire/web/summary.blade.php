@@ -1,20 +1,38 @@
 <div class="bg-brand-black rounded-md text-white w-full flex-1 p-12 space-y-8 max-lg:order-first" x-data="{
             expiry: ($wire.entangle('expiry').live == null) ? '' : $wire.entangle('expiry').live,
             remaining:null,
-            initTimer() {
+            interval: null,
 
+            initTimer() {
+            setTimeout(() => {
+               this.remaining = null;
                 this.setRemaining()
-                setInterval(() => {
+
+
+
+                this.interval = setInterval(() => {
                     this.setRemaining();
                 }, 1000);
+            }, 50)
+
+
 
 
             },
             setRemaining() {
+                if(!this.expiry) {
+                    this.remaining = null
+                    clearInterval(this.interval)
+                    return
+                }
 
              const timeExpiry = new Date(this.expiry)
              const diff = timeExpiry.getTime() - new Date().getTime();
              this.remaining =  parseInt(diff / 1000);
+
+             if(this.remaining <= 0) {
+                $wire.dispatch('timer-expired')
+             }
             },
             minutes() {
     	        return {
@@ -51,7 +69,7 @@
     <p><span class="font-bold">Čas celkem: {{ round($from?->diffInHours($to) ?? 0) }} h</span></p>
 
     <div class="flex flex-row gap-x-4">
-        <x-web.button wire:click="$parent.deleteSelectedReservation('{{ user()->temporaryReservation?->id }}')" class="flex-1" type="danger"><span class="flex flex-row gap-x-4 items-center justify-between">Zrušit!<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <x-web.button wire:click="$parent.deleteSelectedReservation({{ user()->temporaryReservation?->id }})" class="flex-1" type="danger"><span class="flex flex-row gap-x-4 items-center justify-between">Zrušit!<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
 </svg>
 </span></x-web.button>
@@ -66,7 +84,7 @@
                     </span>
             </x-web.button>
         @else
-            <x-web.button class="flex-1" wire:click.prevent="$parent.nextStep">
+            <x-web.button class="flex-1" wire:click.prevent="$parent.confirmReservation">
                     <span class="flex flex-row gap-x-4 items-center justify-between">
                           Dokončit
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -75,9 +93,6 @@
                     </span>
             </x-web.button>
         @endif
-
-
-
     </div>
 
 </div>

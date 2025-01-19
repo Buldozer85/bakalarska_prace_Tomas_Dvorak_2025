@@ -3,7 +3,7 @@
    'sortBy',
    'column'
 ])
-<th wire:click="setSortBy('{{ $column }}')" scope="col" class="px-6 py-3 cursor-pointer">
+<th wire:click="setSortBy('{{ $column }}')" scope="col" class="px-2 py-3 cursor-pointer">
     <div class="flex flex-row items-center gap-x-2">
                     <span>
                         {{ $slot }}

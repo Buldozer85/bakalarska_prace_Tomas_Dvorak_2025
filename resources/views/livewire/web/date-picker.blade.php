@@ -1,10 +1,17 @@
 <div class="flex-1 flex justify-center lg:justify-end" x-data="{
-    selectedDate: '{{$selectDate->format('j.n.Y')}}',
+    selectedDate:'{{ $selectDate->format('j.n.Y')}}',
     setDatePicker(date) {
         this.selectedDate = date
         $wire.setDate(date)
+        console.log(date)
        document.querySelector('#datepicker').innerText = date
        $dispatch('dateSelected', {date: date})
+    },
+      setDatePickerEvent(date) {
+        this.selectedDate = date
+        $wire.setDate(date)
+        console.log(date)
+       document.querySelector('#datepicker').innerText = date
     },
     resetDatePicker() {
         const date = '{{ \Carbon\Carbon::now()->format('j.n.Y') }}'
@@ -13,8 +20,10 @@
         document.querySelector('#datepicker').innerText = date
        $dispatch('dateSelected', {date: date})
     },
-    openedPicker: false
-}">
+    openedPicker: false,
+}" x-init="$wire.on('date-changed', function(date) {
+  setDatePickerEvent(date.time)
+})">
     <div class="relative w-full lg:max-w-sm cursor-pointer" @click="openedPicker = !openedPicker">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg class="w-3 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -79,4 +88,6 @@
         <x-web.button class="w-full !border-0" @click.prevent="resetDatePicker" type="white">Resetovat</x-web.button>
 
     </div>
+
+
 </div>

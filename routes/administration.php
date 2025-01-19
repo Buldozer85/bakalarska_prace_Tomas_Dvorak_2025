@@ -40,6 +40,7 @@ Route::middleware(AdministrationAccessMiddleware::class)->group(function () {
 
     Route::controller(ReservationController::class)->group(function () {
         Route::get('/rezervace', 'index')->name('reservation.index');
+        Route::get('/rezervace/{reservation}', 'detail')->name('reservation.detail');
     });
 
     Route::controller(ReservationAreaController::class)->group(function () {

@@ -83,6 +83,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Reservation::class);
     }
 
+    public function latestReservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class)
+            ->with('address')
+            ->with('customerInformation')
+            ->with('companyData')
+            ->latest();
+    }
+
     public function conversations(): HasMany
     {
         return $this->hasMany(Conversation::class, 'from_email', 'email')->with('messages');

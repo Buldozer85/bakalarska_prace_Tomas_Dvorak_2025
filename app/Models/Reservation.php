@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ReservationTypes;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -20,10 +21,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property ?Carbon $payed
  * @property string $note
  * @property bool $with_areal
- * @property string $type
+ * @property ReservationTypes $type
  * @property string $from_to
  * @property bool $on_company
  * @property string $status
+ * @property string $on_company_label
  */
 class Reservation extends Model
 {
@@ -38,6 +40,7 @@ class Reservation extends Model
             'cancelled' => 'datetime',
             'payed' => 'datetime',
             'with_areal' => 'boolean',
+            'type' => ReservationTypes::class,
         ];
     }
 
@@ -61,17 +64,40 @@ class Reservation extends Model
         return $this->hasMany(ReservationDocuments::class);
     }
 
+    public function customerInformation(): HasOne
+    {
+        return $this->hasOne(ReservationCustomerInformation::class, 'reservation_id');
+    }
+
+    public function companyData(): HasOne
+    {
+        return $this->hasOne(ReservationCompanyData::class);
+    }
+
     public function fromTo(): Attribute
     {
         return Attribute::make(get: function () {
-            return $this->slot_from->format('G:i').' - '.$this->slot_to->format('G:i');
+            return $this->slot_from->format('G:i').' - '.$this->slot_to->copy()->addHour()->format('G:i');
         });
     }
 
     public function status(): Attribute
     {
         return Attribute::make(get: function () {
-            return ''; // TODO
+            if (! is_null($this->cancelled)) {
+                return ['key' => 'cancelled', 'label' => 'Zrušena'];
+            }
+
+            if (! is_null($this->confirmed)) {
+                return ['key' => 'confirmed', 'label' => 'Potvrzena'];
+            }
+
+            return ['key' => 'waiting', 'label' => 'Čeká na vyřízení'];
         });
+    }
+
+    public function onCompanyLabel(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->on_company ? 'Ano' : 'Ne');
     }
 }
