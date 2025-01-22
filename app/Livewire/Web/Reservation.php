@@ -50,7 +50,7 @@ class Reservation extends Component
         $this->backButtonAction = $backButtonAction;
         $this->showCreateButton = $showCreateButton;
 
-        $this->reservations = ReservationModel::query()->where(function (Builder $query) {
+        $this->reservations = ReservationModel::unCancelled()->where(function (Builder $query) {
             $query->where('date', '>=', $this->firstDayOfWeek)->where('date', '<=', $this->lastDayOfWeek);
         })->get();
     }
@@ -155,7 +155,7 @@ class Reservation extends Component
 
     private function updateReservations(): void
     {
-        $this->reservations = ReservationModel::query()->where(function (Builder $query) {
+        $this->reservations = ReservationModel::unCancelled()->where(function (Builder $query) {
             $query->where('date', '>=', $this->firstDayOfWeek)->where('date', '<=', $this->lastDayOfWeek);
         })->get();
     }

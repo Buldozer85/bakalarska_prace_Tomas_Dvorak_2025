@@ -41,6 +41,18 @@ Route::middleware(AdministrationAccessMiddleware::class)->group(function () {
     Route::controller(ReservationController::class)->group(function () {
         Route::get('/rezervace', 'index')->name('reservation.index');
         Route::get('/rezervace/{reservation}', 'detail')->name('reservation.detail');
+        Route::put('rezervace/{reservation}/upravit', 'update')->name('reservation.update');
+        Route::get('/rezervace/{reservation}/zrusit', 'cancelReservation')
+            ->can('cancel', 'reservation')
+            ->name('reservation.cancelReservation');
+
+        Route::get('/rezervace/{reservation}/potvrdit', 'confirmReservation')
+            ->can('confirm', 'reservation')
+            ->name('reservation.confirmReservation');
+
+        Route::get('/rezervace/{reservation}/odpotvrdit', 'unConfirmReservation')
+            ->can('confirm', 'reservation')
+            ->name('reservation.unConfirmReservation');
     });
 
     Route::controller(ReservationAreaController::class)->group(function () {

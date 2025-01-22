@@ -38,6 +38,17 @@
                         <x-web.form.select wire:model.blur="reservation_type"  :options="\App\Enums\ReservationTypes::select()" name="reservation_type" id="reservation_type" label="Kategorie"/>
                     </div>
 
+                    <div class="p-[1px] rounded-md bg-gray-200 max-w-[600px] mx-auto"></div>
+
+                    <div class="grid grid-cols-2 gap-4 items-center">
+                        <x-web.form.input wire:model="street" name="street" id="street" label="Ulice"/>
+                        <x-web.form.input wire:model="number" name="number" id="number" label="Č.P."/>
+                        <x-web.form.input wire:model="town" name="town" id="town" label="Město"/>
+                        <x-web.form.input wire:model="postcode" name="postcode" id="postcode" label="PSČ"/>
+                    </div>
+
+
+
                     <x-web.form.check-box wire:model.live="on_company" color="yellow" name="on_company" id="on_company">
                         Rezervuji na firmu
                     </x-web.form.check-box>
@@ -257,7 +268,11 @@
                                                     {{ $time->format('H:i') }}
                                                 </td>
                                             @else
-                                                <x-web.reservation.tablecell wire:click="addTime('{{$time}}')" tool-tip-activation="click" :type="$this->getTimeSlotStatus($time)" :read-only="$readOnly" id="{{ $time->format('d-m-Y-G-i') }}-cell"/>
+                                                <x-web.reservation.tablecell wire:click="addTime('{{$time}}')"
+                                                                             tool-tip-activation="click"
+                                                                             :type="$this->getTimeSlotStatus($time)"
+                                                                             :read-only="$readOnly"
+                                                                             id="{{ $time->format('d-m-Y-G-i') }}-cell"/>
                                             @endif
 
                                         @endfor
@@ -273,7 +288,13 @@
                 </div>
                 @break
         @endswitch
-            <livewire:web.summary @timer-expired="cancelReservation" :current-step="$this->getSelectedStep()" :expiry="$this->reservationTemporaryEndDate" :from="$this->reservationTimes->first()" :to="$this->reservationTimes->last()?->copy()->addHour()" :date="$this->reservation_date"/>
+            <livewire:web.summary
+                @timer-expired="cancelReservation"
+                :current-step="$this->getSelectedStep()"
+                :expiry="$this->reservationTemporaryEndDate"
+                :from="$this->reservationTimes->first()"
+                :to="$this->reservationTimes->last()?->copy()->addHour()"
+                :date="$this->reservation_date"/>
 
     </div>
 

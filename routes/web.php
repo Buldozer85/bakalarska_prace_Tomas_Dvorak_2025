@@ -70,18 +70,34 @@ Route::controller(AuthController::class)->group(function () {
         ->name('password.update');
 });
 
-Route::controller(ProfileController::class)
-    ->prefix('/profil')
+Route::prefix('/profil')
     ->middleware(['auth', 'verified'])
     ->group(function () {
-        Route::get('/', 'index')->name('profile');
-        Route::get('/zmena-osobnich-udaju', 'editInformation')->name('profile.edit-information');
-        Route::get('/zmena-hesla', 'editPassword')->name('profile.change-password.show');
-        Route::get('/moje-rezervace', 'myReservations')->name('profile.my-reservations');
-        Route::post('/update-information', 'changeInformation')->name('profile.update-information');
-        Route::post('/change-password', 'changePassword')->name('profile.change-password');
-        Route::get('/moje-liga', 'myLeague')->name('profile.my-league');
-        Route::get('/konverzace', 'conversations')->name('profile.conversations');
+        Route::controller(ProfileController::class)->group(function () {
+            Route::get('/', 'index')->name('profile');
+            Route::get('/zmena-osobnich-udaju', 'editInformation')->name('profile.edit-information');
+            Route::get('/zmena-hesla', 'editPassword')->name('profile.change-password.show');
+            Route::get('/moje-rezervace', 'myReservations')->name('profile.my-reservations');
+            Route::get('/moje-rezervace/{reservation}', 'myReservation')
+                ->can('viewOnProfile', 'reservation')
+                ->name('profile.my-reservations.my-reservation');
+            Route::post('/update-information', 'changeInformation')->name('profile.update-information');
+            Route::post('/change-password', 'changePassword')->name('profile.change-password');
+            Route::get('/moje-liga', 'myLeague')->name('profile.my-league');
+            Route::get('/konverzace', 'conversations')->name('profile.conversations');
+
+        });
+
+        Route::controller(ReservationController::class)->group(function () {
+            Route::get('/moje-rezervace/{reservation}/zrusit', 'cancel')
+                ->can('cancel', 'reservation')
+                ->name('profile.my-reservations.my-reservation.cancel');
+
+            Route::put('/moje-rezervace/{reservation}/upravit', 'updateReservation')
+                ->can('update', 'reservation')
+                ->name('profile.my-reservations.my-reservation.update');
+        });
+
     });
 
 Route::get('/rezervace/{reservation}/uspesne-vytvorena', [ReservationController::class, 'success'])->name('reservation.success-page');

@@ -111,4 +111,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(ReservationTemp::class);
     }
+
+    public function upcomingReservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class)
+            ->whereNull('cancelled')
+            ->where('date', '>=', Carbon::now())
+            ->orderBy('date');
+    }
 }

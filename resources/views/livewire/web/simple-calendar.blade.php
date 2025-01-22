@@ -27,7 +27,7 @@
             @for($j = 0; $j < 6; $j++)
                 <tr>
                     @for($i = 0; $i < 7; $i++)
-                        <td>{{ $this->printDay()  }}</td>
+                        <td @if($this->hasDate()) class="rounded-full bg-brand text-white" @endif>{{ $this->printDay()  }}</td>
                     @endfor
                 </tr>
             @endfor

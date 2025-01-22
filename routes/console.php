@@ -8,3 +8,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command('php artisan reservations:delete-expired')->everyFifteenMinutes();
+Schedule::command('php artisan reservations:send-upcoming-notification')->dailyAt(0);

@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Reservation;
 use App\Models\User;
+use App\Policies\ReservationPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use URL;
 
@@ -45,5 +48,8 @@ class AppServiceProvider extends ServiceProvider
             return route('password.reset', $token);
 
         });
+
+        Gate::policy(Reservation::class, ReservationPolicy::class);
+
     }
 }

@@ -14,9 +14,7 @@ class UpcomingReservationMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public Reservation $reservation)
-    {
-    }
+    public function __construct(public Reservation $reservation) {}
 
     public function envelope(): Envelope
     {

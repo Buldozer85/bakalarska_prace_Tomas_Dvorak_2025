@@ -19,6 +19,7 @@
         $wire.resetDate()
         document.querySelector('#datepicker').innerText = date
        $dispatch('dateSelected', {date: date})
+       $dispatch('pickerReseted')
     },
     openedPicker: false,
 }" x-init="$wire.on('date-changed', function(date) {

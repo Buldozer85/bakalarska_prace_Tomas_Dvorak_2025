@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\UpcomingReservationMail;
 use App\Models\Reservation;
+use App\Notifications\UpcomingReservationNotification;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 
 class SendUpcomingReservationsNotificationCommand extends Command
 {
@@ -15,7 +14,7 @@ class SendUpcomingReservationsNotificationCommand extends Command
 
     public function handle(): void
     {
-        $reservations = Reservation::query()
+        $reservations = Reservation::unCancelled()
             ->with('user')
             ->whereNull('cancelled')
             ->whereNotNull('confirmed')
@@ -23,7 +22,7 @@ class SendUpcomingReservationsNotificationCommand extends Command
             ->get();
 
         foreach ($reservations as $reservation) {
-            Mail::to($reservation->user->email)->send(new UpcomingReservationMail($reservation));
+            $reservation->user->notify(new UpcomingReservationNotification($reservation));
         }
     }
 }

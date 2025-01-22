@@ -53,22 +53,29 @@ class MakeReservation extends Component
     public ?string $ico;
 
     #[Validate('string', message: ['string' => 'Poznámka musí být textový řetězec'])]
-    public ?string $note = '';
+    public ?string $note;
 
-    public ?string $street = '';
+    #[Validate('string|required', message: ['required' => 'Ulice je povinná', 'string' => 'Ulice musí být řetězec'])]
+    public string $street;
 
-    public ?string $town = '';
+    #[Validate('string|required', message: ['required' => 'Město je povinné', 'string' => 'Město musí být řetězec'])]
+    public string $town;
 
-    public ?string $postcode = '';
+    #[Validate('string|required', message: ['required' => 'PSČ je povinné', 'string' => 'PSČ musí být řetězec'])]
+    public string $postcode;
 
-    public ?string $country = '';
+    public string $country = 'Česká republika';
 
-    public ?string $number = '';
+    #[Validate('string|required', message: ['required' => 'Č.P. je povinné', 'string' => 'Č.P. musí být řetězec'])]
+    public string $number;
 
+    #[Validate('string|required|in:'.ReservationTypes::TRACK->value.','.ReservationTypes::AREAL_PLUS_TRACK->value, message: ['required' => 'Typ rezervace je povinný', 'string' => 'Typ rezervace musí být řetězec', 'in' => 'Zadaný typ rezervace neexistuje'])]
     public string $reservation_type;
 
+    #[Locked]
     public ?Carbon $reservation_date = null;
 
+    #[Locked]
     public Collection $reservationTimes;
 
     public ?Collection $reservations = null;
@@ -113,7 +120,7 @@ class MakeReservation extends Component
 
         $this->selectedDay = Carbon::now();
 
-        $this->reservations = ReservationModel::query()->where(function (Builder $query) {
+        $this->reservations = ReservationModel::unCancelled()->where(function (Builder $query) {
             $query->where('date', '>=', $this->firstDayOfWeek)->where('date', '<=', $this->lastDayOfWeek);
         })->get();
 
@@ -363,7 +370,7 @@ class MakeReservation extends Component
         $reservationAddress->town = $this->town;
         $reservationAddress->street = $this->street;
         $reservationAddress->postcode = $this->postcode;
-        $reservationAddress->country = $this->country;
+        $reservationAddress->country = config('app.country');
         $reservationAddress->number = $this->number;
         $reservationAddress->save();
 
@@ -497,11 +504,15 @@ class MakeReservation extends Component
             $company = ! empty($this->company_name) && ! empty($this->company_address) && ! empty($this->ico);
         }
 
-        return isset($this->first_name) &&
-            isset($this->last_name) &&
-            isset($this->email) &&
-            isset($this->phone) &&
-            isset($this->reservation_type) &&
+        return ! empty($this->first_name) &&
+            ! empty($this->last_name) &&
+            ! empty($this->email) &&
+            ! empty($this->phone) &&
+            ! empty($this->reservation_type) &&
+            ! empty($this->street) &&
+            ! empty($this->town) &&
+            ! empty($this->postcode) &&
+            ! empty($this->number) &&
             ! is_null($this->reservationTimes->first()) &&
             ! is_null($this->reservation_date) &&
             $company;
@@ -520,7 +531,7 @@ class MakeReservation extends Component
 
     private function updateReservations(): void
     {
-        $this->reservations = ReservationModel::query()->where(function (Builder $query) {
+        $this->reservations = ReservationModel::unCancelled()->where(function (Builder $query) {
             $query->where('date', '>=', $this->firstDayOfWeek)->where('date', '<=', $this->lastDayOfWeek);
         })->get();
     }

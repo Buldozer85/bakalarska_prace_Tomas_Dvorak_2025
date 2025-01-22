@@ -32,11 +32,12 @@ class ReservationCreatedNotification extends Notification implements ShouldQueue
             ->line('Jméno: '.$this->reservation->customerInformation->full_name)
             ->line('E-mail: '.$this->reservation->customerInformation->email)
             ->line('Telefon: '.$this->reservation->customerInformation->phone)
-            ->lineIf($this->reservation->on_company, 'Název společnosti: '.$this->reservation->companyData?->company_name ?? '')
-            ->lineIf($this->reservation->on_company, 'ICO:  '.$this->reservation->companyData?->ico ?? '')
             ->line('Adresa: '.$this->reservation->address->full_address)
+            ->lineIf($this->reservation->on_company, 'Název společnosti: '.$this->reservation->companyData?->company_name ?? '')
+            ->lineIf($this->reservation->on_company, 'ICO:  '.$this->reservation->companyData?->ICO ?? '')
+            ->line('Sídlo: '.$this->reservation->companyData->company_address)
 
-            ->action('Zobrazit reservaci', route('profile.my-reservations'))
+            ->action('Zobrazit reservaci', route('profile.my-reservations.my-reservation', $this->reservation->id))
 
             ->salutation('S pozdravem Kuželna Veselí');
 

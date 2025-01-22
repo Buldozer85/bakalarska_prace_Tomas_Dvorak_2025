@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ReservationTypes;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property bool $on_company
  * @property string $status
  * @property string $on_company_label
+ * @property bool $can_be_cancelled
  */
 class Reservation extends Model
 {
@@ -42,6 +44,11 @@ class Reservation extends Model
             'with_areal' => 'boolean',
             'type' => ReservationTypes::class,
         ];
+    }
+
+    public function scopeUnCancelled(Builder $query): void
+    {
+        $query->whereNull('cancelled');
     }
 
     public function user(): BelongsTo
@@ -99,5 +106,10 @@ class Reservation extends Model
     public function onCompanyLabel(): Attribute
     {
         return Attribute::make(get: fn () => $this->on_company ? 'Ano' : 'Ne');
+    }
+
+    public function canBeCancelled(): Attribute
+    {
+        return Attribute::make(get: fn () => is_null($this->cancelled) && is_null($this->confirmed));
     }
 }

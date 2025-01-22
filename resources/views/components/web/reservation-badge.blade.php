@@ -4,7 +4,7 @@
 
 @php
     $statusColor = match ($status['key']) {
-        'cancelled' => 'cancelled',
+        'cancelled' => 'danger',
         'confirmed' => 'success',
         default => 'waiting'
     }

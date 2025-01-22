@@ -19,7 +19,7 @@
             <x-web.attribute-value label="Typ rezervace">{{ $reservation->type->label() }}</x-web.attribute-value>
             <x-web.attribute-value label="Na firmu">{{ $reservation->on_company_label }}</x-web.attribute-value>
             @if($reservation->on_company)
-                <x-web.attribute-value label="Název firmy">{{ $reservation->companyData->copany_name }}</x-web.attribute-value>
+                <x-web.attribute-value label="Název firmy">{{ $reservation->companyData->company_name }}</x-web.attribute-value>
                 <x-web.attribute-value label="Sídlo">{{ $reservation->companyData->company_address }}</x-web.attribute-value>
                 <x-web.attribute-value label="IČO">{{ $reservation->companyData->ICO }}</x-web.attribute-value>
             @endif
