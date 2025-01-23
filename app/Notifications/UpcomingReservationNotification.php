@@ -26,7 +26,7 @@ class UpcomingReservationNotification extends Notification implements ShouldQueu
             ->greeting('Blíží se termín Vaší rezervace')
             ->line('Rezervace na den: '.$this->reservation->date->format('j. n. Y'))
             ->line('Od - Do: '.$this->reservation->from_to)
-            ->action('Zobrazit detaily', route('profile.my-reservations')) //TODO: link tu exact reservation
+            ->action('Zobrazit detaily', route('profile.my-reservations.my-reservation', $this->reservation->id))
             ->salutation('S přáním hezkého dne '.config('app.name'));
     }
 

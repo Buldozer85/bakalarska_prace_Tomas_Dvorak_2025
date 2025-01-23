@@ -27,7 +27,6 @@ class ReservationController extends Controller
         $reservation->address->number = $request->get('number');
         $reservation->address->postcode = $request->get('postcode');
         $reservation->address->town = $request->get('town');
-        //$reservation->address->country = $request->get('country');
         $reservation->address->save();
 
         if ($reservation->on_company) {
