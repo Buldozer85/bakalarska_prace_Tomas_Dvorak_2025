@@ -15,7 +15,7 @@
     </div>
 
     <div
-        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 xl:gap-40 sm:mt-20 lg:mx-20 lg:max-w-none lg:grid-cols-3">
+        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-4 2xl:gap-4 sm:mt-20  lg:max-w-none lg:grid-cols-3">
         <x-web.small-conteiner>
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -62,7 +62,10 @@
             </p>
 
             <x-slot:button>
-                <x-web.button class="text-lg 2xl:text-xl px-10" type="secondary">Rezervujte a hrajte!</x-web.button>
+                <div class="mt-4">
+                    <x-web.button :route="route('reservation')" class="text-lg 2xl:text-xl px-10" type="secondary">Rezervujte a hrajte!</x-web.button>
+                </div>
+
             </x-slot:button>
         </x-web.small-conteiner>
 
@@ -86,7 +89,10 @@
             </p>
 
             <x-slot:button>
-                <x-web.button class="text-lg 2xl:text-xl px-10" type="secondary">Kontaktujte nás!</x-web.button>
+                <div class="mt-4">
+                    <x-web.button :route="route('contact')" class="text-lg 2xl:text-xl px-10" type="secondary">Kontaktujte nás!</x-web.button>
+                </div>
+
             </x-slot:button>
         </x-web.small-conteiner>
     </div>

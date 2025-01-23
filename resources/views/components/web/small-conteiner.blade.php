@@ -9,7 +9,7 @@
     };
 @endphp
 
-<div {{ $attributes->merge(["class" => $style . " text-center py-10 space-y-8 rounded-md px-16 2xl:w-[650px] mx-6 2xl:mx-auto"]) }}>
+<div {{ $attributes->merge(["class" => $style . " text-center py-10 space-y-8 rounded-md px-16 lg:w-[350px] 2xl:w-[450px] mx-6 lg:mx-auto"]) }}>
     @isset($icon)
         {{ $icon }}
     @endisset

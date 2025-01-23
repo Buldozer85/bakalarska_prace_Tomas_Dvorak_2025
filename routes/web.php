@@ -100,7 +100,9 @@ Route::prefix('/profil')
 
     });
 
-Route::get('/rezervace/{reservation}/uspesne-vytvorena', [ReservationController::class, 'success'])->name('reservation.success-page');
+Route::get('/rezervace/{reservation}/uspesne-vytvorena', [ReservationController::class, 'success'])
+    ->can('view', 'reservation')
+    ->name('reservation.success-page');
 
 Route::get('/rezervace/vytvorit', MakeReservation::class)->middleware('auth')->name('reservation.show-create');
 
