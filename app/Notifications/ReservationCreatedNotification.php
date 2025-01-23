@@ -35,7 +35,7 @@ class ReservationCreatedNotification extends Notification implements ShouldQueue
             ->line('Adresa: '.$this->reservation->address->full_address)
             ->lineIf($this->reservation->on_company, 'Název společnosti: '.$this->reservation->companyData?->company_name ?? '')
             ->lineIf($this->reservation->on_company, 'ICO:  '.$this->reservation->companyData?->ICO ?? '')
-            ->line('Sídlo: '.$this->reservation->companyData->company_address)
+            ->lineIf($this->reservation->on_company,'Sídlo: '.$this->reservation->companyData?->company_address ?? '')
 
             ->action('Zobrazit reservaci', route('profile.my-reservations.my-reservation', $this->reservation->id))
 
