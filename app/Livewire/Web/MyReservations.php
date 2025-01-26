@@ -36,6 +36,7 @@ class MyReservations extends Component
             ->when(! empty($this->orderBy), function (Builder $query) {
                 return $query->orderBy($this->orderBy, $this->direction);
             })
+
             ->paginate(10);
 
         return view('livewire.web.my-reservations')->with('reservations', $reservations);

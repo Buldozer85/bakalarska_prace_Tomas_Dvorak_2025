@@ -72,6 +72,8 @@ class MakeReservation extends Component
     #[Validate('string|required|in:'.ReservationTypes::TRACK->value.','.ReservationTypes::AREAL_PLUS_TRACK->value, message: ['required' => 'Typ rezervace je povinný', 'string' => 'Typ rezervace musí být řetězec', 'in' => 'Zadaný typ rezervace neexistuje'])]
     public string $reservation_type;
 
+    public bool $credentials_concern = false;
+
     #[Locked]
     public ?Carbon $reservation_date = null;
 
@@ -181,7 +183,7 @@ class MakeReservation extends Component
     {
         if ($selectedStep === 3) {
             if (! $this->canGoToSummary()) {
-                return; // TODO: Zde bude ještě flash message, který vyvolá toast a řekne uživateli, že je potřeba vše vyplnit
+                flash('Pro postoupení na další krok je třeba vyplnit všechny povinné údaje', 'warning');
             }
         }
 
@@ -193,6 +195,8 @@ class MakeReservation extends Component
     {
         if ($this->selectedStep + 1 === 3) {
             if (! $this->canGoToSummary()) {
+                flash('Pro postoupení na další krok je třeba vyplnit všechny povinné údaje', 'warning');
+
                 return;
             }
         }
@@ -351,10 +355,16 @@ class MakeReservation extends Component
 
     public function confirmReservation(): void
     {
+        if (! $this->credentials_concern) {
+            flash('Po potvrzení rezervace je třeba potvrdit správnost svých údajů', 'warning');
+
+            return;
+        }
+
         $reservation = new ReservationModel;
 
         $reservation->user_id = user()->id;
-        $reservation->reservation_area_id = ReservationArea::first()->id; // TODO:reservarion area
+        $reservation->reservation_area_id = ReservationArea::first()->id;
         $reservation->date = $this->reservation_date;
         $reservation->slot_from = $this->reservationTimes->first();
         $reservation->slot_to = $this->reservationTimes->last()->copy()->addHour();
@@ -405,6 +415,7 @@ class MakeReservation extends Component
     public function cancelReservation(): void
     {
         $this->deleteSelectedReservation(user()->temporaryReservation);
+        flash('Rezervace byla zrušena', 'error');
         $this->redirectRoute('reservation.show-create');
     }
 

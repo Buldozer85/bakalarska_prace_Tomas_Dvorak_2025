@@ -14,10 +14,6 @@
                     this.setRemaining();
                 }, 1000);
             }, 50)
-
-
-
-
             },
             setRemaining() {
                 if(!this.expiry) {
@@ -49,7 +45,6 @@
                 return ('0' + parseInt(value)).slice(-2)
             },
             time(){
-
                 return {
                     minutes:this.format(this.minutes().value),
                     seconds:this.format(this.seconds().value),

@@ -30,21 +30,21 @@
                 <div class="flex-[2] 2xl:flex-[4] shadow-lg p-12 space-y-12">
 
                     <div class="grid grid-cols-2 gap-4 items-center">
-                        <x-web.form.input wire:model.blur="first_name" id="first_name" label="Jméno" name="first_name"/>
-                        <x-web.form.input wire:model.blur="last_name" id="last_name" label="Příjmení" name="last_name"/>
-                        <x-web.form.input wire:model.blur="email" id="email" label="E-mail" name="email"/>
-                        <x-web.form.input wire:model.blur="phone" id="phone" label="Telefon" name="phone"/>
+                        <x-web.form.input wire:model.blur="first_name" id="first_name" label="Jméno*" name="first_name"/>
+                        <x-web.form.input wire:model.blur="last_name" id="last_name" label="Příjmení*" name="last_name"/>
+                        <x-web.form.input wire:model.blur="email" id="email" label="E-mail*" name="email"/>
+                        <x-web.form.input wire:model.blur="phone" id="phone" label="Telefon*" name="phone"/>
 
-                        <x-web.form.select wire:model.blur="reservation_type"  :options="\App\Enums\ReservationTypes::select()" name="reservation_type" id="reservation_type" label="Kategorie"/>
+                        <x-web.form.select wire:model.blur="reservation_type"  :options="\App\Enums\ReservationTypes::select()" name="reservation_type" id="reservation_type" label="Kategorie*"/>
                     </div>
 
                     <div class="p-[1px] rounded-md bg-gray-200 max-w-[600px] mx-auto"></div>
 
                     <div class="grid grid-cols-2 gap-4 items-center">
-                        <x-web.form.input wire:model="street" name="street" id="street" label="Ulice"/>
-                        <x-web.form.input wire:model="number" name="number" id="number" label="Č.P."/>
-                        <x-web.form.input wire:model="town" name="town" id="town" label="Město"/>
-                        <x-web.form.input wire:model="postcode" name="postcode" id="postcode" label="PSČ"/>
+                        <x-web.form.input wire:model="street" name="street" id="street" label="Ulice*"/>
+                        <x-web.form.input wire:model="number" name="number" id="number" label="Č.P.*"/>
+                        <x-web.form.input wire:model="town" name="town" id="town" label="Město*"/>
+                        <x-web.form.input wire:model="postcode" name="postcode" id="postcode" label="PSČ*"/>
                     </div>
 
 
@@ -102,7 +102,7 @@
 
                     <x-web.attribute-value label="Poznámka">{{ $note }}</x-web.attribute-value>
 
-                    <x-web.form.check-box color="yellow" name="credentials_concent" id="credentials_concent">Potvrzuji
+                    <x-web.form.check-box wire:model.live="credentials_concern" value="1" color="yellow" name="credentials_concern" id="credentials_concent">Potvrzuji
                         správnost svých údajů
                     </x-web.form.check-box>
 
@@ -295,6 +295,10 @@
                 :from="$this->reservationTimes->first()"
                 :to="$this->reservationTimes->last()?->copy()->addHour()"
                 :date="$this->reservation_date"/>
+
+            @if(session()->has('flashMessage'))
+                <x-web.toast :type="session('flashMessage')['type']" :message="session('flashMessage')['message']"/>
+            @endif
 
     </div>
 
