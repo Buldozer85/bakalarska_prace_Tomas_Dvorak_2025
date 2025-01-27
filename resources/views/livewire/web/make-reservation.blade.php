@@ -172,8 +172,7 @@
 
                                     $interval = abs($timeEnd->hour - $time->hour);
 
-                                    $ii = 0; /* Smazat bude nejake id */
-
+                                    $ii = 0;
                                 @endphp
                                 @for($j = 0; $j <= $interval; $j++)
                                     @php

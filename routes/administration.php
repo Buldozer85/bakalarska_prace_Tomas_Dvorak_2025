@@ -11,7 +11,7 @@ use App\Http\Middleware\AdministrationAccessMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(AdministrationAccessMiddleware::class)->group(function () {
-    Route::view('/', 'admin.dashboard')->name('dashboard');
+    Route::get('/', [PageController::class, 'index'])->name('dashboard');
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/uzivatele', 'index')->name('users.index');

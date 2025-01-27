@@ -9,7 +9,7 @@
             <label for="perPage">Na stránku:</label>
             <x-admin.form.select wire:model.live="perPage" name="perPage" id="perPage" :options="$this->perPageOptions"/>
         </div>
-        <x-admin.button :route="route('administration.users.user.createPage')" type="yellow">Vytvořit</x-admin.button>
+
     </div>
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 shadow-md sm:rounded-lg">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

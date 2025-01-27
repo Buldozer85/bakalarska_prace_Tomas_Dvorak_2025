@@ -1,4 +1,4 @@
-<x-admin.layouts.app title="Vytvoření rezervační oblast" page="reservation_areas">
+<x-admin.layouts.app title="Vytvoření rezervační oblast" page="reservation_area">
     <div class="shadow-lg rounded-md p-12 space-y-12 max-w-[1400px] mx-auto">
         <div>
             <x-admin.button :route="route('administration.reservationArea.index')" class="w-[100px] flex flex-row items-center gap-x-4" type="black">
