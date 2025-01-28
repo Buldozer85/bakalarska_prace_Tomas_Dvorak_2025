@@ -149,7 +149,7 @@ class Reservation extends Component
         }
 
         return $this->reservations->filter(function (ReservationModel $reservation) use ($slot) {
-            return floor($reservation->date->diffInDays($slot)) === 0.0 && $reservation->slot_from <= $slot && $reservation->slot_to >= $slot;
+            return floor($reservation->date->diffInDays($slot)) === 0.0 && $reservation->slot_from <= $slot && $reservation->slot_to > $slot;
         });
     }
 
