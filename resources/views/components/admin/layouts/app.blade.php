@@ -150,7 +150,7 @@
 </aside>
 
 <div class="px-4 pt-32 md:ml-64 space-y-12">
-    <div class="max-w-[1400px] mx-auto flex justify-between items-center">
+    <div class="max-w-[1400px] mx-6 xl:mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">{{ $title }}</h1>
     </div>
 

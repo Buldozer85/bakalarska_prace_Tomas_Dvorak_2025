@@ -1,5 +1,5 @@
 <div class="mx-2">
-    <div class="flex flex-col gap-y-12 mx-auto max-w-[1400px] min-h-[900px]">
+    <div class="flex flex-col gap-y-12 mx-6 xl:mx-auto max-w-[1400px] min-h-[900px]">
         @foreach($messages as $message)
 
             @switch($message->sender_email)

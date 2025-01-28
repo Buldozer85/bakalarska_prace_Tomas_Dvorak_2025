@@ -406,7 +406,7 @@ class MakeReservation extends Component
         user()->notify(new ReservationCreatedNotification($reservation));
         Mail::to(config('mail.from.address', 'info@kuzelnaveseli.cz'))->send(new NewReservationCreatedMail($reservation, user()));
 
-        $this->resetSession();
+        $this->deleteSelectedReservation(user()->temporaryReservation);
 
         $this->redirectRoute('reservation.success-page', $reservation->id);
 

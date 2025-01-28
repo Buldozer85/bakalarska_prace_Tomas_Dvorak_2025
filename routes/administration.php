@@ -62,9 +62,7 @@ Route::middleware(AdministrationAccessMiddleware::class)->group(function () {
         Route::get('rezrvacni-prostory/upravit/{reservationArea}', 'updatePage')->name('reservationArea.updatePage');
         Route::put('rezrvacni-prostory/update/{reservationArea}', 'update')->name('reservationArea.update');
     });
-    /*Route::controller(PageController::class)->group(function () {
-        Route::get('/', 'index')->name('dashboard');
-    });*/
+
     Route::get('/odhlasit-se', [AuthController::class, 'logout'])->name('logout');
 
     Route::controller(ConversationController::class)->group(function () {
