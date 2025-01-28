@@ -15,7 +15,7 @@
     </div>
 
     <div
-        class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-4 2xl:gap-4 sm:mt-20  lg:max-w-none lg:grid-cols-3">
+        class="sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-4 2xl:gap-4 sm:mt-20  lg:max-w-none lg:grid-cols-3">
         <x-web.small-conteiner>
             <x-slot:icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -175,7 +175,7 @@
                 </svg>
             </x-slot:icon>
 
-            <h2 class="text-2xl 2xl:text-3xl font-bold mt-6">
+            <h2 class="text-lg lg:text-2xl 2xl:text-3xl font-bold mt-6">
                 Zázaz vstupu se zvířaty
             </h2>
         </x-web.small-conteiner>
@@ -190,7 +190,7 @@
                 </svg>
             </x-slot:icon>
 
-            <h2 class="text-2xl 2xl:text-3xl font-bold mt-6">
+            <h2 class="text-lg lg:text-2xl 2xl:text-3xl font-bold mt-6">
                 Vstup do herny jen se souhlasem pověřené osoby
             </h2>
         </x-web.small-conteiner>
@@ -205,7 +205,7 @@
                 </svg>
             </x-slot:icon>
 
-            <h2 class="text-2xl 2xl:text-3xl font-bold mt-6">
+            <h2 class="text-lg lg:text-2xl 2xl:text-3xl font-bold mt-6">
                 Převzetí klíčů nutno předem domluvit
                 s pověřenou osobou
             </h2>
