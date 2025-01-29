@@ -1,20 +1,18 @@
 <div class="flex-1 flex justify-center lg:justify-end" x-data="{
-    selectedDate:'{{ $selectDate->format('j.n.Y')}}',
+    selectedDate:$wire.entangle('printDate'),
     setDatePicker(date) {
-        this.selectedDate = date
-        $wire.setDate(date)
-        console.log(date)
+       $wire.setDate(date)
        document.querySelector('#datepicker').innerText = date
        $dispatch('dateSelected', {date: date})
     },
       setDatePickerEvent(date) {
         this.selectedDate = date
         $wire.setDate(date)
-        console.log(date)
+
        document.querySelector('#datepicker').innerText = date
     },
     resetDatePicker() {
-        const date = '{{ \Carbon\Carbon::now()->format('j.n.Y') }}'
+        const date = '{{ \Carbon\Carbon::now()->addDay()->format('j.n.Y') }}'
         this.selectedDate = date
         $wire.resetDate()
         document.querySelector('#datepicker').innerText = date
@@ -38,8 +36,6 @@
              class="bg-brand-black border border-gray-300 text-white text-sm rounded-lg block w-full text-center lg:text-left lg:ps-10 p-2.5"
              x-text="selectedDate"></div>
     </div>
-
-
 
     <div class="space-y-2 text-xl bg-brand-black rounded-lg max-w-[350px] p-8 text-white absolute top-[100px] lg:top-[50px]"
          x-show="openedPicker" @click.away="openedPicker = false">

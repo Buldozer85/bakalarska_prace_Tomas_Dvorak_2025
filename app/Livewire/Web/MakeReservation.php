@@ -120,7 +120,7 @@ class MakeReservation extends Component
         $this->lastDayOfWeek = Carbon::now()->endOfWeek();
         $this->currentWeekFirstDay = Carbon::now();
 
-        $this->selectedDay = Carbon::now();
+        $this->selectedDay = Carbon::now()->addDay();
 
         $this->reservations = ReservationModel::unCancelled()->where(function (Builder $query) {
             $query->where('date', '>=', $this->firstDayOfWeek)->where('date', '<=', $this->lastDayOfWeek);
@@ -246,8 +246,8 @@ class MakeReservation extends Component
         $this->lastDayOfWeek = $this->firstDayOfWeek->copy()->endOfWeek();
 
         if (round($this->currentWeekFirstDay->diffInDays($this->firstDayOfWeek)) < 0) {
-            $this->selectedDay = $this->currentWeekFirstDay->copy();
-            $this->selectedDate = $this->currentWeekFirstDay->copy()->format('Y-m-d');
+            $this->selectedDay = $this->currentWeekFirstDay->copy()->addDay();
+            $this->selectedDate = $this->currentWeekFirstDay->copy()->addDay()->format('Y-m-d');
         } else {
             $this->selectedDay = $this->firstDayOfWeek->copy();
             $this->selectedDate = $this->firstDayOfWeek->format('Y-m-d');
@@ -266,6 +266,7 @@ class MakeReservation extends Component
         $this->selectedDate = $date;
         $this->updateReservations();
         $this->selectedDay = Carbon::parse($date);
+        $this->dispatch('date-changed', time: $this->selectedDay->format('j.n.Y'))->to(DatePicker::class);
     }
 
     public function addTime(string $time): void
@@ -312,7 +313,7 @@ class MakeReservation extends Component
         $tmp->slot_to = $this->reservationTimes->last();
         $tmp->date = $this->reservation_date;
         $tmp->user_id = user()->id;
-        $tmp->reservation_area_id = ReservationArea::first()->id; // TODO: Complete ID of reservation area. It is for general purpose. For this app. It is enough
+        $tmp->reservation_area_id = ReservationArea::first()->id; // Complete ID of reservation area. It is for general purpose. For this app. It is enough
         $tmp->save();
 
         user()->refresh();

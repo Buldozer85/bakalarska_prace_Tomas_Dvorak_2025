@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <div class="flex flex-col lg:flex-row gap-x-12  gap-y-12 mx-6">
+    <div class="flex flex-col lg:flex-row gap-x-12 gap-y-12 mx-6">
         @switch($this->getSelectedStep())
             @case(2)
 

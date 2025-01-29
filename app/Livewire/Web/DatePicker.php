@@ -16,13 +16,18 @@ class DatePicker extends Component
 
     public Carbon $firstDayOfCalendar;
 
-    public function mount()
+    public string $printDate = '';
+
+    public function mount(): void
     {
         $this->date = $this->selectDate->copy();
-        // $this->selectDate = $selectedDate ?? $this->date->copy();
         $firstDayOfMonth = $this->selectDate->copy()->startOfMonth();
         $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
+    }
 
+    public function boot()
+    {
+        $this->printDate = $this->selectDate->format('j.n.Y');
     }
 
     public function render()
@@ -37,9 +42,10 @@ class DatePicker extends Component
 
     public function addMonth(): void
     {
-        $this->date->addMonth();
+        $this->date->firstOfMonth()->addMonth();
 
         $this->setFirstDayOfCalendar();
+
     }
 
     public function decreaseMonth(): void
@@ -47,8 +53,8 @@ class DatePicker extends Component
         if ($this->pastMonth($this->date->copy()->subMonth(), Carbon::now())) {
             return;
         }
-        $this->date->subMonth();
-        $this->firstDayOfCalendar->subMonth();
+         $this->date->firstOfMonth()->subMonth();
+
         $this->setFirstDayOfCalendar();
     }
 
@@ -77,8 +83,8 @@ class DatePicker extends Component
 
     public function setDate($date): void
     {
-        // $this->selectDate = ;
         $this->date = Carbon::parse($date);
+        $this->printDate = $this->date->format('j.n.Y');
         $this->setFirstDayOfCalendar();
     }
 
@@ -89,11 +95,15 @@ class DatePicker extends Component
 
     public function resetDate(): void
     {
-        $this->reset();
+        $this->date = $this->selectDate->copy();
+        $this->printDate = $this->date->format('j.n.Y');
+        $firstDayOfMonth = $this->selectDate->copy()->startOfMonth();
+        $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
     }
 
     public function formatedSelectedDate(): string
     {
         return $this->selectDate->format('j.n.Y');
     }
+
 }
