@@ -1,4 +1,4 @@
-<x-web.layouts.app title="Změna osobních údajů">
+<x-web.layouts.app page="change-credentials" title="Změna osobních údajů">
     <x-web.layouts.dashboard site="zmena-osobnich-udaju">
         <div class="mx-auto xl:w-[900px] ">
             <div class="shadow-lg p-12 space-y-8">

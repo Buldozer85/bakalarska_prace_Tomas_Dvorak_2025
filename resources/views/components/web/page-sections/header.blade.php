@@ -98,13 +98,6 @@
 
                             <a href="{{ route('league') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 hover:bg-gray-50">Kuželkářská liga</a>
                         </div>
-
-
-
-
-
-
-
                     </div>
 
                     @auth
@@ -149,6 +142,15 @@
                                 <a href="{{ route('profile.change-password.show') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 hover:bg-gray-50">Změna hesla</a>
                             </div>
 
+                            <div class="flex flex-row items-center gap-x-4 px-2 @if($currentPage === 'messages') bg-brand !text-white rounded-md @endif">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                                </svg>
+
+
+                                <a href="{{ route('profile.conversations') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 hover:bg-gray-50">Zprávy</a>
+                            </div>
+
 
                         </div>
                     @endauth
@@ -170,12 +172,10 @@
                             </div>
                         @endguest
                         @auth
-                                <div class="flex flex-row items-center gap-x-4 px-2 @if($currentPage === 'change-password') bg-brand !text-white rounded-md @endif">
+                                <div class="flex flex-row items-center gap-x-4 px-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
                                     </svg>
-
-
                                     <a href="{{ route('logout') }}" class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 hover:bg-gray-50">Odhlásit se</a>
                                 </div>
 

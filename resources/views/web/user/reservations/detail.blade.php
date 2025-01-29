@@ -1,4 +1,4 @@
-<x-web.layouts.app title="Rezervace #{{ $reservation->id }}">
+<x-web.layouts.app page="my-reservations" title="Rezervace #{{ $reservation->id }}">
     <x-web.layouts.dashboard site="moje-rezervace">
         <div class="mx-auto xl:w-[900px] space-y-12" x-data="{
             selectedTab: window.location.hash.replace('#', '').length > 0 ? window.location.hash.replace('#', '') : 'general'

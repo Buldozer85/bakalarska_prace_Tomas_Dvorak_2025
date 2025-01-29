@@ -6,10 +6,10 @@
         $wire.set('selectedReservationId', this.reservation.id)
     }
  }">
-    <div class="flex flex-row gap-x-5 justify-start max-w-[400px]">
+    <div class="flex flex-col md:flex-row gap-x-5 justify-start md:max-w-[400px] gap-y-4">
         <button id="dropdownOrderByButton"
                 data-dropdown-toggle="dropdownOrderBy"
-                class="text-white bg-brand-black focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                class="text-white bg-brand-black focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex justify-between items-center"
                 type="button">Seřadit <svg class="w-2.5 h-2.5 ms-3"
                                            aria-hidden="true"
                                            xmlns="http://www.w3.org/2000/svg"
@@ -50,13 +50,12 @@
 
         <button id="dropdownStatusOptionsButton"
                 data-dropdown-toggle="dropdownStatusOptions"
-                class="text-brand-black bg-brand-yellow focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                class="text-brand-black bg-brand-yellow focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-between inline-flex items-center"
                 type="button">Status
             <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
             </svg>
         </button>
-        <!-- Dropdown menu -->
         <div id="dropdownStatusOptions" class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow">
         <ul class="p-3 space-y-3 text-sm text-gray-700" aria-labelledby="dropdownCheckboxButton">
             <li>
@@ -98,16 +97,12 @@
         <x-web.button wire:click="resetFilters" type="danger">Resetovat filtry</x-web.button>
     </div>
 
-    <div>
-        {{--TODO: Zde budou vypsané vybrané filtry--}}
-    </div>
     <div class="shadow-lg space-y-8">
         <div id="accordion-collapse" data-accordion="collapse">
         @foreach($reservations as $reservation)
-
-                <h2 id="accordion-collapse-heading-{{ $reservation->id  }}">
+                <h2 id="accordion-collapse-heading-{{ $reservation->id  }}" class="">
                     <button wire:click="selectedReservationId = {{ $reservation->id }}" type="button"
-                            class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+                            class="flex md:flex-row flex-col items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
                             data-accordion-target="#accordion-collapse-body-{{ $reservation->id }}" aria-expanded="true"
                             aria-controls="accordion-collapse-body-{{ $reservation->id }}">
                     <span class="flex items-center space-x-4 flex-1">
@@ -174,14 +169,14 @@
                 <div id="accordion-collapse-body-{{ $reservation->id }}" class="hidden" aria-labelledby="accordion-collapse-heading-{{ $reservation->id }}">
                     <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 space-y-4">
                         <div class="flex flex-col space-y-4">
-                            <div class="flex flex-row items-center">
+                            <div class="flex flex-col md:flex-row items-center gap-y-4">
                                 <p class="flex-1"><span class="font-bold">Jméno:</span> {{ $reservation->customerInformation->first_name }}</p>
                                 <p class="flex-1"><span class="font-bold">Příjmení:</span> {{ $reservation->customerInformation->last_name }}</p>
                                 <p class="flex-1"><span class="font-bold">Telefon:</span> {{ $reservation->customerInformation->phone }}</p>
                                 <p class="flex-1"><span class="font-bold">E-mail:</span> {{ $reservation->customerInformation->email }}</p>
                             </div>
 
-                            <div class="flex flex-row items-center">
+                            <div class="flex flex-col md:flex-row items-center gap-y-4">
                                 <p class="flex-1"><span class="font-bold">Datum:</span> {{ $reservation->date->format('j. n. Y') }}</p>
                                 <p class="flex-1"><span class="font-bold">Od:</span> {{ $reservation->slot_from->format('G:i') }}</p>
                                 <p class="flex-1"><span class="font-bold">Do:</span> {{ $reservation->slot_to->copy()->addHour()->format('G.i') }}</p>
@@ -189,7 +184,7 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-end gap-x-8">
+                        <div class="flex justify-center md:justify-end gap-x-8 mt-12">
                             @if(is_null($reservation->cancelled))
                                 <x-web.button :route="route('profile.my-reservations.my-reservation', $reservation->id)">Detail</x-web.button>
                             @endif
@@ -201,7 +196,6 @@
                         </div>
                     </div>
                 </div>
-
         @endforeach
         </div>
         <x-web.confirm-action-modal id="deleteReservation">
@@ -216,7 +210,10 @@
 
         </x-web.confirm-action-modal>
     </div>
-    {{ $reservations->links() }}
+    <div class="pb-12">
+        {{ $reservations->links() }}
+    </div>
+
     @script
     <script>
         $wire.on('page-updated', ()=> {

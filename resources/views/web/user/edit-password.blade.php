@@ -1,4 +1,4 @@
-<x-web.layouts.app title="Změna hesla">
+<x-web.layouts.app page="change-password" title="Změna hesla">
     <x-web.layouts.dashboard site="zmena-hesla">
         <div class="mx-auto xl:w-[900px] ">
             <div class="shadow-lg p-12 space-y-8">

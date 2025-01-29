@@ -1,4 +1,4 @@
-<x-web.layouts.app title="Profil">
+<x-web.layouts.app page="profile" title="Profil">
     <x-web.layouts.dashboard>
         <div class="flex justify-center md:justify-between items-center">
             <h1 class="text-2xl md:text-3xl text-black font-bold border-b-4 border-brand-darker text-center mt-4 mx-4 max-w-[400px]">{{ $today->day . '. ' . monthInInflection($today->month - 1)  . ' '. $today->year}}</h1>
