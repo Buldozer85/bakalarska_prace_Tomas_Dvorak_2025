@@ -8,6 +8,9 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
+/**
+ * @deprecated
+ */
 class ReservationMobile extends Component
 {
     #[Locked]
