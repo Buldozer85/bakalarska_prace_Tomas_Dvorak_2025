@@ -31,7 +31,9 @@ class MessageController extends Controller
 
         $message->save();
 
-        Mail::to($conversation->from_email)->bcc('kuzelnaveseli@centrum.cz')->queue(new ContactMessageSentMail($message));
+        Mail::to($conversation->from_email)
+            ->bcc(config('mail.from.address', 'info@kuzelnaveseli.cz'))
+            ->queue(new ContactMessageSentMail($message));
 
     }
 }

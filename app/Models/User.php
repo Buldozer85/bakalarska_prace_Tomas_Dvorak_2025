@@ -83,6 +83,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Reservation::class);
     }
 
+    public function latestReservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class)
+            ->with('address')
+            ->with('customerInformation')
+            ->with('companyData')
+            ->latest();
+    }
+
     public function conversations(): HasMany
     {
         return $this->hasMany(Conversation::class, 'from_email', 'email')->with('messages');
@@ -96,5 +105,18 @@ class User extends Authenticatable implements MustVerifyEmail
     public function initials(): Attribute
     {
         return Attribute::make(get: fn () => Str::upper(Str::take($this->first_name, 1).Str::take($this->last_name, 1)));
+    }
+
+    public function temporaryReservation(): HasOne
+    {
+        return $this->hasOne(ReservationTemp::class);
+    }
+
+    public function upcomingReservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class)
+            ->whereNull('cancelled')
+            ->where('date', '>=', Carbon::now())
+            ->orderBy('date');
     }
 }

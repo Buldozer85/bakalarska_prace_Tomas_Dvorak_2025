@@ -1,4 +1,4 @@
-<div class="overflow-x-auto max-w-[1400px] mx-auto space-y-4" x-data="{
+<div class="overflow-x-auto max-w-[1400px] mx-6 xl:mx-auto space-y-4" x-data="{
     model: {
         id: '',
         name: ''

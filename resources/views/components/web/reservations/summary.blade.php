@@ -2,12 +2,59 @@
     'date' => '',
     'from' => '',
     'to' => '',
+    'remaining' => ''
 
 ])
-<div {{ $attributes->merge(['class' => 'bg-brand-black rounded-md text-white w-full flex-1 p-12 space-y-8']) }}>
-    <h2 class="font-bold text-2xl">Souhrn</h2>
-    <p>Rezervace platná: ..</p>
+<div {{ $attributes->merge(['class' => 'bg-brand-black rounded-md text-white w-full flex-1 p-12 space-y-8']) }} x-data="{
+            expiry: '{{ $remaining }}',
+            remaining:null,
+            initTimer() {
+             console.log('tesz')
+                this.setRemaining()
+                setInterval(() => {
+                    this.setRemaining();
+                    console.log('tesz')
+                }, 1000);
 
+
+            },
+            setRemaining() {
+console.log('tesz')
+            const timeExpiry = new Date(this.expiry)
+             const diff = timeExpiry.getTime() - new Date().getTime();
+             this.remaining =  parseInt(diff / 1000);
+            },
+            minutes() {
+    	        return {
+      	            value:this.remaining / 60,
+                    remaining:this.remaining % 60
+                };
+            },
+            seconds() {
+    	        return {
+      	            value:this.minutes().remaining,
+                };
+            },
+            format(value) {
+                return ('0' + parseInt(value)).slice(-2)
+            },
+            time(){
+
+                return {
+                    minutes:this.format(this.minutes().value),
+                    seconds:this.format(this.seconds().value),
+                }
+            },
+
+
+
+
+
+}" x-on:start-timer.window="initTimer()">
+    <h2 class="font-bold text-2xl">Souhrn</h2>
+    @if(!empty($remaining))
+        <p x-show="expiry">Rezervace platná: <span x-text="time().minutes"></span>:<span x-text="time().seconds"></span></p>
+    @endif
     <p><span class="font-bold">Datum:</span></p>
     <p><span class="font-bold">Od - Do:</span></p>
     <p><span class="font-bold">Čas celkem:</span></p>

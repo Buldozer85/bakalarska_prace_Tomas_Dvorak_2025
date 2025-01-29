@@ -15,12 +15,8 @@
         <div class="space-y-12">
             <div class="bg-brand rounded-xl w-full h-[650px] lg:h-[800px] mt-72">
                 <div class="max-w-[1300px] relative mx-auto top-[-20%]">
-                    <div class="max-lg:hidden">
+                    <div>
                         <livewire:web.reservation :read-only="true"></livewire:web.reservation>
-                    </div>
-
-                    <div class="lg:hidden mx-6">
-                        <livewire:web.reservation-mobile :read-only="true"/>
                     </div>
 
                 </div>

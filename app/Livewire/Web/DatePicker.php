@@ -3,24 +3,31 @@
 namespace App\Livewire\Web;
 
 use Carbon\Carbon;
+use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 class DatePicker extends Component
 {
-    public Carbon $selectDate;
+    #[Reactive]
+    public ?Carbon $selectDate;
 
     public Carbon $date;
 
     public Carbon $firstDayOfCalendar;
 
-    public function __construct()
-    {
-        $this->date = Carbon::now();
-        $this->selectDate = $this->date->copy();
-        $firstDayOfMonth = Carbon::now()->startOfMonth();
-        $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
+    public string $printDate = '';
 
+    public function mount(): void
+    {
+        $this->date = $this->selectDate->copy();
+        $firstDayOfMonth = $this->selectDate->copy()->startOfMonth();
+        $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
+    }
+
+    public function boot()
+    {
+        $this->printDate = $this->selectDate->format('j.n.Y');
     }
 
     public function render()
@@ -35,9 +42,10 @@ class DatePicker extends Component
 
     public function addMonth(): void
     {
-        $this->date->addMonth();
+        $this->date->firstOfMonth()->addMonth();
 
         $this->setFirstDayOfCalendar();
+
     }
 
     public function decreaseMonth(): void
@@ -45,12 +53,11 @@ class DatePicker extends Component
         if ($this->pastMonth($this->date->copy()->subMonth(), Carbon::now())) {
             return;
         }
-        $this->date->subMonth();
-        $this->firstDayOfCalendar->subMonth();
+        $this->date->firstOfMonth()->subMonth();
+
         $this->setFirstDayOfCalendar();
     }
 
-    #[Renderless]
     public function printDay()
     {
         $day = $this->firstDayOfCalendar->day;
@@ -63,7 +70,7 @@ class DatePicker extends Component
 
     public function getFormattedDate(): string
     {
-        return "{$this->firstDayOfCalendar->format('j')}.{$this->firstDayOfCalendar->format('n')}.{$this->firstDayOfCalendar->year}";
+        return "{$this->firstDayOfCalendar->format('j.n.Y')}";
     }
 
     #[Renderless]
@@ -74,10 +81,11 @@ class DatePicker extends Component
         $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
     }
 
-    #[Renderless]
     public function setDate($date): void
     {
-        $this->selectDate = Carbon::parse($date);
+        $this->date = Carbon::parse($date);
+        $this->printDate = $this->date->format('j.n.Y');
+        $this->setFirstDayOfCalendar();
     }
 
     public function pastMonth(Carbon $date1, Carbon $date2): bool
@@ -87,6 +95,14 @@ class DatePicker extends Component
 
     public function resetDate(): void
     {
-        $this->reset();
+        $this->date = $this->selectDate->copy();
+        $this->printDate = $this->date->format('j.n.Y');
+        $firstDayOfMonth = $this->selectDate->copy()->startOfMonth();
+        $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
+    }
+
+    public function formatedSelectedDate(): string
+    {
+        return $this->selectDate->format('j.n.Y');
     }
 }

@@ -11,7 +11,7 @@ use App\Http\Middleware\AdministrationAccessMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(AdministrationAccessMiddleware::class)->group(function () {
-    Route::view('/', 'admin.dashboard')->name('dashboard');
+    Route::get('/', [PageController::class, 'index'])->name('dashboard');
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/uzivatele', 'index')->name('users.index');
@@ -40,6 +40,19 @@ Route::middleware(AdministrationAccessMiddleware::class)->group(function () {
 
     Route::controller(ReservationController::class)->group(function () {
         Route::get('/rezervace', 'index')->name('reservation.index');
+        Route::get('/rezervace/{reservation}', 'detail')->name('reservation.detail');
+        Route::put('rezervace/{reservation}/upravit', 'update')->name('reservation.update');
+        Route::get('/rezervace/{reservation}/zrusit', 'cancelReservation')
+            ->can('cancel', 'reservation')
+            ->name('reservation.cancelReservation');
+
+        Route::get('/rezervace/{reservation}/potvrdit', 'confirmReservation')
+            ->can('confirm', 'reservation')
+            ->name('reservation.confirmReservation');
+
+        Route::get('/rezervace/{reservation}/odpotvrdit', 'unConfirmReservation')
+            ->can('confirm', 'reservation')
+            ->name('reservation.unConfirmReservation');
     });
 
     Route::controller(ReservationAreaController::class)->group(function () {
@@ -49,9 +62,7 @@ Route::middleware(AdministrationAccessMiddleware::class)->group(function () {
         Route::get('rezrvacni-prostory/upravit/{reservationArea}', 'updatePage')->name('reservationArea.updatePage');
         Route::put('rezrvacni-prostory/update/{reservationArea}', 'update')->name('reservationArea.update');
     });
-    /*Route::controller(PageController::class)->group(function () {
-        Route::get('/', 'index')->name('dashboard');
-    });*/
+
     Route::get('/odhlasit-se', [AuthController::class, 'logout'])->name('logout');
 
     Route::controller(ConversationController::class)->group(function () {

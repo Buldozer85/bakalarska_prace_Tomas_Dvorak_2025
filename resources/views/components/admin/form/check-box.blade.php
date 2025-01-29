@@ -2,7 +2,9 @@
     'name',
     'id',
     'required' => false,
-    'color' => 'primary'
+    'color' => 'primary',
+    'checked' => false
+
 ])
 
 @php
@@ -16,7 +18,7 @@
 
     <div class="relative flex items-start">
         <div class="flex h-6 items-center">
-            <input id="{{ $id }}" name="{{ $name }}" type="checkbox" {{ $attributes }}
+            <input id="{{ $id }}" name="{{ $name }}" @if($checked) checked @endif type="checkbox" {{ $attributes }}
                    class="h-4 w-4 rounded {{ $style }}" @if($required) required @endif>
         </div>
         @if(!is_null($slot))

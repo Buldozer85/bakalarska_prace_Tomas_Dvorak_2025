@@ -1,20 +1,28 @@
 <div class="flex-1 flex justify-center lg:justify-end" x-data="{
-    selectedDate: '{{$selectDate->format('j.n.Y')}}',
+    selectedDate:$wire.entangle('printDate'),
     setDatePicker(date) {
-        this.selectedDate = date
-        $wire.setDate(date)
+       $wire.setDate(date)
        document.querySelector('#datepicker').innerText = date
        $dispatch('dateSelected', {date: date})
     },
+      setDatePickerEvent(date) {
+        this.selectedDate = date
+        $wire.setDate(date)
+
+       document.querySelector('#datepicker').innerText = date
+    },
     resetDatePicker() {
-        const date = '{{ \Carbon\Carbon::now()->format('j.n.Y') }}'
+        const date = '{{ \Carbon\Carbon::now()->addDay()->format('j.n.Y') }}'
         this.selectedDate = date
         $wire.resetDate()
         document.querySelector('#datepicker').innerText = date
        $dispatch('dateSelected', {date: date})
+       $dispatch('pickerReseted')
     },
-    openedPicker: false
-}">
+    openedPicker: false,
+}" x-init="$wire.on('date-changed', function(date) {
+  setDatePickerEvent(date.time)
+})">
     <div class="relative w-full lg:max-w-sm cursor-pointer" @click="openedPicker = !openedPicker">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg class="w-3 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -28,8 +36,6 @@
              class="bg-brand-black border border-gray-300 text-white text-sm rounded-lg block w-full text-center lg:text-left lg:ps-10 p-2.5"
              x-text="selectedDate"></div>
     </div>
-
-
 
     <div class="space-y-2 text-xl bg-brand-black rounded-lg max-w-[350px] p-8 text-white absolute top-[100px] lg:top-[50px]"
          x-show="openedPicker" @click.away="openedPicker = false">
@@ -79,4 +85,6 @@
         <x-web.button class="w-full !border-0" @click.prevent="resetDatePicker" type="white">Resetovat</x-web.button>
 
     </div>
+
+
 </div>

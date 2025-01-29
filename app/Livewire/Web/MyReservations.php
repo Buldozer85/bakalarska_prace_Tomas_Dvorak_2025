@@ -2,19 +2,68 @@
 
 namespace App\Livewire\Web;
 
+use App\Enums\ReservationStatus;
+use App\Models\Reservation as ReservationModel;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class MyReservations extends Component
 {
-    public int $selectedReservationId;
+    use WithPagination;
+
+    private ?ReservationModel $selectedReservation;
+
+    public string $status = '';
+
+    public string $orderBy = 'created_at';
+
+    public string $direction = 'desc';
 
     public function render()
     {
-        return view('livewire.web.my-reservations');
+        $reservations = user()
+            ->reservations()
+            ->when($this->status === ReservationStatus::CONFIRMED->value, function (Builder $query) {
+                return $query->whereNotNull('confirmed');
+            })
+            ->when($this->status === ReservationStatus::CANCELLED->value, function (Builder $query) {
+                return $query->whereNotNull('cancelled');
+            })
+            ->when($this->status === ReservationStatus::WAITING->value, function (Builder $query) {
+                return $query->whereNull('confirmed')->whereNull('cancelled');
+            })
+            ->when(! empty($this->orderBy), function (Builder $query) {
+                return $query->orderBy($this->orderBy, $this->direction);
+            })
+
+            ->paginate(10);
+
+        return view('livewire.web.my-reservations')->with('reservations', $reservations);
     }
 
-    public function deleteReservation(): void
+    public function updatedPage($page): void
     {
-        // TODO: Delete reservation
+        $this->dispatch('page-updated');
+    }
+
+    public function cancelReservation(int $reservationId): void
+    {
+        $reservation = user()->reservations->find($reservationId);
+
+        if (is_null($reservation->id)) {
+            abort(403);
+        }
+
+        $reservation->cancelled = now();
+        $reservation->save();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->status = '';
+        $this->orderBy = 'created_at';
+        $this->direction = 'desc';
+
     }
 }

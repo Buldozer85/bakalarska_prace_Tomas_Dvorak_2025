@@ -3,6 +3,7 @@
 namespace App\Livewire\Web;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class SimpleCalendar extends Component
@@ -11,11 +12,12 @@ class SimpleCalendar extends Component
 
     public Carbon $firstDayOfCalendar;
 
+    public ?Collection $reservations = null;
+
     public function boot(): void
     {
         $this->date = Carbon::now();
         $this->setFirstDayOfCalendar();
-
     }
 
     public function render()
@@ -61,5 +63,16 @@ class SimpleCalendar extends Component
         $firstDayOfMonth = $this->date->copy()->firstOfMonth();
 
         $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
+    }
+
+    public function hasDate(): bool
+    {
+        if (is_null($this->reservations)) {
+            return false;
+        }
+
+        return ! is_null($this->reservations->filter(function (\App\Models\Reservation $reservation) {
+            return $reservation->date == $this->firstDayOfCalendar;
+        })->first());
     }
 }

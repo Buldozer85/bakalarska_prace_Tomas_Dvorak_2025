@@ -15,6 +15,7 @@
 </head>
 <body>
 <x-web.page-sections.header current-page="{{ $page }}"/>
+
 <main class="min-h-screen space-y-20">
     {{ $slot }}
 </main>

@@ -10,7 +10,7 @@
 ])
 <div>
     @if(!empty($label))
-        <label for="{{ $id }}" class="block text-sm font-medium leading-6 text-gray-900 @if($whiteText) !text-white @endif">{{ $label }}</label>
+        <label for="{{ $id }}" class="text-left block text-sm font-medium leading-6 text-gray-900 @if($whiteText) !text-white @endif">{{ $label }}</label>
     @endif
         @error($name)
         <x-admin.error-message>

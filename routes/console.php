@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\ReservationTemp;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote')->hourly();
+Schedule::command('model:prune', [
+    '--model' => [ReservationTemp::class],
+])->everyFifteenMinutes();
+
+Schedule::command('php artisan reservations:send-upcoming-notification')->dailyAt(0);
