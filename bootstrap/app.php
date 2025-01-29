@@ -21,7 +21,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo('/prihlaseni')->trustProxies('*');
 
     })
-    ->withCommands([\App\Console\Commands\ReservationsDeleteExpiredCommand::class])
+    ->withCommands([
+        \App\Console\Commands\ReservationsDeleteExpiredCommand::class,
+        \App\Console\Commands\SendUpcomingReservationsNotificationCommand::class,
+    ])
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
