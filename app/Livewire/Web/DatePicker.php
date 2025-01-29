@@ -53,7 +53,7 @@ class DatePicker extends Component
         if ($this->pastMonth($this->date->copy()->subMonth(), Carbon::now())) {
             return;
         }
-         $this->date->firstOfMonth()->subMonth();
+        $this->date->firstOfMonth()->subMonth();
 
         $this->setFirstDayOfCalendar();
     }
@@ -105,5 +105,4 @@ class DatePicker extends Component
     {
         return $this->selectDate->format('j.n.Y');
     }
-
 }
