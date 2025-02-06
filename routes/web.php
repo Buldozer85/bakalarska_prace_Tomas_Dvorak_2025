@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\AuthController;
+use App\Http\Controllers\Web\LeagueController;
 use App\Http\Controllers\Web\PageController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\ReservationController;
@@ -97,6 +98,12 @@ Route::prefix('/profil')
                 ->can('update', 'reservation')
                 ->name('profile.my-reservations.my-reservation.update');
         });
+
+        Route::controller(LeagueController::class)
+            ->prefix('/moje-liga')
+            ->group(function () {
+                Route::get('/{league}', 'detail')->name('profile.user.league.detail');
+            });
 
     });
 

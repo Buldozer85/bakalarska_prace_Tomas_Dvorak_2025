@@ -32,7 +32,6 @@
             @endguest
 
             @auth
-
                 <x-web.flyout-menu name="{{ user()->full_name }}">
                     <x-slot:icon>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -40,6 +39,9 @@
                         </svg>
                     </x-slot:icon>
                     <a href="{{ route('profile') }}" class="block p-2 hover:text-brand-darker">Profil</a>
+                    @if(user()->is_admin)
+                        <a href="{{ route('administration.dashboard') }}" class="block p-2 hover:text-brand-darker">Administrace</a>
+                    @endif
                     <a href="{{ route('profile.my-reservations') }}" class="block p-2 hover:text-brand-darker">Moje rezervace</a>
                     <a href="{{ route('profile.my-league') }}" class="block p-2 hover:text-brand-darker">Moje liga</a>
                     <a href="{{ route('profile.edit-information') }}" class="block p-2 hover:text-brand-darker">Změna údajů</a>

@@ -25,7 +25,7 @@
         {{ $slot }}
     </a>
 @else
-    <button @if($action === 'submit') type="submit" @endif {{ $attributes->merge(['class' => 'text-sm text-decoration-none text-center font-bold text-black cursor-pointer '. $style . ' ' . $size, 'data-modal-show' => '']) }}>
+    <button @if($action === 'submit') type="submit" @endif {{ $attributes->merge(['class' => 'text-sm text-decoration-none text-center font-bold text-black cursor-pointer '. $style . ' ' . $size]) }} {{ $attributes->get('data-modal-show') }} {{ $attributes->get('@click') }}>
         {{ $slot }}
     </button>
 @endif
