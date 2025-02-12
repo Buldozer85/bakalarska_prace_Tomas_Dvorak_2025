@@ -17,14 +17,14 @@ class LeagueProfileSelector extends Component
     public function mount()
     {
         $this->userLeagues = user()->activeLeagues;
-        $this->selectedLeague = $this->userLeagues->first()->id;
+        $this->selectedLeague = $this->userLeagues->first()?->id;
     }
 
     public function render()
     {
         $league = League::find($this->selectedLeague);
 
-        $currentRound = $league->rounds
+        $currentRound = $league?->rounds
             ->where('from', '<=', now()->format('Y-m-d'))
             ->where('to', '>=', now()->format('Y-m-d'))
             ->first();

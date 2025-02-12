@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon $start
  * @property ?Carbon $end
  * @property string $description
+ * @property string $from_to
  */
 class League extends Model
 {
@@ -56,5 +58,10 @@ class League extends Model
     public function getRankOfPlayer(int $playerId): int
     {
         return $this->players()->selectRaw('*, RANK() OVER (ORDER BY pivot_score DESC) as rank')->where('league_players.id', $playerId)->get()->first()->rank;
+    }
+
+    public function fromTo(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->start->format('j. n. Y').' - '.$this->end->format('j. n. Y') ?? '');
     }
 }

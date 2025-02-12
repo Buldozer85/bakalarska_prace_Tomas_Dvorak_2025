@@ -52,7 +52,7 @@ class MyReservations extends Component
         $reservation = user()->reservations->find($reservationId);
 
         if (is_null($reservation->id)) {
-            abort(403);
+            abort(404, 'Rezervace nenalezana');
         }
 
         $reservation->cancelled = now();

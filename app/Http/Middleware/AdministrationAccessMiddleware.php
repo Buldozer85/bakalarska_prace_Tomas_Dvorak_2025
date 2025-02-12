@@ -15,7 +15,7 @@ class AdministrationAccessMiddleware
         }
 
         if (user()->role == Roles::USER) {
-            abort(403);
+            abort(403, 'Do administrace nemáte přístup!');
         }
 
         return $next($request);

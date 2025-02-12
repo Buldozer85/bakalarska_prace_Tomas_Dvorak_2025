@@ -6,6 +6,9 @@
         number: {{ $round->number }}
     } ,
     setRoundScore() {
+        if(isNaN(this.round.score)) {
+            return;
+        }
         $wire.setRoundScore(this.round.score)
     }
 
@@ -23,21 +26,42 @@ setTimeout(() => {
 
 });  document.querySelector('#round-number') ? document.querySelector('#round-number').innerText = round.number : ''">
 
-    <div class="max-lg:flex max-lg:flex-row max-lg:justify-center">
+    <div class="max-lg:flex max-lg:flex-row max-md:justify-center">
         <x-web.button @click="selectedTab = 'weekly'" :type="$selectedTab === 'weekly' ? 'black' : 'secondary'">Po týdnech</x-web.button>
         <x-web.button @click="selectedTab = 'results'" :type="$selectedTab === 'results' ? 'black' : 'secondary'">Celkové výsledky</x-web.button>
     </div>
     <div x-show="selectedTab === 'weekly'">
-        <div class="flex flex-row gap-x-4">
-            @foreach($league->rounds as $round)
+        <div class="hidden md:flex flex-row gap-x-4">
+            @foreach($leagueModel->rounds as $round)
                 <x-web.league-round wire:key="{{ $round->id }}" wire:click="setSelectedRound({{ $round->id }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->id }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
             @endforeach
+        </div>
 
+        <div class="md:hidden max-[280px]:flex-wrap gap-y-4 flex flex-row gap-x-4">
+            @if($this->roundGroup !== 0)
+                <div class="w-24 h-24 flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="previousRoundGroup">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                    </svg>
+                </div>
+            @endif
+
+            @foreach($this->splitRounds[$roundGroup] as $round)
+                <x-web.league-round wire:click="setSelectedRound({{ $round->id }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->id }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
+            @endforeach
+
+            @if($this->roundGroup != count($this->splitRounds) - 1)
+                <div class="w-24 h-24 flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="nextRoundGroup">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            @endif
         </div>
 
         @if(!$this->hasSubmittedRoundResult())
-            <div class="mt-12">
-                <x-web.button @click="showModal = true">Zpasat výsledek !</x-web.button>
+            <div class="mt-4">
+                <x-web.button type="yellow" @click="showModal = true">Zpasat výsledek</x-web.button>
             </div>
             <div x-show="showModal" x-transition.opacity.scale
                  class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -64,8 +88,8 @@ setTimeout(() => {
         @else
 
             @if(is_null($roundPlayed->confirmed))
-                <div class="mt-12">
-                    <x-web.button @click="showModal = true">Upravit výsledek</x-web.button>
+                <div class="mt-4">
+                    <x-web.button type="yellow" @click="showModal = true">Upravit výsledek</x-web.button>
                 </div>
                 <div x-show="showModal" x-transition.opacity.scale
                      class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -91,9 +115,7 @@ setTimeout(() => {
             @endif
         @endif
 
-        <div class="relative overflow-x-auto sm:rounded-lg max-sm:space-y-6 mt-12">
-
-
+        <div class="relative overflow-x-auto sm:rounded-lg max-sm:space-y-6 mt-4">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 shadow-md">
                 <thead class="text-xs text-brand-black uppercase bg-gray-50">
                 <tr>
@@ -153,7 +175,7 @@ setTimeout(() => {
                 </thead>
                 <tbody>
 
-                @foreach($league->rankedLeaguePlayers as $player)
+                @foreach($leagueModel->rankedLeaguePlayers as $player)
                     <tr class="border-b @if($player->user_id === user()->id) bg-gray-100 @else bg-white @endif">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {{ $player->rank }}.
@@ -164,8 +186,6 @@ setTimeout(() => {
                         <td class="px-6 py-4">
                             {{ $player->score }}
                         </td>
-
-
                     </tr>
                 @endforeach
 

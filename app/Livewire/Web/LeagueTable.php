@@ -5,17 +5,11 @@ namespace App\Livewire\Web;
 use App\Models\League;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Locked;
-use Livewire\Component;
 
-class LeagueTable extends Component
+class LeagueTable extends AbstractBaseLeagueManager
 {
-    public string $selectedTab = 'weekly';
-
     #[Locked]
     public Collection $leagues;
-
-    #[Locked]
-    public League $selectedLeagueModel;
 
     public int $selectedLeague;
 
@@ -26,23 +20,19 @@ class LeagueTable extends Component
     public function mount()
     {
         $this->leagues = League::query()->has('rounds')->get();
-        $this->selectedLeagueModel = $this->leagues->first();
-        $this->selectedLeague = $this->selectedLeagueModel->id;
-        $this->selectedRound = $this->selectedLeagueModel->rounds->first()?->id;
+        $this->leagueModel = $this->leagues->first();
+        $this->selectedLeague = $this->leagueModel->id;
+        $this->selectedRound = $this->leagueModel->rounds->first()?->id;
+
     }
 
     public function render()
     {
-        $leagueRounds = $this->selectedLeagueModel->rounds;
+        $leagueRounds = $this->leagueModel->rounds;
 
         return view('livewire.web.league-table')->with([
             'leagueRounds' => $leagueRounds,
         ]);
-    }
-
-    public function setView(string $view): void
-    {
-        $this->selectedView = $view;
     }
 
     public function getLeagueSelect(): array
@@ -58,14 +48,14 @@ class LeagueTable extends Component
 
     public function updatedSelectedLeague()
     {
-        $this->selectedLeagueModel = $this->leagues->where('id', $this->selectedLeague)->first();
-        $this->selectedRound = $this->selectedLeagueModel->rounds->first()?->id;
+        $this->leagueModel = $this->leagues->where('id', $this->selectedLeague)->first();
+        $this->selectedRound = $this->leagueModel->rounds->first()?->id;
     }
 
     public function getRoundPlayers(): \Illuminate\Support\Collection
     {
         if (empty($this->name)) {
-            return $this->selectedLeagueModel
+            return $this->leagueModel
                 ->rounds
                 ->where('id', $this->selectedRound)
                 ->first()
@@ -75,7 +65,7 @@ class LeagueTable extends Component
 
         $nameExploded = explode(' ', $this->name);
 
-        return $this->selectedLeagueModel
+        return $this->leagueModel
             ->rounds()
             ->where('id', $this->selectedRound)
             ->first()
@@ -96,13 +86,13 @@ class LeagueTable extends Component
     public function getAllPlayers(): \Illuminate\Support\Collection
     {
         if (empty($this->name)) {
-            return $this->selectedLeagueModel
+            return $this->leagueModel
                 ->rankedLeaguePlayers;
         }
 
         $nameExploded = explode(' ', $this->name);
 
-        return $this->selectedLeagueModel
+        return $this->leagueModel
             ->leaguePlayers()
             ->whereHas('user', function ($query) use ($nameExploded) {
                 $query->where('first_name', 'LIKE', "$nameExploded[0]%");

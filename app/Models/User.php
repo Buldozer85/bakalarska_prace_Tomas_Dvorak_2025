@@ -131,4 +131,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(League::class, 'league_players', 'user_id', 'league_id')
             ->where('end', '>=', now());
     }
+
+    public function leaguesWithRounds(): BelongsToMany
+    {
+        return $this->belongsToMany(League::class, 'league_players', 'user_id', 'league_id')
+            ->whereHas('rounds');
+    }
 }

@@ -2,17 +2,13 @@
 
 namespace App\Livewire\Web;
 
-use App\Models\League;
 use App\Models\LeaguePlayer;
 use App\Models\LeagueRound;
 use App\Models\RoundPlayer;
 use Livewire\Attributes\Locked;
-use Livewire\Component;
 
-class LeagueDetail extends Component
+class LeagueDetail extends AbstractBaseLeagueManager
 {
-    public League $league;
-
     public LeaguePlayer $player;
 
     #[Locked]
@@ -22,15 +18,13 @@ class LeagueDetail extends Component
 
     public ?RoundPlayer $roundPlayed = null;
 
-    public string $selectedTab = 'weekly';
-
     public function mount(): void
     {
-        $this->selectedRound = $this->league->rounds->first()->id;
+        $this->selectedRound = $this->leagueModel->rounds->first()->id;
 
-        $this->round = $this->league->rounds->first();
+        $this->round = $this->leagueModel->rounds->first();
 
-        $this->player = LeaguePlayer::find($this->league->players()->where('user_id', auth()->id())->first()->pivot->id);
+        $this->player = LeaguePlayer::find($this->leagueModel->players()->where('user_id', auth()->id())->first()->pivot->id);
 
         $this->setRoundPlayed();
     }
@@ -42,7 +36,7 @@ class LeagueDetail extends Component
 
     public function getRoundPlayers(): \Illuminate\Support\Collection
     {
-        return $this->league
+        return $this->leagueModel
             ->rounds
             ->where('id', $this->selectedRound)
             ->first()
