@@ -14,7 +14,7 @@ class AbstractBaseLeagueManager extends Component
     public int $roundGroup = 0;
 
     #[Locked]
-    public League $leagueModel;
+    public ?League $leagueModel;
 
     #[Computed]
     public function splitRounds()

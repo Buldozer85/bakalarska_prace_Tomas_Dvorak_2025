@@ -11,7 +11,7 @@ class LeagueTable extends AbstractBaseLeagueManager
     #[Locked]
     public Collection $leagues;
 
-    public int $selectedLeague;
+    public ?int $selectedLeague;
 
     public ?int $selectedRound;
 
@@ -21,14 +21,14 @@ class LeagueTable extends AbstractBaseLeagueManager
     {
         $this->leagues = League::query()->has('rounds')->get();
         $this->leagueModel = $this->leagues->first();
-        $this->selectedLeague = $this->leagueModel->id;
-        $this->selectedRound = $this->leagueModel->rounds->first()?->id;
+        $this->selectedLeague = $this->leagueModel?->id;
+        $this->selectedRound = $this->leagueModel?->rounds->first()?->id;
 
     }
 
     public function render()
     {
-        $leagueRounds = $this->leagueModel->rounds;
+        $leagueRounds = $this->leagueModel?->rounds;
 
         return view('livewire.web.league-table')->with([
             'leagueRounds' => $leagueRounds,

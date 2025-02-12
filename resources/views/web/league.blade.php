@@ -10,12 +10,21 @@
         <img alt="Obrázek kuželek a zeleným oválem v pozadí" class="max-md:hidden" src="{{ asset('images/league.png') }}">
     </div>
 
-    <div class="mx-8 mt-[600px]">
+    <div class="mx-8 mt-[600px] pb-12">
         <div class="md:bg-brand rounded-xl w-full h-[450px] lg:h-[800px] mt-32 lg:mt-72">
-            <div class="max-w-[1300px] relative mx-auto top-[-110%] lg:top-[-50%]">
-                <livewire:web.league-table></livewire:web.league-table>
+            @if(\App\Models\League::count() > 0)
+                <div class="max-w-[1300px] relative mx-auto top-[-110%] lg:top-[-50%]">
+                    <livewire:web.league-table></livewire:web.league-table>
+                </div>
+            @else
+                <div class="relative w-full h-32">
+                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 text-white p-4">
+                        <h3 class="text-white text-2xl text-center">Momentálně se zde nenachází žádná liga</h3>
+                    </div>
+                </div>
 
-            </div>
+            @endif
+
         </div>
     </div>
 </div>

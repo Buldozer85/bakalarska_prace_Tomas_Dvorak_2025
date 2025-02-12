@@ -1,6 +1,8 @@
 <div class="gap-y-8 flex flex-col justify-center" x-data="{
     selectedTab: $wire.entangle('selectedTab').live
 }">
+
+
     <div class="max-w-[350px] max-md:mx-auto">
         <x-web.form.select wire:model.live="selectedLeague" id="years" name="years" label="Ročník" :options="$this->getLeagueSelect()"></x-web.form.select>
     </div>
