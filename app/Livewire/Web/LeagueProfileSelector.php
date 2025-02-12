@@ -24,9 +24,9 @@ class LeagueProfileSelector extends Component
     {
         $league = League::find($this->selectedLeague);
 
+
         $currentRound = $league?->rounds
-            ->where('from', '<=', now()->format('Y-m-d'))
-            ->where('to', '>=', now()->format('Y-m-d'))
+            ->where('from', '>=', now()->format('Y-m-d'))
             ->first();
 
         if (is_null($currentRound)) {
