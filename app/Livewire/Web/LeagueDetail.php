@@ -69,12 +69,12 @@ class LeagueDetail extends AbstractBaseLeagueManager
     {
 
         if (! is_null($this->roundPlayed)) {
-            if (is_null($this->roundPlayed->pivot->confirmed)) {
+            if (! is_null($this->roundPlayed->confirmed)) {
                 return;
             }
 
-            $this->roundPlayed->pivot->score = $score;
-            $this->roundPlayed->pivot->save();
+            $this->roundPlayed->score = $score;
+            $this->roundPlayed->save();
 
             return;
         }

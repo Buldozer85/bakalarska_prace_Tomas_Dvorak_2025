@@ -107,7 +107,7 @@ setTimeout(() => {
 
                             <div class="flex flex-row gap-x-4 w-full justify-center">
                                 <x-web.form.input x-model="round.score" id="score" name="score" type="number" min="0" placeholder="Výsledek" />
-                                <x-web.button @click="setRoundScore">Zapsat</x-web.button>
+                                <x-web.button @click="setRoundScore; showModal = false">Zapsat</x-web.button>
                             </div>
                         </div>
                     </div>

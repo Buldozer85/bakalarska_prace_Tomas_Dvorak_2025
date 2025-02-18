@@ -50,7 +50,7 @@ class LeagueManager extends Component
         }
     }
 
-    public function addPlayer(User $user): void
+    public function addPlayer(?User $user): void
     {
         $this->league->players()->attach($user);
         $this->usersInLeague = $this->league->players;

@@ -31,10 +31,13 @@
 
 
             <div class="space-y-8 divide-y-2 divide-gray-200" x-show="tab === 'league-players'">
-                <div class="flex flex-row items-center gap-x-4  ">
-                    <x-admin.form.select x-model="selectedUser" :options="$users" name="players" id="players" />
-                    <x-admin.button @click.prevent="addUser; ">Přidat Hráče</x-admin.button>
-                </div>
+                @if(!empty($users))
+                    <div class="flex flex-row items-center gap-x-4  ">
+                        <x-admin.form.select x-model="selectedUser" :options="$users" name="players" id="players" />
+                        <x-admin.button @click.prevent="addUser; ">Přidat Hráče</x-admin.button>
+                    </div>
+                @endif
+
 
 
 
