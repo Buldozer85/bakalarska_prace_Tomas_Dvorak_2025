@@ -5,10 +5,10 @@
             <x-web.button class="max-md:hidden" :route="route('homepage')">Zpět na web</x-web.button>
         </div>
 
-        <div class="lg:mt-20 max-w-7xl space-y-16 flex flex-col md:flex-row justify-center md:justify-between ">
+        <div class="mt-12 lg:mt-20 max-w-7xl space-y-16 flex flex-col md:flex-row justify-center md:justify-between ">
             <div class="space-y-12 max-md:mt-12">
                 <div class="max-w-3xl flex flex-row items-baseline max-md:justify-center">
-                    <h2 class="text-black font-bold text-2xl ">Nadcházející rezervace </h2>
+                    <h2 class="text-black font-bold text-2xl mx-4">Nadcházející rezervace </h2>
                     <span class="bg-black rounded-full text-white text-lg ml-6 w-6 h-6 leading-6 block text-center">{{ $reservationCount }}</span>
                 </div>
 
@@ -20,8 +20,6 @@
                                 <td class="p-4">{{ $reservation->from_to }}</td>
                                 <td class="p-4">
                                     <x-web.reservation-badge :status="$reservation->status"/>
-
-
                                 </td>
                                 <td class="p-4">
                                     <a href="{{ route('profile.my-reservations.my-reservation', $reservation->id) }}">
@@ -34,9 +32,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
-
-
                     </table>
                 </div>
             </div>
@@ -47,7 +42,5 @@
             </div>
 
         </div>
-
-
     </x-web.layouts.dashboard>
 </x-web.layouts.app>

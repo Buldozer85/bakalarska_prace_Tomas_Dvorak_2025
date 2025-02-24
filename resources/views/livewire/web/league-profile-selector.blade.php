@@ -15,12 +15,12 @@
                             <th class="p-4 border-b-2 border-r-2 border-gray-200 w-[150px]">Od</th>
                             <th class="p-4 border-b-2 border-r-2 border-gray-200 w-[150px]">Do</th>
                             <th class="p-4 border-b-2 border-r-2 border-gray-200 w-[150px]">Výsledek</th>
-                            <th class="p-4 border-b-2 border-gray-200 w-[150px]">Body po kole</th>
+                            <th class="p-4 border-b-2 border-gray-200 w-[150px]">Body&nbsp;po&nbsp;kole</th>
                         </tr>
                         <tr>
                             <td class="border-r-2 border-gray-200 p-4">{{ $currentRound->number }}.</td>
-                            <td class="border-r-2 border-gray-200 p-4">{{ $currentRound->from->format('j. n. Y') }}</td>
-                            <td class="border-r-2 border-gray-200 p-4">{{ $currentRound->to->format('j. n. Y') }}</td>
+                            <td class="border-r-2 border-gray-200 p-4">{!! $currentRound->formatted_from !!}</td>
+                            <td class="border-r-2 border-gray-200 p-4">{!! $currentRound->formatted_to !!} </td>
                             <td class="border-r-2 border-gray-200 p-4">{{ $currentRound->leaguePlayers->where('user_id', '=', user()->id)->first()->pivot->score ?? 'Neodehráno' }}</td>
                             <td class="p-4">{{  $currentRound->leaguePlayers->where('user_id', '=', user()->id)->first()?->getScoreToRound($currentRound->number) ?? 0 }}</td>
                         </tr>

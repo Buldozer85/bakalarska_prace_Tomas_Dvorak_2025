@@ -6,7 +6,6 @@
             <livewire:web.league-profile-selector/>
         </div>
 
-
         <h2 class="text-xl font-bold mt-12 max-md:text-center">Moje ligy</h2>
 
         <div class="mt-12 grid grid-cols-1 max-md:justify-items-center lg:grid-cols-2 xl:grid-cols-3 gap-y-12 pb-12">

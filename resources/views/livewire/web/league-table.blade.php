@@ -72,16 +72,17 @@
                         Soutěžící
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Bodů v tomto kole
+                        Bodů&nbsp;v&nbsp;tomto&nbsp;kole
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Bodů celkem po tomto kole
+                        Bodů&nbsp;celkem&nbsp;po&nbsp;tomto&nbsp;kole
                     </th>
 
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($this->getRoundPlayers() as $player)
+                    @if($player->pivot->confirmed)
                     <tr class="bg-white border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                            {{ $loop->index + 1 }}.
@@ -90,13 +91,13 @@
                            {{ $player->user->full_name }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $player->pivot->score }}
+                            {{$player->pivot->score}}
                         </td>
                         <td class="px-6 py-4">
                             {{ $player->getScoreToRound($this->selectedRound) }}
                         </td>
-
                     </tr>
+                    @endif
                 @endforeach
 
                 </tbody>

@@ -123,10 +123,10 @@ setTimeout(() => {
                         Soutěžící
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Bodů v tomto kole
+                        Bodů&nbsp;v&nbsp;tomto&nbsp;kole
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Bodů celkem po tomto kole
+                        Bodů&nbsp;celkem&nbsp;po&nbsp;tomto&nbsp;kole
                     </th>
 
                 </tr>

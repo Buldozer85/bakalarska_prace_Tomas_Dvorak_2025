@@ -19,14 +19,21 @@
 
         <div class="space-y-4">
             <div x-show="tab === 'league-info'">
-                <div class="grid grid-cols-2 gap-4 gap-x-8 pb-12">
-                    <x-admin.form.input wire:model.blur="name" id="name" name="name" label="Název" :value="old('name') ?? ''"/>
-                    <x-admin.form.input wire:model.blur="year" type="number"  id="year" name="year" label="Rok" :value="old('year') ?? ''"/>
-                    <x-admin.form.input type="date" wire:model.blur="start" id="start" name="start" label="Začátek" :value="old('start') ?? ''"/>
-                    <x-admin.form.input type="date" id="end" wire:model.blur="end" name="end" label="Konec" :value="old('end') ?? ''"/>
-                </div>
+                <form wire:submit="updateInfo">
+                    <div class="grid grid-cols-2 gap-4 gap-x-8 pb-12">
+                        <x-admin.form.input wire:model.blur="name" id="name" name="name" label="Název" :value="old('name') ?? ''"/>
+                        <x-admin.form.input wire:model.blur="year" type="number"  id="year" name="year" label="Rok" :value="old('year') ?? ''"/>
+                        <x-admin.form.input type="date" wire:model.blur="start" id="start" name="start" label="Začátek" :value="old('start') ?? ''"/>
+                        <x-admin.form.input type="date" id="end" wire:model.blur="end" name="end" label="Konec" :value="old('end') ?? ''"/>
+                    </div>
 
-                <x-admin.form.textarea wire:model.blur="description" name="description" id="description" label="Popis">{{ old('description') ?? '' }}</x-admin.form.textarea>
+                    <x-admin.form.textarea wire:model.blur="description" name="description" id="description" label="Popis">{{ old('description') ?? '' }}</x-admin.form.textarea>
+
+                    <div class="flex justify-end mt-12">
+                        <x-admin.button class="w-[250px]" action="submit" type="yellow">Uložit</x-admin.button>
+                    </div>
+                </form>
+
             </div>
 
 
@@ -125,9 +132,7 @@
 
 
 
-            <div class="flex justify-end">
-                <x-admin.button class="w-[250px]" action="submit" type="yellow">Uložit</x-admin.button>
-            </div>
+
         </div>
     </div>
 
@@ -151,5 +156,7 @@
         </x-admin.modal>
     @endif
 
-
+    @if(session()->has('flashMessage'))
+        <x-admin.toast :type="session('flashMessage')['type']" :message="session('flashMessage')['message']"/>
+    @endif
 </div>

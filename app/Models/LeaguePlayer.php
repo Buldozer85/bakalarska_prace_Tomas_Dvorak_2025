@@ -36,7 +36,7 @@ class LeaguePlayer extends Model
     public function getScoreToRound(int $roundNumber): float
     {
         return $this->playedRounds->where('number', '<=', $roundNumber)->sum(function (LeagueRound $round) {
-            return $round->pivot->score;
+            return $round->pivot->confirmed ? $round->pivot->score : 0;
         });
     }
 

@@ -69,6 +69,8 @@ class LeagueRoundController extends Controller
         $leagueRound->is_finished = false;
         $leagueRound->save();
 
+        flash('Kolo bylo upraveno');
+
         return redirect()->route('administration.league.round.detail', ['league' => $league->id, 'leagueRound' => $leagueRound->id]);
     }
 }

@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property string $from_to
+ * @property string $formatted_to
+ * @property string $formatted_from
  */
 class LeagueRound extends Model
 {
@@ -56,5 +58,15 @@ class LeagueRound extends Model
     public function fromTo(): Attribute
     {
         return Attribute::make(get: fn () => $this->from->format('j. n.').' - '.$this->to->format('j. n.'));
+    }
+
+    public function formattedFrom(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->from->format('j.').'&nbsp;'.$this->from->format('n.').'&nbsp;'.$this->from->format('Y'));
+    }
+
+    public function formattedTo(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->to->format('j.').'&nbsp;'.$this->to->format('n.').'&nbsp;'.$this->to->format('Y'));
     }
 }
