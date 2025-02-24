@@ -305,6 +305,7 @@
     @script
     <script>
         $wire.on('date-changed', ()=> {
+            console.log('lol')
             setTimeout( function () {
                 initFlowbiteTooltips();
             }, 50)

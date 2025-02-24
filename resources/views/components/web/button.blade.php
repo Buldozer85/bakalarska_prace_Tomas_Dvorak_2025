@@ -21,7 +21,7 @@
 @endphp
 
 @if(!is_null($route))
-    <a {{ $attributes->merge(['class' => 'text-sm text-decoration-none text-center font-bold cursor-pointer align-middle '. $style . ' ' . $size]) }} href="{{ $route }}">
+    <a {{ $attributes->merge(['class' => 'text-sm text-decoration-none text-center font-bold cursor-pointer align-middle block '. $style . ' ' . $size]) }} href="{{ $route }}">
         {{ $slot }}
     </a>
 @else

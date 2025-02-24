@@ -66,7 +66,7 @@
             @for($j = 0; $j <= $interval; $j++)
                 @php
                     $date1 = $firstDayOfWeek->copy();
-                $time->setDateFrom($date1)
+                    $time->setDateFrom($date1)
                 @endphp
                 <tr class="bg-white border">
                     @for($i = 0; $i <= 7; $i++)
@@ -82,7 +82,6 @@
                                 read-only
                                 id="{{ $time->format('d-n-Y-H-i') }}-cell"/>
                             @php
-
                                 $date1->addDay();
                                 $time->setDateFrom($date1)
                             @endphp

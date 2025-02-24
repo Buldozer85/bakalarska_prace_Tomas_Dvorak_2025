@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\League;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Policies\ReservationPolicy;
+use App\Policies\Web\MyLeaguePolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -50,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::policy(Reservation::class, ReservationPolicy::class);
+        Gate::policy(League::class, MyLeaguePolicy::class);
 
     }
 }

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -118,5 +119,22 @@ class User extends Authenticatable implements MustVerifyEmail
             ->whereNull('cancelled')
             ->where('date', '>=', Carbon::now())
             ->orderBy('date');
+    }
+
+    public function leagues(): BelongsToMany
+    {
+        return $this->belongsToMany(League::class, 'league_players', 'user_id', 'league_id');
+    }
+
+    public function activeLeagues(): BelongsToMany
+    {
+        return $this->belongsToMany(League::class, 'league_players', 'user_id', 'league_id')
+            ->where('end', '>=', now());
+    }
+
+    public function leaguesWithRounds(): BelongsToMany
+    {
+        return $this->belongsToMany(League::class, 'league_players', 'user_id', 'league_id')
+            ->whereHas('rounds');
     }
 }

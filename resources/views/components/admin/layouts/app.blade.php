@@ -24,7 +24,7 @@
                         <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                     </svg>
                 </button>
-                <a href="https://flowbite.com" class="flex ms-2 md:me-24">
+                <a href="{{ route('administration.dashboard') }}" class="flex ms-2 md:me-24">
                     <img alt="logo_kuzelna" class="h-12 w-24" src="{{ asset('images/logo.png') }}">
                 </a>
             </div>
@@ -52,6 +52,12 @@
                             </li>
                             <li>
                                 <a href="{{ route('administration.user.profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Úprava údajů</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Uživatelská sekce</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('homepage') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Hlavní stránka</a>
                             </li>
                             <li>
                                 <a href="{{ route('administration.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Odhlásit se</a>
@@ -111,7 +117,7 @@
             </x-admin.dashboard-link>
 
 
-            <x-admin.dashboard-link :route="route('administration.dashboard')" :selected="$page === 'league'">
+            <x-admin.dashboard-link :route="route('administration.league.index')" :selected="$page === 'league'">
                 <x-slot:ico>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />

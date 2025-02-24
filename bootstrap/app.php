@@ -19,7 +19,6 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo('/prihlaseni')->trustProxies('*');
-
     })
     ->withCommands([
         \App\Console\Commands\ReservationsDeleteExpiredCommand::class,

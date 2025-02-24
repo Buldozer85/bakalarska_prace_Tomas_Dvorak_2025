@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ConversationController;
+use App\Http\Controllers\Admin\LeagueController;
+use App\Http\Controllers\Admin\LeagueRoundController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ReservationAreaController;
 use App\Http\Controllers\Admin\ReservationController;
@@ -69,6 +71,21 @@ Route::middleware(AdministrationAccessMiddleware::class)->group(function () {
         Route::get('/konverzace', 'index')->name('conversations.index');
         Route::get('/konverzace/{conversation}', 'detail')->name('conversations.detail');
     });
+
+    Route::controller(LeagueController::class)->prefix('ligy')->group(function () {
+        Route::get('/', 'index')->name('league.index');
+        Route::get('/liga/{league}', 'detail')->name('league.detail');
+        Route::get('/vytvorit', 'showCreate')->name('league.show-create');
+        Route::post('/create', 'create')->name('league.create');
+    });
+
+    Route::controller(LeagueRoundController::class)->prefix('/ligy/liga/{league}/kolo/')->group(function () {
+        Route::get('detail/{leagueRound}', 'detail')->name('league.round.detail');
+        Route::get('/vytvorit', 'showCreate')->name('league.round.show-create');
+        Route::post('/create', 'create')->name('league.round.create');
+        Route::put('/update/{leagueRound}', 'update')->name('league.round.update');
+    });
+
 });
 
 Route::controller(AuthController::class)->group(function () {

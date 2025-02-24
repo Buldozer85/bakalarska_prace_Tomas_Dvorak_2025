@@ -26,7 +26,7 @@ class AuthController extends Controller
         }
 
         if (! $user->is_admin) {
-            abort(403);
+            abort(403, 'Do požadované sekce nemáte přístup');
         }
 
         if (! Hash::check($request->password, $user->password)) {

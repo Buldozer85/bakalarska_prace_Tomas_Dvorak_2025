@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Web\AuthController;
+use App\Http\Controllers\Web\LeagueController;
+use App\Http\Controllers\Web\MessageController;
 use App\Http\Controllers\Web\PageController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\ReservationController;
+use App\Http\Middleware\Web\IsMemberOfLeagueMiddleware;
 use App\Http\Middleware\Web\UnverifiedMiddleware;
 use App\Livewire\Web\MakeReservation;
 use Illuminate\Support\Facades\Route;
@@ -22,53 +25,56 @@ Route::controller(PageController::class)->group(function () {
         ->name('league');
 });
 
-Route::controller(AuthController::class)->group(function () {
-    Route::get('/prihlaseni', 'index')
-        ->name('show-login-page');
+Route::controller(AuthController::class)
+    ->middleware('guest')
+    ->group(function () {
+        Route::get('/prihlaseni', 'index')
+            ->name('show-login-page');
 
-    Route::post('login', 'login')
-        ->name('login');
+        Route::post('login', 'login')
+            ->name('login');
 
-    Route::get('/registrace', 'showRegistrationPage')
-        ->name('show-registration-page');
+        Route::get('/registrace', 'showRegistrationPage')
+            ->name('show-registration-page');
 
-    Route::post('/register', 'register')
-        ->name('register');
+        Route::post('/register', 'register')
+            ->name('register');
 
-    Route::get('/odhlasit-se', 'logout')
-        ->middleware('auth')
-        ->name('logout');
+        Route::get('/odhlasit-se', 'logout')
+            ->withoutMiddleware('guest')
+            ->middleware('auth')
+            ->name('logout');
 
-    // Handling of email verification
-    Route::get('/email/verify/{id}/{hash}', 'verifyEmail')
-        ->middleware(['auth', 'signed',  UnverifiedMiddleware::class])
-        ->name('verification.verify');
+        // Handling of email verification
+        Route::get('/email/verify/{id}/{hash}', 'verifyEmail')
+            ->middleware(['auth', 'signed',  UnverifiedMiddleware::class])
+            ->name('verification.verify');
 
-    Route::post('/email/verification-notification', 'sendVerificationEmail')
-        ->middleware(['auth', 'throttle:6,1',  UnverifiedMiddleware::class])
-        ->name('verification.send');
+        Route::post('/email/verification-notification', 'sendVerificationEmail')
+            ->middleware(['auth', 'throttle:6,1',  UnverifiedMiddleware::class])
+            ->name('verification.send');
 
-    Route::get('/email/verify', 'verificationNotice')
-        ->middleware(['auth', UnverifiedMiddleware::class])
-        ->name('verification.notice');
+        Route::get('/email/verify', 'verificationNotice')
+            ->middleware(['auth', UnverifiedMiddleware::class])
+            ->name('verification.notice');
 
-    // Password reset
-    Route::get('/zapomenute-heslo', 'forgotPasswordPage')
-        ->middleware('guest')
-        ->name('forgot-password-page.show');
+        // Password reset
+        Route::get('/zapomenute-heslo', 'forgotPasswordPage')
+            ->middleware('guest')
+            ->name('forgot-password-page.show');
 
-    Route::post('/zapomenute-heslo-odeslat', 'sendResetPasswordEmail')
-        ->middleware('guest')
-        ->name('forgot-password-page.send-email');
+        Route::post('/zapomenute-heslo-odeslat', 'sendResetPasswordEmail')
+            ->middleware('guest')
+            ->name('forgot-password-page.send-email');
 
-    Route::get('/reset-hesla/{token}', 'resetPasswordPage')
-        ->middleware('guest')
-        ->name('password.reset');
+        Route::get('/reset-hesla/{token}', 'resetPasswordPage')
+            ->middleware('guest')
+            ->name('password.reset');
 
-    Route::post('/reset-password', 'resetPassword')
-        ->middleware('guest')
-        ->name('password.update');
-});
+        Route::post('/reset-password', 'resetPassword')
+            ->middleware('guest')
+            ->name('password.update');
+    });
 
 Route::prefix('/profil')
     ->middleware(['auth', 'verified'])
@@ -83,7 +89,9 @@ Route::prefix('/profil')
                 ->name('profile.my-reservations.my-reservation');
             Route::post('/update-information', 'changeInformation')->name('profile.update-information');
             Route::post('/change-password', 'changePassword')->name('profile.change-password');
-            Route::get('/moje-liga', 'myLeague')->name('profile.my-league');
+            Route::get('/moje-liga', 'myLeague')
+                ->middleware(IsMemberOfLeagueMiddleware::class)
+                ->name('profile.my-league');
             Route::get('/konverzace', 'conversations')->name('profile.conversations');
 
         });
@@ -98,21 +106,27 @@ Route::prefix('/profil')
                 ->name('profile.my-reservations.my-reservation.update');
         });
 
+        Route::controller(LeagueController::class)
+            ->prefix('/moje-liga')
+            ->middleware(IsMemberOfLeagueMiddleware::class)
+            ->group(function () {
+                Route::get('/{league}', 'detail')
+                    ->can('view', 'league')
+                    ->can('view-only-with-rounds', 'league')
+                    ->name('profile.user.league.detail');
+            });
+
     });
 
 Route::get('/rezervace/{reservation}/uspesne-vytvorena', [ReservationController::class, 'success'])
     ->can('view', 'reservation')
     ->name('reservation.success-page');
 
-Route::get('/rezervace/vytvorit', MakeReservation::class)->middleware('auth')->name('reservation.show-create');
+Route::get('/rezervace/vytvorit', MakeReservation::class)
+    ->middleware('auth')
+    ->name('reservation.show-create');
 
-Route::controller(\App\Http\Controllers\Web\MessageController::class)->group(function () {
-    Route::post('/kontakt/odeslat-dotaz', 'send')->name('contact.message.send');
-});
-/*
-Route::middleware('auth')->group(function () {
-    Route::controller(UsersController::class)->group(function () {
-        Route::get('/ucet', 'profile')->name('profile');
-        Route::post('/zmena-osobnich-udaju', 'updateInformation')->name('update-information');
+Route::controller(MessageController::class)
+    ->group(function () {
+        Route::post('/kontakt/odeslat-dotaz', 'send')->name('contact.message.send');
     });
-});*/
