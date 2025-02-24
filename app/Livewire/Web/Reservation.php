@@ -35,6 +35,9 @@ class Reservation extends Component
     #[Locked]
     public Carbon $selectedDay;
 
+    #[Locked]
+    public array $openedDays = [];
+
     public function __construct()
     {
         $this->firstDayOfWeek = Carbon::now()->startOfWeek();
@@ -53,11 +56,29 @@ class Reservation extends Component
         $this->reservations = ReservationModel::unCancelled()->where(function (Builder $query) {
             $query->where('date', '>=', $this->firstDayOfWeek)->where('date', '<=', $this->lastDayOfWeek);
         })->get();
+
+        foreach (explode(',', settings('opening.days.shortcuts')) as $day) {
+            $this->openedDays[] = daysOfWeekIndexes($day);
+        }
     }
 
     public function render()
     {
-        return view('livewire.web.reservation');
+        $start = openingStart();
+        $end = openingEnd();
+
+        $interval = abs($end - $start) - 1;
+
+        $time = \Carbon\Carbon::now()->setTime($start, 0);
+        $timeEnd = $time->copy()->addHours($interval);
+
+        return view('livewire.web.reservation')->with([
+            'start' => $start,
+            'end' => $end,
+            'time' => $time,
+            'timeEnd' => $timeEnd,
+            'interval' => $interval,
+        ]);
     }
 
     public function addDay(): void
@@ -135,7 +156,7 @@ class Reservation extends Component
             return 'reserved';
         }
 
-        if (round($slot->diffInDays(Carbon::now())) >= 0) {
+        if (round($slot->diffInDays(Carbon::now())) >= 0 || ! in_array($slot->dayOfWeekIso - 1, $this->openedDays)) {
             return 'unavailable';
         }
 

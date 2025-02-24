@@ -103,6 +103,9 @@ class MakeReservation extends Component
     #[Locked]
     public Carbon $selectedDay;
 
+    #[Locked]
+    public array $openedDays = [];
+
     #[Layout('components.web.layouts.app')]
     #[Title('Vytvoření rezervace')]
     public function render()
@@ -164,6 +167,10 @@ class MakeReservation extends Component
             $this->selectedStep = session('reservation.step');
         } else {
             session()->put('reservation.step', 1);
+        }
+
+        foreach (explode(',', settings('opening.days.shortcuts')) as $day) {
+            $this->openedDays[] = daysOfWeekIndexes($day);
         }
     }
 
@@ -279,7 +286,7 @@ class MakeReservation extends Component
             return;
         }
 
-        if (round($time->diffInDays(Carbon::now())) >= 0) {
+        if (round($time->diffInDays(Carbon::now())) >= 0 || ! in_array($time->dayOfWeekIso - 1, $this->openedDays)) {
             return;
         }
 
@@ -334,7 +341,7 @@ class MakeReservation extends Component
             return 'selected';
         }
 
-        if (round($slot->diffInDays(Carbon::now())) >= 0) {
+        if (round($slot->diffInDays(Carbon::now())) >= 0 || ! in_array($slot->dayOfWeekIso - 1, $this->openedDays)) {
             return 'unavailable';
         }
 

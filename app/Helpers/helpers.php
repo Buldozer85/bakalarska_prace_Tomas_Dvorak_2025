@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\WebsiteSetting;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
@@ -93,5 +94,51 @@ if (! function_exists('unseenMessages')) {
             ->when(! user()->is_admin, function ($query) {
                 return $query->where('sender_email', '!=', user()->email);
             })->count();
+    }
+}
+
+if (! function_exists('settings')) {
+    function settings(string $key): string
+    {
+        if (Cache::has($key)) {
+            return Cache::get($key);
+        }
+
+        $setting = WebsiteSetting::query()->where('key', $key)->first();
+
+        if (is_null($setting)) {
+            return $key;
+        }
+
+        Cache::put($key, $setting->value);
+
+        return $setting->value;
+    }
+}
+
+if (! function_exists('openingStart')) {
+    function openingStart(): int
+    {
+        $start = explode(':', settings('opening.start'));
+
+        return intval($start[0]);
+    }
+}
+
+if (! function_exists('openingEnd')) {
+    function openingEnd(): int
+    {
+        $end = explode(':', settings('opening.end'));
+
+        return intval($end[0]);
+    }
+}
+
+if (! function_exists('daysOfWeekIndexes')) {
+    function daysOfWeekIndexes(string $day): int|bool
+    {
+        $days = ['PO', 'ÚT', 'ST', 'ČT', 'PÁ', 'SO', 'NE'];
+
+        return array_search($day, $days);
     }
 }

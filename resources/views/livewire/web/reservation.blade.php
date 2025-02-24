@@ -57,12 +57,7 @@
             </tr>
             </thead>
             <tbody>
-            @php
-                $time = \Carbon\Carbon::now()->setTime(9, 0);
-                $timeEnd = $time->copy()->addHours(9);
 
-                $interval = abs($timeEnd->hour - $time->hour);
-            @endphp
             @for($j = 0; $j <= $interval; $j++)
                 @php
                     $date1 = $firstDayOfWeek->copy();
@@ -71,7 +66,6 @@
                 <tr class="bg-white border">
                     @for($i = 0; $i <= 7; $i++)
                         @if($i === 0)
-                            {{--                    TODO:bude se resit otviracka, zatim staticky bude start a stop čas    --}}
                             <td class="px-6 py-4 border text-center font-bold text-brand-black">
                                 {{ $time->format('H:i') }}
                             </td>
@@ -105,7 +99,7 @@
         <div class="relative overflow-x-auto space-y-4 overflow-hidden mx-6">
             <div class="flex flex-col justify-center space-y-4">
                 <div class=" flex flex-row justify-center space-x-12 font-bold flex-1">
-                    @if(!inPast($selectedDay->copy()->subDay()->setTime(0,0), \Carbon\Carbon::now()->setTime(0,0)))
+                    @if(!inPast($selectedDay->copy()->subDay()->setTime(0,0), now()->setTime(0,0)))
                         <svg wire:click="subDay" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 cursor-pointer">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
                         </svg>
@@ -141,18 +135,20 @@
                 </thead>
                 <tbody>
                 @php
-                    $time = $selectedDay->copy()->setTime(9, 0);
-                    $timeEnd = $time->copy()->addHours(9);
+                    $start = openingStart();
+                    $end = openingEnd();
 
-                    $interval = abs($timeEnd->hour - $time->hour);
+                    $interval = abs($end - $start) - 1;
+
+                    $time = \Carbon\Carbon::now()->setTime($start, 0);
+                    $timeEnd = $time->copy()->addHours($interval);
 
                 @endphp
                 @for($j = 0; $j <= $interval; $j++)
                     <tr class="bg-white border">
                         @for($i = 0; $i <= 1; $i++)
                             @if($i === 0)
-                                {{--                    TODO:bude se resit otviracka, zatim staticky bude start a stop čas    --}}
-                                <td class="px-6 py-4 border text-center font-bold text-brand-black font-bold">
+                                <td class="px-6 py-4 border text-center font-bold text-brand-black">
                                     {{ $time->format('H:i') }}
                                 </td>
                             @else

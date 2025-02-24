@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\WebsiteSetting;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Validate;
 
 class WebsiteSettingModelTable extends AbstractModelTable
@@ -35,5 +36,11 @@ class WebsiteSettingModelTable extends AbstractModelTable
         $this->value = '';
         $this->sortBy = 'id';
         $this->sortDirection = 'asc';
+    }
+
+    public function eraseCache(): void
+    {
+        Cache::flush();
+        flash('Cache aplikace byla promazána');
     }
 }
