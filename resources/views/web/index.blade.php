@@ -216,7 +216,7 @@
 
     <div
         class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 2xl:gap-60 sm:mt-20 lg:max-w-none 2xl:grid-cols-2 py-12">
-            <x-web.contact-card name="Jiří Jeřábek" description="Správce kuželny" phone="{{ settings('administrator.phone') }}" email="{{ settings('administration.email') }}"/>
+            <x-web.contact-card name="Jiří Jeřábek" description="Správce kuželny" phone="{{ settings('administrator.phone') }}" email="{{ settings('administrator.email') }}"/>
             <x-web.contact-card name="Pavel Danihelka" description="Zástupce správce kuželny" phone="{{ settings('co-administrator.phone') }}" email="{{ settings('co-administrator.email') }}"/>
     </div>
 
