@@ -166,14 +166,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php
-                                    $time = \Carbon\Carbon::now()->setTime(9, 0);
-                                    $timeEnd = $time->copy()->addHours(9);
-
-                                    $interval = abs($timeEnd->hour - $time->hour);
-
-                                    $ii = 0;
-                                @endphp
                                 @for($j = 0; $j <= $interval; $j++)
                                     @php
                                         $date1 = $firstDayOfWeek->copy();
@@ -182,7 +174,6 @@
                                     <tr class="bg-white border">
                                         @for($i = 0; $i <= 7; $i++)
                                             @if($i === 0)
-                                                {{--                    TODO:bude se resit otviracka, zatim staticky bude start a stop čas    --}}
                                                 <td class="px-6 py-4 border text-center font-bold text-brand-black">
                                                     {{ $time->format('H:i') }}
                                                 </td>
@@ -191,9 +182,8 @@
                                                 <x-web.reservation.tablecell
                                                     :type="$this->getTimeSlotStatus($time)"
                                                     wire:click="addTime('{{$time}}')" :read-only="$readOnly"
-                                                    id="{{ $ii }}-cell"></x-web.reservation.tablecell>
+                                                    id="{{ $time->format('d-n-Y-H-i') }}-cell"></x-web.reservation.tablecell>
                                                 @php
-                                                    $ii++;
                                                     $date1->addDay();
                                                     $time->setDateFrom($date1)
                                                 @endphp
@@ -252,17 +242,20 @@
                                 </thead>
                                 <tbody>
                                 @php
-                                    $time = $selectedDay->copy()->setTime(9, 0);
-                                    $timeEnd = $time->copy()->addHours(9);
+                                    $start = openingStart();
+                                    $end = openingEnd();
 
-                                    $interval = abs($timeEnd->hour - $time->hour);
+                                    $interval = abs($end - $start) - 1;
+
+                                    $time = $selectedDay->copy()->setTime($start, 0);
+                                    $timeEnd = $time->copy()->addHours($interval);
 
                                 @endphp
                                 @for($j = 0; $j <= $interval; $j++)
                                     <tr class="bg-white border">
                                         @for($i = 0; $i <= 1; $i++)
                                             @if($i === 0)
-                                                {{--                    TODO:bude se resit otviracka, zatim staticky bude start a stop čas    --}}
+
                                                 <td class="px-6 py-4 border text-center font-bold text-brand-black font-bold">
                                                     {{ $time->format('H:i') }}
                                                 </td>

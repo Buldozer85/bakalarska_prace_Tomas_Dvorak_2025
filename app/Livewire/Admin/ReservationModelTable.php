@@ -52,7 +52,8 @@ class ReservationModelTable extends AbstractModelTable
             ->when(! empty($this->reservation_name), function (Builder $query) {
                 $exploded = explode(' ', $this->reservation_name);
 
-                $query->join('users', 'user_id', '=', 'users.id')->where('users.first_name', 'like', $exploded[0].'%');
+                $query->join('users', 'user_id', '=', 'users.id')
+                    ->where('users.first_name', 'like', $exploded[0].'%');
 
                 if (count($exploded) > 1) {
                     $query->where('users.last_name', 'like', $exploded[1].'%');

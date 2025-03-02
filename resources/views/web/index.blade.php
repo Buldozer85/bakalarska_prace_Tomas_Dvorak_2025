@@ -132,9 +132,9 @@
 
     <div class="md:mx-auto max-w-2xl w-full">
         <x-web.small-conteiner>
-            <h3 class="xl:text-4xl text-2xl font-bold">Cena za jednu 1 hod</h3>
+            <h3 class="xl:text-4xl text-2xl font-bold">Cena za 1 hod</h3>
             <p class="xl:text-4xl text-2xl font-normal">
-                100,- Kč
+               {{ settings('price.track') }},- Kč
             </p>
         </x-web.small-conteiner>
     </div>
@@ -158,10 +158,10 @@
             </h2>
 
             <p class="text-lg 2xl:text-xl">
-                Pondělí - Sobota
+                {{ settings('opening.days.interval') }}
             </p>
             <p class="text-lg 2xl:text-xl text-brand-yellow font-normal">
-                9:00 - 20:00
+                {{ settings('opening.start') }} - {{ settings('opening.end') }}
             </p>
         </x-web.small-conteiner>
 
@@ -216,8 +216,8 @@
 
     <div
         class="mx-6 sm:mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-16 2xl:gap-60 sm:mt-20 lg:max-w-none 2xl:grid-cols-2 py-12">
-            <x-web.contact-card name="Jiří Jeřábek" description="Správce kuželny" phone="+420 724 410 275" email="kuzelnaveseli@centrum.cz"/>
-            <x-web.contact-card name="Pavel Danihelka" description="Zástupce správce kuželny" phone="+420 777 575 750" email="kuzelnaveseli@centrum.cz"/>
+            <x-web.contact-card name="Jiří Jeřábek" description="Správce kuželny" phone="{{ settings('administrator.phone') }}" email="{{ settings('administrator.email') }}"/>
+            <x-web.contact-card name="Pavel Danihelka" description="Zástupce správce kuželny" phone="{{ settings('co-administrator.phone') }}" email="{{ settings('co-administrator.email') }}"/>
     </div>
 
 </x-web.layouts.app>

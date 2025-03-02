@@ -32,6 +32,8 @@ class WebsiteSettingController extends Controller
         $setting->value = $request->get('value');
         $setting->save();
 
+        flash('Nastavení bylo vytvořeno');
+
         return redirect()->route('administration.websiteSetting.detail', $setting->id);
     }
 
@@ -40,6 +42,8 @@ class WebsiteSettingController extends Controller
         $websiteSetting->key = $request->get('key');
         $websiteSetting->value = $request->get('value');
         $websiteSetting->save();
+
+        flash('Nastavení bylo upraveno');
 
         return redirect()->route('administration.websiteSetting.detail', $websiteSetting->id);
     }

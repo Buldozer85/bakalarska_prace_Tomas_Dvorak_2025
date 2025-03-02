@@ -17,8 +17,8 @@
                         <h2 class="text-3xl md:text-5xl text-brand-darker font-bold tracking-tight text-gray-900 text-center">Kontaktní osoby</h2>
                     </div>
                     <div class="space-y-12">
-                        <x-web.contact-card name="Jiří Jeřábek" description="Správce kuželny" email="kuzelnaveseli@centrum.cz" phone="+420 724 410 275"/>
-                        <x-web.contact-card name="Pavel Danihelka" description="Zástupce správce kuželny" email="kuzelnaveseli@centrum.cz" phone="+420 777 575 750"/>
+                        <x-web.contact-card name="Jiří Jeřábek" description="Správce kuželny" email="{{ settings('administrator.email') }}" phone="{{ settings('administrator.phone') }}"/>
+                        <x-web.contact-card name="Pavel Danihelka" description="Zástupce správce kuželny" email="{{ settings('co-administrator.email') }}" phone="{{ settings('co-administrator.phone') }}"/>
                     </div>
                 </div>
                 <div class="!px-0">

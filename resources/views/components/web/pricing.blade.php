@@ -9,9 +9,9 @@
             <p class=" flex items-baseline gap-x-1 text-center justify-center">
                 <span class="text-md lg:text-2xl font-normal tracking-tight text-white text-center">+ do 2 hodin</span>
             </p>
-            <h4 class="text-lg md:text-3xl lg:text-4xl font-bold tracking-tight text-white mt-16 text-center">200,- Kč</h4>
+            <h4 class="text-lg md:text-3xl lg:text-4xl font-bold tracking-tight text-white mt-16 text-center">{{ settings('price.short-term') }},- Kč</h4>
             <p class=" flex items-baseline gap-x-1 text-center justify-center">
-                <span class="text-lg md:text-xl lg:text-2xl font-normal tracking-tight text-white">+ kuželník 50,- Kč</span>
+                <span class="text-lg md:text-xl lg:text-2xl font-normal tracking-tight text-white">+ kuželník {{ settings('price.track.pack') }},- Kč</span>
                 <span class="text-sm font-normal leading-6 text-white text-center">/hodinu</span>
             </p>
         </div>
@@ -26,9 +26,9 @@
             <p class="flex items-baseline gap-x-1 text-center justify-center">
                 <span class="text-md md:text-2xl font-normal tracking-tight text-white text-center">+ od 2 do 24 hodin</span>
             </p>
-            <h4 class="text-lg md:text-3xl lg:text-4xl font-bold tracking-tight text-white mt-16 text-center">500,- Kč</h4>
+            <h4 class="text-lg md:text-3xl lg:text-4xl font-bold tracking-tight text-white mt-16 text-center">{{ settings('price.full-day') }},- Kč</h4>
             <p class="flex items-baseline gap-x-1 text-center justify-center">
-                <span class="text-lg md:text-xl lg:text-2xl font-normal tracking-tight text-white">+ kuželník 50,- Kč</span>
+                <span class="text-lg md:text-xl lg:text-2xl font-normal tracking-tight text-white">+ kuželník {{ settings('price.track.pack') }},- Kč</span>
                 <span class="text-sm font-normal leading-6 text-white text-center">/hodinu</span>
             </p>
         </div>
@@ -43,9 +43,9 @@
             <p class="flex items-baseline gap-x-1 text-center justify-center">
                 <span class="text-md md:text-2xl font-normal tracking-tight text-white text-center">+ od 2 do 24 hodin</span>
             </p>
-            <h4 class="text-lg md:text-3xl lg:text-4xl font-bold tracking-tight text-white mt-16 text-center">1000,- Kč</h4>
+            <h4 class="text-lg md:text-3xl lg:text-4xl font-bold tracking-tight text-white mt-16 text-center">{{ settings('price.commercial-events') }},- Kč</h4>
             <p class="flex items-baseline gap-x-1 text-center justify-center">
-                <span class="text-lg md:text-xl lg:text-2xl font-normal tracking-tight text-white">+ kuželník 50,- Kč</span>
+                <span class="text-lg md:text-xl lg:text-2xl font-normal tracking-tight text-white">+ kuželník {{ settings('price.track.pack') }},- Kč</span>
                 <span class="text-sm font-normal leading-6 text-white text-center">/hodinu</span>
             </p>
         </div>
