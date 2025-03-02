@@ -35,6 +35,10 @@ class Conversation extends Component
 
     public function sendMessage(): void
     {
+        if (empty($this->message)) {
+            return;
+        }
+
         if (is_null($this->conversation->id)) {
             $this->conversation->from_name = user()->full_name;
             $this->conversation->from_email = user()->email;

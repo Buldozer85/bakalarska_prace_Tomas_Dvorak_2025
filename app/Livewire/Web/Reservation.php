@@ -3,6 +3,7 @@
 namespace App\Livewire\Web;
 
 use App\Models\Reservation as ReservationModel;
+use App\Models\ReservationTemp;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -38,6 +39,9 @@ class Reservation extends Component
     #[Locked]
     public array $openedDays = [];
 
+    #[Locked]
+    public ?Collection $tmpReservations;
+
     public function __construct()
     {
         $this->firstDayOfWeek = Carbon::now()->startOfWeek();
@@ -60,6 +64,8 @@ class Reservation extends Component
         foreach (explode(',', settings('opening.days.shortcuts')) as $day) {
             $this->openedDays[] = daysOfWeekIndexes($day);
         }
+
+        $this->tmpReservations = ReservationTemp::query()->get();
     }
 
     public function render()
@@ -151,8 +157,9 @@ class Reservation extends Component
     public function getTimeSlotStatus(Carbon $slot): string
     {
         $dbReservation = $this->getReservationsAtTimeSlot($slot)->first();
+        $tmpReservation = $this->getTmpReservationsAtTimeSlot($slot)->first();
 
-        if (! is_null($dbReservation)) {
+        if (! is_null($dbReservation) || ! is_null($tmpReservation)) {
             return 'reserved';
         }
 
@@ -179,5 +186,16 @@ class Reservation extends Component
         $this->reservations = ReservationModel::unCancelled()->where(function (Builder $query) {
             $query->where('date', '>=', $this->firstDayOfWeek)->where('date', '<=', $this->lastDayOfWeek);
         })->get();
+    }
+
+    private function getTmpReservationsAtTimeSlot(Carbon $slot): Collection
+    {
+        if (is_null($this->tmpReservations)) {
+            return collect();
+        }
+
+        return $this->tmpReservations->filter(function (ReservationTemp $reservationTmp) use ($slot) {
+            return floor($reservationTmp->date->diffInDays($slot)) === 0.0 && $reservationTmp->slot_from <= $slot && $reservationTmp->slot_to >= $slot;
+        });
     }
 }

@@ -57,10 +57,10 @@
                         <div class="p-[1px] rounded-md bg-gray-200 max-w-[600px] mx-auto"></div>
 
                         <div class="grid grid-cols-2 gap-4 items-center">
-                            <x-web.form.input wire:model.blur="company_name" id="company_name" label="Název firmy"
+                            <x-web.form.input wire:model.blur="company_name" id="company_name" label="Název firmy*"
                                               name="company_name"/>
-                            <x-web.form.input wire:model.blur="ico" id="ico" label="IČO" name="ico"/>
-                            <x-web.form.input wire:model.blur="company_address" id="company_address" label="Sídlo"
+                            <x-web.form.input wire:model.blur="ico" id="ico" label="IČO*" name="ico"/>
+                            <x-web.form.input wire:model.blur="company_address" id="company_address" label="Sídlo*"
                                               name="company_address"/>
                         </div>
                     @endif

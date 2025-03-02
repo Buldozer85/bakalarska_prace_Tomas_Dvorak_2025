@@ -41,6 +41,10 @@ class Conversation extends Component
 
     public function sendMessage(): void
     {
+        if (empty($this->message)) {
+            return;
+        }
+
         $message = new Message;
 
         $message->message = $this->message;

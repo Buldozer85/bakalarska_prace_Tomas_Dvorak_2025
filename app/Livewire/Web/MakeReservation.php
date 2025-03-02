@@ -106,6 +106,9 @@ class MakeReservation extends Component
     #[Locked]
     public array $openedDays = [];
 
+    #[Locked]
+    public ?Collection $tmpReservations;
+
     #[Layout('components.web.layouts.app')]
     #[Title('Vytvoření rezervace')]
     public function render()
@@ -186,6 +189,8 @@ class MakeReservation extends Component
         foreach (explode(',', settings('opening.days.shortcuts')) as $day) {
             $this->openedDays[] = daysOfWeekIndexes($day);
         }
+
+        $this->tmpReservations = ReservationTemp::query()->get();
     }
 
     public function updated($property): void
@@ -204,7 +209,9 @@ class MakeReservation extends Component
     {
         if ($selectedStep === 3) {
             if (! $this->canGoToSummary()) {
-                flash('Pro postoupení na další krok je třeba vyplnit všechny povinné údaje', 'warning');
+                flash('Pro postoupení na poslední krok je třeba vyplnit všechny povinné údaje', 'warning');
+
+                return;
             }
         }
 
@@ -294,9 +301,20 @@ class MakeReservation extends Component
     {
         $time = Carbon::parse($time);
 
+        $this->updateReservations();
         $dbReservation = $this->getReservationsAtTimeSlot($time)->first();
 
         if (! is_null($dbReservation)) {
+            return;
+        }
+
+        $tmpReservations = ReservationTemp::query()
+            ->where('date', '=', $time->format('Y-m-d'))
+            ->where('slot_from', '<=', $time)
+            ->where('slot_to', '>=', $time)
+            ->get();
+
+        if (! is_null($tmpReservations->first())) {
             return;
         }
 
@@ -345,14 +363,16 @@ class MakeReservation extends Component
 
     public function getTimeSlotStatus(Carbon $slot): string
     {
-        $dbReservation = $this->getReservationsAtTimeSlot($slot)->first();
-
-        if (! is_null($dbReservation)) {
-            return 'reserved';
-        }
-
         if ($this->reservationTimes->contains($slot)) {
             return 'selected';
+        }
+
+        $dbReservation = $this->getReservationsAtTimeSlot($slot)->first();
+
+        $tmpReservation = $this->getTmpReservationsAtTimeSlot($slot)->first();
+
+        if (! is_null($dbReservation) || ! is_null($tmpReservation)) {
+            return 'reserved';
         }
 
         if (round($slot->diffInDays(Carbon::now())) >= 0 || ! in_array($slot->dayOfWeekIso - 1, $this->openedDays)) {
@@ -437,6 +457,7 @@ class MakeReservation extends Component
     public function cancelReservation(): void
     {
         $this->deleteSelectedReservation(user()->temporaryReservation);
+        $this->tmpReservations = ReservationTemp::query()->get();
         flash('Rezervace byla zrušena', 'error');
         $this->redirectRoute('reservation.show-create');
     }
@@ -559,6 +580,17 @@ class MakeReservation extends Component
 
         return $this->reservations->filter(function (ReservationModel $reservation) use ($slot) {
             return floor($reservation->date->diffInDays($slot)) === 0.0 && $reservation->slot_from <= $slot && $reservation->slot_to > $slot;
+        });
+    }
+
+    private function getTmpReservationsAtTimeSlot(Carbon $slot): Collection
+    {
+        if (is_null($this->tmpReservations)) {
+            return collect();
+        }
+
+        return $this->tmpReservations->filter(function (ReservationTemp $reservationTmp) use ($slot) {
+            return floor($reservationTmp->date->diffInDays($slot)) === 0.0 && $reservationTmp->slot_from <= $slot && $reservationTmp->slot_to >= $slot;
         });
     }
 

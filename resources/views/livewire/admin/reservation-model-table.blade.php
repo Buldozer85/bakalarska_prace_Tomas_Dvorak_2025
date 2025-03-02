@@ -22,16 +22,16 @@
                 Uživatel
             </x-admin.table-header>
 
-            <x-admin.table-header column="email" :sort-direction="$sortDirection" :sort-by="$sortBy">
+            <x-admin.table-header column="date" :sort-direction="$sortDirection" :sort-by="$sortBy">
                 Datum
             </x-admin.table-header>
 
             <x-admin.table-header column="first_name" :sort-direction="$sortDirection" :sort-by="$sortBy">
-                Od - Do
+                Od&nbsp;-&nbsp;Do
             </x-admin.table-header>
 
             <x-admin.table-header column="last_name" :sort-direction="$sortDirection" :sort-by="$sortBy">
-                Typ rezervace
+                Typ&nbsp;rezervace
             </x-admin.table-header>
 
             <x-admin.table-header column="role" :sort-direction="$sortDirection" :sort-by="$sortBy">
@@ -83,6 +83,10 @@
                     {{ $reservation->on_company_label }}
                 </td>
 
+                <td class="px-2 py-4">
+                    <x-admin.status-badge :type="$reservation->status['key']">{{ $reservation->status['label'] }}</x-admin.status-badge>
+                </td>
+
 
                 <td class="px-2 py-4">
                     <div class="flex flex-row gap-x-4 items-center">
@@ -131,7 +135,7 @@
                 </div>
             </td>
             <td class="px-2 py-4">
-                <x-admin.form.select name="email_verified_at" id="email_verified_at" name="email_verified_at" wire:model.live="email_verified_at" :options="['Ne', 'Ano', 'Ano/Ne']" :selected="2"></x-admin.form.select>
+                <x-admin.form.select name="type" id="type" wire:model.live="type" :options="array_merge(['unselected' => 'Nevybráno'], \App\Enums\ReservationTypes::select())" selected="unselected"></x-admin.form.select>
             </td>
             <td class="px-2 py-4">
                 <x-admin.form.input wire:model.live="reservation_name" name="reservation_name" id="reservation_name" placeholder="Rezervovatel"></x-admin.form.input>
@@ -142,7 +146,7 @@
             <td class="px-2 py-4">
                 <x-admin.form.input wire:model.live="phone" name="phone" id="phone" placeholder="Telefon"></x-admin.form.input>
             </td>
-            <td class="px-2 py-4">
+            <td class="px-2 py-4 w-[150px]">
                 <x-admin.form.select name="on_company" id="on_company" name="on_company" wire:model.live="on_company" :options="['Ne', 'Ano', 'Ano/Ne']" :selected="2"></x-admin.form.select>
             </td>
 
@@ -151,7 +155,10 @@
                 <x-admin.form.select name="status" id="status" name="status" wire:model.live="status" :options="['unselected' => 'Vybrat status', 'confirmed' => 'Potvrzená', 'cancelled' => 'Zrušená', 'waiting' => 'Čeká na zpracování']" :selected="2"></x-admin.form.select>
             </td>
             <td class="px-2 py-4">
-                <x-web.button wire:click.prevent="resetFilters" class="w-full" type="black">Resetovat filtr</x-web.button>
+                <div class="mt-2">
+                    <x-web.button wire:click.prevent="resetFilters" class="w-full" type="black">Resetovat filtr</x-web.button>
+                </div>
+
             </td>
         </tr>
         </tbody>

@@ -34,6 +34,8 @@ class ReservationModelTable extends AbstractModelTable
     #[Validate('in:0,1,2', message: 'Na firmu obsahuje neznámou hodnotu')]
     public int $on_company = 2;
 
+    public string $user = '';
+
     protected function query(): Builder
     {
         return $this->basicQuery()
@@ -74,6 +76,11 @@ class ReservationModelTable extends AbstractModelTable
             })
             ->when($this->on_company !== 2, function (Builder $query) {
                 return $query->where('on_company', '=', $this->on_company);
+            })
+            ->when(! empty($this->user), function (Builder $query) {
+                return $query->whereHas('user', function (Builder $query) {
+                    $query->where('email', 'like', $this->user.'%');
+                });
             });
     }
 
