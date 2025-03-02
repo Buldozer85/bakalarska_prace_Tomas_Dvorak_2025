@@ -110,7 +110,21 @@ class MakeReservation extends Component
     #[Title('Vytvoření rezervace')]
     public function render()
     {
-        return view('livewire.web.make-reservation');
+        $start = openingStart();
+        $end = openingEnd();
+
+        $interval = abs($end - $start) - 1;
+
+        $time = \Carbon\Carbon::now()->setTime($start, 0);
+        $timeEnd = $time->copy()->addHours($interval);
+
+        return view('livewire.web.make-reservation')->with([
+            'start' => $start,
+            'end' => $end,
+            'time' => $time,
+            'timeEnd' => $timeEnd,
+            'interval' => $interval,
+        ]);
     }
 
     /**

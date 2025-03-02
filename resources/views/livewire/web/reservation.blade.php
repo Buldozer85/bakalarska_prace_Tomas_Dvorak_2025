@@ -140,9 +140,8 @@
 
                     $interval = abs($end - $start) - 1;
 
-                    $time = \Carbon\Carbon::now()->setTime($start, 0);
+                    $time = $selectedDay->copy()->setTime($start, 0);
                     $timeEnd = $time->copy()->addHours($interval);
-
                 @endphp
                 @for($j = 0; $j <= $interval; $j++)
                     <tr class="bg-white border">
