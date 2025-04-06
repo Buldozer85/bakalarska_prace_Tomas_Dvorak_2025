@@ -8,11 +8,14 @@ enum ReservationTypes: string
 
     case TRACK = 'track';
 
+    case AREAL = 'areal';
+
     public function label(): string
     {
         return match ($this) {
             self::AREAL_PLUS_TRACK => 'Areál a dráha',
             self::TRACK => 'Dráha',
+            self::AREAL => 'Areál'
         };
     }
 
@@ -21,6 +24,7 @@ enum ReservationTypes: string
         return [
             self::AREAL_PLUS_TRACK->value => 'Areál a dráha',
             self::TRACK->value => 'Dráha',
+            self::AREAL->value => 'Areál',
         ];
     }
 
@@ -29,6 +33,7 @@ enum ReservationTypes: string
         return match ($key) {
             self::AREAL_PLUS_TRACK->value => 'Areál a dráha',
             self::TRACK->value => 'Dráha',
+            self::AREAL->value => 'Areál'
         };
     }
 }

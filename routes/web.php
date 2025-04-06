@@ -23,6 +23,9 @@ Route::controller(PageController::class)->group(function () {
 
     Route::get('/kuzelkarska-liga', 'league')
         ->name('league');
+
+    Route::get('/o-webu', 'aboutWeb')
+        ->name('about-web');
 });
 
 Route::controller(AuthController::class)

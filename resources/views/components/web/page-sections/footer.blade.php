@@ -17,6 +17,10 @@
                 <a href="{{ route('league') }}" class="text-sm leading-6 text-white hover:text-slate-100">Kuželkářská liga</a>
             </div>
 
+            <div class="pb-6">
+                <a href="{{ route('about-web') }}" class="text-sm leading-6 text-white hover:text-slate-100">O webu</a>
+            </div>
+
             @guest
                 <div class="pb-6">
                     <a href="{{ route('show-login-page') }}" class="text-sm leading-6 text-white hover:text-slate-100">Přihlášení</a>

@@ -17,7 +17,7 @@ class SendUpcomingReservationsNotificationCommand extends Command
         $reservations = Reservation::unCancelled()
             ->with('user')
             ->whereNotNull('confirmed')
-            ->where('date', '=', now()->addDay()->setTime(0, 0))
+            ->where('date', '=', now()->addDay()->format('Y-m-d'))
             ->get();
 
         $this->info('Počet rezervací: '.$reservations->count());

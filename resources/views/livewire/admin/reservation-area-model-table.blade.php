@@ -40,13 +40,13 @@
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ $reservation_area->id }}
                 </th>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 min-w-[250px]">
                     {{ $reservation_area->name }}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 min-w-[250px]">
                     {{ $reservation_area->key }}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 min-w-[250px]">
                     {{ $reservation_area->is_active ? 'Ano' : 'Ne' }}
                 </td>
                 <td class="px-6 py-4">
@@ -74,17 +74,17 @@
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             </th>
-            <td class="px-6 py-4">
+            <td class="py-4 px-3">
                 <x-admin.form.input wire:model.live="name" name="name" id="name" placeholder="Název"></x-admin.form.input>
             </td>
-            <td class="px-6 py-4">
+            <td class="py-4 px-3">
                 <x-admin.form.input wire:model.live="key" name="key" id="key" placeholder="Klíč"></x-admin.form.input>
             </td>
 
-            <td class="px-6 py-4">
+            <td class="py-4 px-3">
                 <x-admin.form.select name="is_active" id="is_active" name="is_active" wire:model.live="is_active" :options="['Ne', 'Ano', 'Ano/Ne']" :selected="2"></x-admin.form.select>
             </td>
-            <td class="px-6 py-4">
+            <td class="py-4 px-3">
                 <x-web.button wire:click.prevent="resetFilters" class="w-full" type="black">Resetovat filtr</x-web.button>
             </td>
         </tr>

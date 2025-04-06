@@ -9,13 +9,11 @@
         <table class="w-full max-w-[1000px] border-gray-200 border overflow-auto">
             @foreach($reservations as $reservation)
                 <tr class="border-b-2 border-gray-200">
-                    <td class="p-4"><span class="text-brand-reserved">Vytvořena:</span> {{ $reservation->created_at->format('j. n. Y') }} </td>
-                    <td class="p-4">{{ $reservation->user->email }}</td>
-                    <td class="p-4">{{ $reservation->date->format('j.n.Y') }}, {{ $reservation->from_to }}</td>
-                    <td class="p-4">
+                    <td class="p-4 min-w-[200px]"><span class="text-brand-reserved">Vytvořena:</span>&nbsp;{{ $reservation->created_at->format('j.') }}&nbsp;{{ $reservation->created_at->format('n.') }}&nbsp;{{ $reservation->created_at->format('Y') }}</td>
+                    <td class="p-4 min-w-[200px]">{{ $reservation->user->email }}</td>
+                    <td class="p-4 min-w-[250px]">{{ $reservation->date->format('j.n.Y') }},&nbsp;{{ $reservation->slot_from->format('G:i') }}&nbsp;-&nbsp;{{ $reservation->slot_to->format('G:i') }}</td>
+                    <td class="p-4 min-w-[200px] text-center">
                         <x-web.reservation-badge :status="$reservation->status"/>
-
-
                     </td>
                     <td class="p-4">
                         <a href="{{ route('administration.reservation.detail', $reservation->id) }}">
@@ -28,13 +26,10 @@
                     </td>
                 </tr>
             @endforeach
-
-
-
         </table>
     </div>
 
-    <div class="flex flex-row items-center max-md:justify-center  gap-x-1">
+    <div class="flex flex-row items-center  gap-x-1">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
         </svg>
@@ -48,8 +43,8 @@
         <table class="w-full max-w-[1000px] border-gray-200 border overflow-auto">
             @foreach($messages as $message)
                 <tr class="border-b-2 border-gray-200">
-                    <td class="p-4"><span class="text-brand">Přijata:</span> {{ $message->sent->format('j.') }} {{ monthInInflection($message->sent->month - 1) }} {{ $message->sent->format('Y') }}</td>
-                    <td class="p-4">Od: {{ $message->sender_email }}</td>
+                    <td class="p-4"><span class="text-brand">Přijata:</span>&nbsp;{{ $message->sent->format('j.') }}&nbsp;{{ monthInInflection($message->sent->month - 1) }}&nbsp;{{ $message->sent->format('Y') }}</td>
+                    <td class="p-4">Od:&nbsp;{{ $message->sender_email }}</td>
                     <td class="p-4 font-bold">{{ Str::limit($message->message, 20) }}</td>
 
                     <td class="p-4">

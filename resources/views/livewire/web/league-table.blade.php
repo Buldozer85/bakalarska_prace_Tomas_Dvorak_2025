@@ -3,7 +3,7 @@
 }">
 
 
-    <div class="max-w-[350px] max-md:mx-auto">
+    <div class="max-w-[350px]">
         <x-web.form.select wire:model.live="selectedLeague" id="years" name="years" label="Ročník" :options="$this->getLeagueSelect()"></x-web.form.select>
     </div>
     <div class="max-lg:flex max-lg:flex-row max-lg:justify-center">
@@ -81,11 +81,14 @@
                 </tr>
                 </thead>
                 <tbody>
+                @php
+                    $index = 0;
+                @endphp
                 @foreach($this->getRoundPlayers() as $player)
                     @if($player->pivot->confirmed)
                     <tr class="bg-white border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                           {{ $loop->index + 1 }}.
+                           {{ $index + 1 }}.
                         </th>
                         <td class="px-6 py-4">
                            {{ $player->user->full_name }}
@@ -97,6 +100,9 @@
                             {{ $player->getScoreToRound($this->selectedRound) }}
                         </td>
                     </tr>
+                        @php
+                            $index++;
+                        @endphp
                     @endif
                 @endforeach
 

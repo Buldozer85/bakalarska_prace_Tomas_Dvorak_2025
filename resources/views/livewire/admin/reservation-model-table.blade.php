@@ -114,17 +114,17 @@
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             </th>
 
-            <td class="px-2 py-4">
+            <td class="px-2 py-4 min-w-[250px]">
                 <x-admin.form.input wire:model.live="user" name="user" id="user" placeholder="Uživatel"></x-admin.form.input>
             </td>
 
 
-            <td class="px-2 py-4">
+            <td class="px-2 py-4 min-w-[250px]">
                 <x-admin.form.input wire:model.live="date" type="date" name="date" id="date" placeholder="Datum"></x-admin.form.input>
             </td>
 
 
-            <td class="px-2 py-4 flex flex-row items-center gap-x-2">
+            <td class="px-2 py-4 flex flex-row items-center gap-x-2 min-w-[250px]">
                 <div class="py-4">
                     <x-admin.form.input type="number" min="0" wire:model.live.debounce="slot_from" name="slot_from" id="slot_from" placeholder="Od"></x-admin.form.input>
 
@@ -134,24 +134,22 @@
                     <x-admin.form.input type="number" min="{{ $slot_from ?? 0 }}" wire:model.live="slot_to" name="slot_to" id="slot_to" placeholder="Do"></x-admin.form.input>
                 </div>
             </td>
-            <td class="px-2 py-4">
+            <td class="px-2 py-4 min-w-[250px]">
                 <x-admin.form.select name="type" id="type" wire:model.live="type" :options="array_merge(['unselected' => 'Nevybráno'], \App\Enums\ReservationTypes::select())" selected="unselected"></x-admin.form.select>
             </td>
-            <td class="px-2 py-4">
+            <td class="px-2 py-4 min-w-[250px]">
                 <x-admin.form.input wire:model.live="reservation_name" name="reservation_name" id="reservation_name" placeholder="Rezervovatel"></x-admin.form.input>
             </td>
 
-
-
-            <td class="px-2 py-4">
+            <td class="px-2 py-4 min-w-[250px]">
                 <x-admin.form.input wire:model.live="phone" name="phone" id="phone" placeholder="Telefon"></x-admin.form.input>
             </td>
-            <td class="px-2 py-4 w-[150px]">
+            <td class="px-2 py-4 min-w-[150px]">
                 <x-admin.form.select name="on_company" id="on_company" name="on_company" wire:model.live="on_company" :options="['Ne', 'Ano', 'Ano/Ne']" :selected="2"></x-admin.form.select>
             </td>
 
 
-            <td class="px-2 py-4">
+            <td class="px-2 py-4 min-w-[250px]">
                 <x-admin.form.select name="status" id="status" name="status" wire:model.live="status" :options="['unselected' => 'Vybrat status', 'confirmed' => 'Potvrzená', 'cancelled' => 'Zrušená', 'waiting' => 'Čeká na zpracování']" :selected="2"></x-admin.form.select>
             </td>
             <td class="px-2 py-4">

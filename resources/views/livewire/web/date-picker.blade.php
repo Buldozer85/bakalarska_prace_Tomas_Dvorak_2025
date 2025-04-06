@@ -70,7 +70,8 @@
             @for($j = 0; $j < 6; $j++)
                 <tr>
                     @for($i = 0; $i < 7; $i++)
-                        @if(inPast($this->firstDayOfCalendar->copy()->setTime(0,0), \Carbon\Carbon::now()->setTime(0,0)))
+
+                        @if(inPast($this->iteratedDay->copy()->setTime(0,0), \Carbon\Carbon::now()->setTime(0,0)))
                         <td disabled class="cursor-default text-gray-400">{{ $this->printDay()  }}</td>
                         @else
                         <td x-bind:class="selectedDate == '{{ $this->getFormattedDate() }}' ? 'bg-white text-brand-black rounded-full' : '' "

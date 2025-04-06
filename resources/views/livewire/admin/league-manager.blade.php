@@ -20,7 +20,7 @@
         <div class="space-y-4">
             <div x-show="tab === 'league-info'">
                 <form wire:submit="updateInfo">
-                    <div class="grid grid-cols-2 gap-4 gap-x-8 pb-12">
+                    <div class="grid xl:grid-cols-2 gap-4 gap-x-8 pb-12">
                         <x-admin.form.input wire:model.blur="name" id="name" name="name" label="Název" :value="old('name') ?? ''"/>
                         <x-admin.form.input wire:model.blur="year" type="number"  id="year" name="year" label="Rok" :value="old('year') ?? ''"/>
                         <x-admin.form.input type="date" wire:model.blur="start" id="start" name="start" label="Začátek" :value="old('start') ?? ''"/>
@@ -39,7 +39,7 @@
 
             <div class="space-y-8 divide-y-2 divide-gray-200" x-show="tab === 'league-players'">
                 @if(!empty($users))
-                    <div class="flex flex-row items-center gap-x-4  ">
+                    <div class="flex flex-col xl:flex-row xl:items-center gap-y-4 gap-x-4">
                         <x-admin.form.select x-model="selectedUser" :options="$users" name="players" id="players" />
                         <x-admin.button @click.prevent="addUser; ">Přidat Hráče</x-admin.button>
                     </div>
@@ -103,8 +103,8 @@
             </div>
 
             <div class="space-y-8 divide-y-2 divide-gray-200" x-show="tab === 'league-rounds'">
-                <div class="flex flex-row items-center gap-x-4  ">
-                    <x-admin.button :route="route('administration.league.round.show-create', $league->id)">Vytvořit kolo</x-admin.button>
+                <div class="flex flex-row xl:items-center gap-x-4">
+                    <x-admin.button class="max-xl:w-full" :route="route('administration.league.round.show-create', $league->id)">Vytvořit kolo</x-admin.button>
                 </div>
 
 

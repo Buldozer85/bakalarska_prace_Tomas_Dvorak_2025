@@ -9,4 +9,4 @@
         default => 'bg-brand text-white'
     };
 @endphp
-<span class="{{ $color }} text-xs font-medium me-2 px-2.5 py-0.5 rounded">{{ $slot }}</span>
+<span class="{{ $color }} text-xs font-medium me-2 px-2.5 py-0.5 rounded block text-center">{{ $slot }}</span>

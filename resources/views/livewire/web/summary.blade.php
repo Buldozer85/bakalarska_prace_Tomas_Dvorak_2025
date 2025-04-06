@@ -107,7 +107,7 @@
         @else
             <h3 class="mb-5 text-lg font-bold text-black">Opravdu si přejete zrušit vybranou rezervaci?</h3>
             <div class="flex justify-between max-w-[250px] gap-x-5 mx-auto">
-                <x-web.button class="flex-1" wire:click="$parent.deleteSelectedReservation({{ user()->temporaryReservation?->id }})" data-modal-hide="cancelReservation" type="danger">Potvrdit</x-web.button>
+                <x-web.button class="flex-1" wire:click="$parent.cancelReservation" data-modal-hide="cancelReservation" type="danger">Potvrdit</x-web.button>
                 <x-web.button class="flex-1" data-modal-hide="cancelReservation" data-modal-hide="cancelReservation" type="white">Zpět</x-web.button>
             </div>
 

@@ -30,9 +30,14 @@
                     <x-web.form.input label="Heslo" id="password" name="password" type="password" required/>
                     <x-web.form.input label="Heslo znovu" id="password_confirmation" name="password_confirmation" type="password"
                                        required/>
-                    <x-web.form.check-box id="gdpr_agreement" name="gdpr_agreement">Souhlasím s prohlášením o ochraně
-                        osobních údajů
-                    </x-web.form.check-box>
+
+                        <x-web.form.check-box id="gdpr_agreement" name="gdpr_agreement">Souhlasím s prohlášením o ochraně
+                            osobních údajů.
+                            <a class="underline text-sm" href="{{ route('about-web') }}" target="_blank">Více zde</a>
+                        </x-web.form.check-box>
+
+
+
                     <div class="flex items-center justify-between">
                         <div class="text-sm">
                             <a href="{{ route('show-login-page') }}"
