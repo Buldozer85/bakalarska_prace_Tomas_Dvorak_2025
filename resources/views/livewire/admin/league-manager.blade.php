@@ -108,11 +108,15 @@
                 </div>
 
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 ">
+                <div class="grid grid-cols-1 md:grid-cols-2 justify-center @if($league->rounds->count() > 2) lg:grid-cols-3 2xl:grid-cols-4 @endif">
                     @foreach($league->rounds as $round)
                         <div class="flex flex-row gap-x-4 items-center mt-12">
                             <span>
                                 {{ $round->number }}. Kolo
+                            </span>
+->
+                            <span>
+                                {{ $round->from_to }}
                             </span>
 
                             <x-admin.button :route="route('administration.league.round.detail', ['league' => $league->id, 'leagueRound' => $round->id])" type="black">Zobrazit</x-admin.button>

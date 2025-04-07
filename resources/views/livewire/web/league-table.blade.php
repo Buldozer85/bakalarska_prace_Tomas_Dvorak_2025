@@ -13,7 +13,7 @@
     <div x-show="selectedTab === 'weekly'">
         <div class="hidden md:flex flex-row gap-x-4">
             @foreach($leagueRounds as $round)
-                <x-web.league-round wire:click="setSelectedRound({{ $round->number }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->number }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
+                <x-web.league-round wire:click="setSelectedRound({{ $round->id }}, {{ $round->number }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->id }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
             @endforeach
 
         </div>
@@ -28,7 +28,7 @@
             @endif
 
             @foreach($this->splitRounds[$roundGroup] as $round)
-                <x-web.league-round wire:click="setSelectedRound({{ $round->id }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->id }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
+                <x-web.league-round wire:click="setSelectedRound({{ $round->id }}, {{ $round->number }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->id }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
             @endforeach
 
                 @if($this->roundGroup != count($this->splitRounds) - 1)
@@ -81,14 +81,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                @php
-                    $index = 0;
-                @endphp
+
                 @foreach($this->getRoundPlayers() as $player)
                     @if($player->pivot->confirmed)
                     <tr class="bg-white border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                           {{ $index + 1 }}.
+                           {{ $player->rankAfterRound($this->selectedRoundNumber) }}.
                         </th>
                         <td class="px-6 py-4">
                            {{ $player->user->full_name }}
@@ -97,7 +95,7 @@
                             {{$player->pivot->score}}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $player->getScoreToRound($this->selectedRound) }}
+                            {{ $player->getScoreToRound($this->selectedRoundNumber) }}
                         </td>
                     </tr>
                         @php

@@ -35,6 +35,8 @@ class LeagueRound extends Model
     public function rankedLeaguePlayers(): BelongsToMany
     {
         return $this->belongsToMany(LeaguePlayer::class, 'round_players', 'league_round_id', 'league_player_id')
+            ->has('playedRounds')
+            ->wherePivotNotNull('confirmed')
             ->withPivot(['score', 'confirmed', 'id', 'created_at'])
             ->orderBy('score', 'DESC');
     }
