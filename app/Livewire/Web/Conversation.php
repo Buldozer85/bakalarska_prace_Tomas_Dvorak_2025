@@ -6,6 +6,7 @@ use App\Mail\MessageReceivedMail;
 use App\Models\Conversation as ConversationModel;
 use App\Models\Message;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -55,9 +56,9 @@ class Conversation extends Component
 
         $this->message = '';
 
-        \Mail::to(config('mail.from.address'))->send((new MessageReceivedMail($message))->onQueue('messages'));
+        $message = (new MessageReceivedMail($message))
+            ->onQueue('messages');
 
-        //   $this->conversation->conversationStarterUser->notify();
-
+        Mail::to(config('mail.from.address'))->queue($message);
     }
 }
