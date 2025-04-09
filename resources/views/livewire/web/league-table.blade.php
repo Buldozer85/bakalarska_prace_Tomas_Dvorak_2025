@@ -98,9 +98,6 @@
                             {{ $player->getScoreToRound($this->selectedRoundNumber) }}
                         </td>
                     </tr>
-                        @php
-                            $index++;
-                        @endphp
                     @endif
                 @endforeach
 
