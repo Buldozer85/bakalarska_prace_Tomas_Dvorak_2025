@@ -1,5 +1,5 @@
 <div x-data="{
-    selectedUser: {{ array_key_first($users) }},
+    selectedUser: '{{ array_key_first($users) ?? '' }}' ,
     addUser() {
           $wire.addPlayer(this.selectedUser)
 
@@ -7,7 +7,12 @@
     round: {
         number: '',
         id: ''
-    }
+    },
+    player: {
+        name: '',
+        id: ''
+    },
+    deletePlayerOpen: false
 }" x-init="$wire.on('player-added', (data) => {
      setTimeout(()=> {
 
@@ -82,7 +87,7 @@
                                         {{  $player->pivot->score ?? 0 }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <svg @click="$wire.removePlayer({{ $player->id}})" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-brand-reserved cursor-pointer">
+                                        <svg @click="player.id = '{{ $player->id }}'; player.name = '{{ $player->full_name }}'; deletePlayerOpen = true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-brand-reserved cursor-pointer">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                         </svg>
 
@@ -108,7 +113,7 @@
                 </div>
 
 
-                <div class="grid grid-cols-1 md:grid-cols-2 justify-center @if($league->rounds->count() > 2) lg:grid-cols-3 2xl:grid-cols-4 @endif">
+                <div class="grid grid-cols-1 md:grid-cols-2 justify-center @if($league->rounds->count() > 2) 2xl:grid-cols-3 @endif">
                     @foreach($league->rounds as $round)
                         <div class="flex flex-row gap-x-4 items-center mt-12">
                             <span>
@@ -139,6 +144,26 @@
 
         </div>
     </div>
+
+    @if(!is_null($usersInLeague->first))
+
+        <x-web.vanilla-modal id="deletePlayerOpen">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-14 text-brand-reserved">
+                <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+            </svg>
+
+            <h3 class="text-xl font-bold">Smazat záznam</h3>
+
+            <p class="font-normal">Opravdu si přejete smazat hráče. <span x-text="player.name"></span>?</p>
+
+            <div class="flex flex-row gap-x-4 w-full">
+
+                <x-admin.button class="flex-1" @click="$wire.removePlayer(player.id); deletePlayerOpen = false" action="submit" type="danger">Smazat</x-admin.button>
+                <x-admin.button @click="deletePlayerOpen = false" class="flex-1" type="yellow">Zrušit</x-admin.button>
+            </div>
+        </x-web.vanilla-modal>
+
+    @endif
 
     @if(!is_null($league->rounds->first()))
         <x-admin.modal id="deleteRoundModal">
