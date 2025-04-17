@@ -36,4 +36,9 @@ enum ReservationTypes: string
             self::AREAL->value => 'Areál'
         };
     }
+
+    public static function types(): array
+    {
+        return [self::AREAL_PLUS_TRACK, self::TRACK, self::AREAL];
+    }
 }

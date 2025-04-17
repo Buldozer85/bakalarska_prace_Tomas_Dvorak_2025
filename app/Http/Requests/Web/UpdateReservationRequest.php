@@ -25,7 +25,7 @@ class UpdateReservationRequest extends FormRequest
             'number' => ['required', 'string'],
             'town' => ['required', 'string'],
             'postcode' => ['required', 'string'],
-            'country' => ['required', 'string'],
+            'country' => ['nullable', 'string'],
         ]);
     }
 

@@ -29,7 +29,7 @@ abstract class AbstractModelTable extends Component
     public string $sortDirection = 'asc';
 
     #[Locked]
-    public array $perPageOptions = [1 => 1, 10 => 10, 25 => 25, 50 => 50, 100 => 100, 200 => 200, 500 => 500, 1000 => 1000];
+    public array $perPageOptions = [10 => 10, 25 => 25, 50 => 50, 100 => 100, 200 => 200, 500 => 500, 1000 => 1000];
 
     public function render(): Factory|View|Application|ClassicView
     {

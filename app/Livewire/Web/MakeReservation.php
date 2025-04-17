@@ -337,10 +337,6 @@ class MakeReservation extends Component
         }
 
         if (is_null($this->reservation_date) || round(abs($this->reservation_date->copy()->setTime(0, 0)->diffInDays($time->copy()->setTime(0, 0)))) > 0) {
-            if (! is_null($this->reservation_date)) {
-                dump($this->reservation_date->diffInDays($time->copy()->setTime(0, 0)));
-            }
-
             $this->reservationTimes = collect();
             $this->reservation_date = $time->copy();
         }

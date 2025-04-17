@@ -16,6 +16,10 @@
 <body>
 <x-web.page-sections.header current-page="{{ $page }}"/>
 
+@if(session()->has('flashMessage'))
+    <x-web.toast :type="session('flashMessage')['type']" :message="session('flashMessage')['message']"/>
+@endif
+
 <main class="min-h-screen space-y-20">
     {{ $slot }}
 </main>

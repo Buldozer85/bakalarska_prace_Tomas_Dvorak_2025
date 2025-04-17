@@ -65,7 +65,7 @@ class ProfileController extends Controller
         $user->last_name = $request->get('last_name');
         $user->phone = $request->get('phone');
 
-        $user->save();
+        $user->save() ? flash('Údaje byly změněny') : flash('Vyskytla se chyba, zkuste to prosím znovu', 'error');
 
         return redirect()->back();
     }
@@ -74,7 +74,7 @@ class ProfileController extends Controller
     {
         $user = user();
         $user->password = Hash::make($request->get('password'));
-        $user->save();
+        $user->save() ? flash('Heslo bylo změněno') : flash('Vyskytla se chyba, zkuste to prosím znovu', 'error');
 
         return redirect()->back();
     }

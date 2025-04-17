@@ -13,6 +13,6 @@
         {{ $message }}
     </x-web.error-message>
     @enderror
-    <textarea {{ $attributes }}  id="{{ $id }}" name="{{ $name }}" rows="4" class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300" placeholder="{{ $placeholder }}"></textarea>
+    <textarea {{ $attributes }}  id="{{ $id }}" name="{{ $name }}" rows="4" class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:border-0 focus:outline-0  focus:ring-brand" placeholder="{{ $placeholder }}"></textarea>
 
 </div>

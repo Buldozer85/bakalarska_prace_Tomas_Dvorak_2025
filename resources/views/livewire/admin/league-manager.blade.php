@@ -114,7 +114,7 @@
 
 
                 <div class="grid grid-cols-1 md:grid-cols-2 justify-center @if($league->rounds->count() > 2) 2xl:grid-cols-3 @endif">
-                    @foreach($league->rounds as $round)
+                    @foreach($league->orderedRounds as $round)
                         <div class="flex flex-row gap-x-4 items-center mt-12">
                             <span>
                                 {{ $round->number }}. Kolo

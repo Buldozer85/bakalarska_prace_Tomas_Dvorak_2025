@@ -1,4 +1,4 @@
-<x-admin.layouts.app title="Upravit kolo" page="league">
+<x-admin.layouts.app title="Upravit kolo č. {{ $leagueRound->number }}, {{ $leagueRound->from_to }} {{ $league->year }}" page="league">
     <div class="max-w-[1400px] mx-auto" x-data="{
         tab: 'round-info'
     }">

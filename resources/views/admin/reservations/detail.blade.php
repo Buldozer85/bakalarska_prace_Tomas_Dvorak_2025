@@ -4,7 +4,7 @@
             selectedTab: window.location.hash.replace('#', '').length > 0 ? window.location.hash.replace('#', '') : 'general'
         }">
 
-        <div>
+        <div class="2xl:max-w-[200px]">
             <x-admin.button :route="route('administration.reservation.index')" type="black" >
                 Zpět
             </x-admin.button>

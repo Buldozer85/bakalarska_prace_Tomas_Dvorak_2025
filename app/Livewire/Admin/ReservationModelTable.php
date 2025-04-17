@@ -94,4 +94,13 @@ class ReservationModelTable extends AbstractModelTable
         $this->status = 'unselected';
         $this->on_company = 2;
     }
+
+    public function delete(int $id): void
+    {
+        $model = $this->model::findOrFail($id);
+
+        $model->delete();
+
+        flash('Rezervace od: '.$model->user->email.'byla smazána');
+    }
 }

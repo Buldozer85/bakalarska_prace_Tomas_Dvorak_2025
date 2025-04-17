@@ -30,7 +30,7 @@ class LeagueTable extends AbstractBaseLeagueManager
 
     public function render()
     {
-        $leagueRounds = $this->leagueModel?->rounds;
+        $leagueRounds = $this->leagueModel?->orderedRounds;
 
         return view('livewire.web.league-table')->with([
             'leagueRounds' => $leagueRounds,

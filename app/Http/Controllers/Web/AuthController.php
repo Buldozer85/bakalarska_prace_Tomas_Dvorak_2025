@@ -109,7 +109,7 @@ class AuthController extends Controller
 
         return $status === Password::RESET_LINK_SENT
             ? back()->with(['status' => 'Odeslali jsme Vám e-mail s odkaz pro resetování hesla.'])
-            : back()->withErrors(['email' => 'Uživatel s daným e-mailem neexistuje']);
+            : back()->withErrors(['email' => __($status)]);
     }
 
     public function resetPasswordPage(string $token): View

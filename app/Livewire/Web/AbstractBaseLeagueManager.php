@@ -19,7 +19,7 @@ class AbstractBaseLeagueManager extends Component
     #[Computed]
     public function splitRounds()
     {
-        return $this->leagueModel->rounds->split(round($this->leagueModel->rounds->count() / 2));
+        return $this->leagueModel->orderedRounds->split(round($this->leagueModel->rounds->count()));
     }
 
     public function nextRoundGroup(): void

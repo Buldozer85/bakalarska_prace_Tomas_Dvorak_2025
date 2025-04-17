@@ -19,7 +19,7 @@ class UpdateReservationRequest extends FormRequest
     {
         return [
             'note' => ['nullable', 'string'],
-            'reservation_type' => ['required', Rule::in([ReservationTypes::TRACK->value, ReservationTypes::AREAL_PLUS_TRACK->value])],
+            'reservation_type' => ['required', Rule::in(ReservationTypes::types())],
             'phone' => ['required'],
             'on_company' => ['nullable', 'boolean'],
             'first_name' => ['required', 'string'],

@@ -18,9 +18,9 @@
 
         </div>
 
-        <div class="md:hidden max-[280px]:gap-x-1 max-[280px]:flex-wrap gap-y-4 flex flex-row gap-x-4">
+        <div class="md:hidden max-[280px]:gap-x-1 max-[280px]:flex-wrap gap-y-4 flex flex-row gap-x-4 justify-center sm:justify-start">
             @if($this->roundGroup !== 0)
-            <div class="w-24 h-24 flex-wrap flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="previousRoundGroup">
+            <div class="w-16 h-24 flex-wrap flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="previousRoundGroup">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
@@ -32,7 +32,7 @@
             @endforeach
 
                 @if($this->roundGroup != count($this->splitRounds) - 1)
-                <div class="w-24 h-24 flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="nextRoundGroup">
+                <div class="w-16 h-24 flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="nextRoundGroup">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>

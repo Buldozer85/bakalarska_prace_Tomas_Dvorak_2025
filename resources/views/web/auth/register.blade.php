@@ -17,16 +17,16 @@
                                        :value="old('email')" required/>
                     <div class="flex flex-row gap-5 justify-between">
                         <div class="flex-1">
-                            <x-web.form.input label="Jméno" id="first_name" name="first_name" type="text" required/>
+                            <x-web.form.input label="Jméno" id="first_name" name="first_name" type="text" :value="old('first_name')" required/>
                         </div>
 
                         <div class="flex-1">
-                            <x-web.form.input label="Příjmení" id="last_name" name="last_name" type="text" required/>
+                            <x-web.form.input label="Příjmení" id="last_name" name="last_name" type="text" :value="old('last_name')" required/>
                         </div>
 
 
                     </div>
-                    <x-web.form.input label="Telefon" id="phone" name="phone" type="text" required/>
+                    <x-web.form.input label="Telefon" id="phone" name="phone" type="text" :value="old('phone')" required/>
                     <x-web.form.input label="Heslo" id="password" name="password" type="password" required/>
                     <x-web.form.input label="Heslo znovu" id="password_confirmation" name="password_confirmation" type="password"
                                        required/>
