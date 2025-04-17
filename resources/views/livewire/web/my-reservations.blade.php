@@ -103,7 +103,7 @@
                 <h2 id="accordion-collapse-heading-{{ $reservation->id  }}" class="">
                     <button wire:click="selectedReservationId = {{ $reservation->id }}" type="button"
                             class="flex md:flex-row flex-col items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
-                            data-accordion-target="#accordion-collapse-body-{{ $reservation->id }}" aria-expanded="true"
+                            data-accordion-target="#accordion-collapse-body-{{ $reservation->id }}"
                             aria-controls="accordion-collapse-body-{{ $reservation->id }}">
                     <span class="flex items-center space-x-4 flex-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -218,40 +218,9 @@
     <script>
         $wire.on('page-updated', ()=> {
             setTimeout( function () {
-                initFlowbiteAccordion();
-
-            }, 50)
+                initFlowbite()
+            }, 100)
         } );
-
-        function initFlowbiteAccordion() {
-            const accordionContainers = document.querySelectorAll('[data-accordion="collapse"]');
-
-            accordionContainers.forEach((accordionContainer) => {
-                const accordionItems = [];
-
-                accordionContainer.querySelectorAll('button[data-accordion-target]').forEach((button) => {
-                    const targetId = button.getAttribute('data-accordion-target');
-                    const targetEl = accordionContainer.querySelector(targetId);
-
-                    if (targetEl) {
-                        accordionItems.push({
-                            id: button.getAttribute('id'),
-                            triggerEl: button,
-                            targetEl: targetEl,
-                            active: targetEl.classList.contains('open'),
-                        });
-                    }
-                });
-
-                if (accordionItems.length > 0) {
-                    new Accordion(accordionContainers,accordionItems, {
-                        alwaysOpen: accordionContainer.getAttribute('data-accordion-always-open') === 'true',
-                        activeClasses: 'bg-gray-100 text-gray-900',
-                        inactiveClasses: 'text-gray-500',
-                    });
-                }
-            });
-        }
     </script>
 
     @endscript

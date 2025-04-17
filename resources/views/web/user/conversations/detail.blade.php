@@ -1,4 +1,4 @@
-<x-web.layouts.app title="Konverzace">
+<x-web.layouts.app title="Konverzace" page="messages">
     <x-web.layouts.dashboard site="konverzace">
         <div class="mx-auto xl:w-[900px] space-y-12">
             <h1 class="text-2xl font-bold">Konverzace s Kuželnou Veselí</h1>
