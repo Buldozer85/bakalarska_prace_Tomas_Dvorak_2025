@@ -1,4 +1,4 @@
-<div>
+<div class="pb-8">
     <div class="flex flex-col gap-y-12 mx-auto max-w-[1400px] min-h-[900px]">
         @if(!is_null($conversation->id))
             @foreach($messages as $message)

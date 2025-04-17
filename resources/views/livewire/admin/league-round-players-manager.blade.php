@@ -38,31 +38,40 @@
                     <td class="px-6 py-4">
                         {{ $player->user->email }}
                     </td>
-                    <td class="px-6 py-4">
-                        @if(is_null($player->pivot->confirmed))
+                    @if(is_null($player->pivot->confirmed))
+                        <td class="px-6 py-4">
                             <x-admin.form.input value="{{ $player->pivot->score  ?? 0}}" id="score-{{$player->pivot->id}}" name="score-{{$player->pivot->id}}"/>
-                        @else
+                        </td>
+
+                        <td class="px-6 py-4">
+                            <div class="flex flex-row gap-x-4" x-data="{
+                                pivotId: '{{ $player->pivot->id }}',
+
+                            }">
+                                <x-admin.button x-on:click="$wire.editScore(pivotId, parseFloat(document.querySelector('#score-' + pivotId).value))"  type="yellow">Upravit</x-admin.button>
+                                <x-admin.button wire:click.prevent="confirmScore({{ $player->pivot->id  }})">Potvrdit</x-admin.button>
+                            </div>
+                        </td>
+                    @else
+                        <td class="px-6 py-4">
                             {{ $player->pivot->score  ?? 0}}
-                        @endif
+                        </td>
 
+                        <td class="px-6 py-4">
+                            <div class="flex flex-row gap-x-4">
+                                <x-admin.button type="danger" wire:click.prevent="confirmScore({{ $player->pivot->id  }})">Zrušit potvrzení</x-admin.button>
+                            </div>
+                        </td>
 
-                    </td>
-                    <td class="px-6 py-4">
-                     <div class="flex flex-row gap-x-4">
-                         @if(is_null($player->pivot->confirmed))
-                             <x-admin.button @click="editScore({{ $player->pivot->id }})"  type="yellow">Upravit</x-admin.button>
-                             <x-admin.button wire:click.prevent="confirmScore({{ $player->pivot->id  }})">Potvrdit</x-admin.button>
-                         @else
-                             <x-admin.button type="danger" wire:click.prevent="confirmScore({{ $player->pivot->id  }})">Zrušit potvrzení</x-admin.button>
-                         @endif
+                    @endif
 
-                     </div>
-                    </td>
                 </tr>
             @endforeach
 
             </tbody>
         </table>
     </div>
-
+    @if(session()->has('flashMessage'))
+        <x-admin.toast :type="session('flashMessage')['type']" :message="session('flashMessage')['message']"/>
+    @endif
 </div>

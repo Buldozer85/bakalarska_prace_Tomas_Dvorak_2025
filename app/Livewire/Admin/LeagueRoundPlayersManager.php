@@ -22,16 +22,16 @@ class LeagueRoundPlayersManager extends Component
         if (! is_null($roundPlayer->confirmed)) {
             $roundPlayer->confirmed = null;
             $roundPlayer->player->score = max([$score - $roundPlayer->score, 0]);
-            $roundPlayer->save();
-            $roundPlayer->player->save();
-
-            return;
+            flash('Bylo zrušeno potvrzení skóre', 'error');
+        } else {
+            $roundPlayer->confirmed = now();
+            $roundPlayer->player->score = $score + $roundPlayer->score;
+            flash('Skóre bylo úspěšně potvrzeno');
         }
 
-        $roundPlayer->confirmed = now();
-        $roundPlayer->player->score = $score + $roundPlayer->score;
         $roundPlayer->save();
         $roundPlayer->player->save();
+
     }
 
     public function editScore(RoundPlayer $roundPlayer, float $score): void

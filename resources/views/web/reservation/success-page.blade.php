@@ -12,7 +12,7 @@
         <div class="flex flex-col md:grid grid-cols-2 mx-auto gap-x-8 xl:gap-x-32 gap-y-4 py-12 px-6">
             <x-web.attribute-value label="Jméno">{{ $reservation->customerInformation->first_name }}</x-web.attribute-value>
             <x-web.attribute-value label="Příjmení">{{ $reservation->customerInformation->last_name }}</x-web.attribute-value>
-            <x-web.attribute-value label="E-mail">{{ $reservation->customerInformation->email }}@dore.cz</x-web.attribute-value>
+            <x-web.attribute-value label="E-mail">{{ $reservation->customerInformation->email }}</x-web.attribute-value>
             <x-web.attribute-value label="Telefon">{{ $reservation->customerInformation->phone }}</x-web.attribute-value>
             <x-web.attribute-value label="Datum">{{ $reservation->date->format('j. n. Y') }}</x-web.attribute-value>
             <x-web.attribute-value label="Od - Do">{{ $reservation->slot_from->format('G:i') }} - {{ $reservation->slot_to->copy()->addHour()->format('G:i') }}</x-web.attribute-value>

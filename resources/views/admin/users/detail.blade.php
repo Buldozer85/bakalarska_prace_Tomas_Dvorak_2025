@@ -39,7 +39,7 @@
               >
             @method('PUT')
             @csrf
-            <div class="grid grid-cols-2 gap-4 gap-x-8 border-b border-b-gray-200 pb-12">
+            <div class="grid xl:grid-cols-2 gap-4 gap-x-8 border-b border-b-gray-200 pb-12">
                 <x-admin.form.input id="first_name" name="first_name" value="{{ $user->first_name }}" label="Jméno"/>
                 <x-admin.form.input id="last_name" name="last_name" value="{{ $user->last_name }}" label="Příjmení"/>
                 <x-admin.form.input id="email" name="email" value="{{ $user->email }}" label="E-mail"/>
@@ -47,7 +47,7 @@
                 <x-admin.form.select id="role" name="role" selected="{{ $user->role }}" label="Role" :options="\App\Enums\Roles::options()"/>
                 <x-admin.form.select id="email_verified_at" name="email_verified_at" :selected="is_null($user->email_verified_at) ? 0 : 1" label="Ověřený e-mail" :options="['Ne', 'Ano']"/>
             </div>
-            <div class="grid grid-cols-2 gap-4 gap-x-8 pt-4">
+            <div class="grid xl:grid-cols-2 gap-4 gap-x-8 pt-4">
                 <x-admin.form.input id="password" type="password" name="password" label="Heslo"/>
                 <x-admin.form.input id="password_confirmation" name="password_confirmation" type="password" label="Heslo znovu"/>
             </div>
@@ -71,7 +71,7 @@
             @endif
 
             @csrf
-            <div class="grid grid-cols-2 gap-4 gap-x-8 pb-12">
+            <div class="grid xl:grid-cols-2 gap-4 gap-x-8 pb-12">
                 <x-admin.form.input id="street" name="street" value="{{ $user?->address->street ?? '' }}" label="Ulice"/>
                 <x-admin.form.input id="number" name="number" value="{{ $user?->address->number ?? '' }}" label="Č.P."/>
                 <x-admin.form.input id="town" name="town" value="{{ $user?->address->town ?? '' }}" label="Město"/>

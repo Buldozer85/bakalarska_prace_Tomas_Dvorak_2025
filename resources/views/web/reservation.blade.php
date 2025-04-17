@@ -2,7 +2,7 @@
     <div class="max-w-nav mx-auto lg:px-8 pb-32 max-lg:pt-12">
         <div class="flex flex-col lg:flex-row lg:items-center ">
             <div class="flex-1 max-lg:space-y-8">
-                <x-web.heading>Zajistěte si u nás<br>místo!</x-web.heading>
+                <x-web.heading class="lg:!text-left !text-center">Zajistěte si u nás<br>místo!</x-web.heading>
                 <p class="md:text-4xl text-2xl !leading-snug font-normal lg:text-left text-center">Rezervujte si dráhu nebo<br> i celý areál.</p>
             </div>
 

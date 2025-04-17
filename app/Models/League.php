@@ -55,6 +55,11 @@ class League extends Model
         return $this->hasMany(LeagueRound::class);
     }
 
+    public function orderedRounds(): HasMany
+    {
+        return $this->hasMany(LeagueRound::class)->orderBy('number');
+    }
+
     public function getRankOfPlayer(int $playerId): int
     {
         return $this->players()->selectRaw('*, RANK() OVER (ORDER BY pivot_score DESC) as rank')->where('league_players.id', $playerId)->get()->first()->rank;

@@ -44,18 +44,18 @@
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ $league->id }}
                 </th>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4  min-w-[250px]">
                     {{ $league->name }}
                 </td>
 
-                <td class="px-6 py-4">
+                <td class="px-6 py-4  min-w-[250px]">
                     {{ $league->year }}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4  min-w-[250px]">
                     {{ $league->start->format('j.n.Y') }}
                 </td>
 
-                <td class="px-6 py-4">
+                <td class="px-6 py-4  min-w-[250px]">
                     {{ $league->end->format('j.n.Y') }}
                 </td>
 

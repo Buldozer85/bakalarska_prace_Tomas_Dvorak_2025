@@ -23,6 +23,9 @@ Route::controller(PageController::class)->group(function () {
 
     Route::get('/kuzelkarska-liga', 'league')
         ->name('league');
+
+    Route::get('/o-webu', 'aboutWeb')
+        ->name('about-web');
 });
 
 Route::controller(AuthController::class)
@@ -45,19 +48,6 @@ Route::controller(AuthController::class)
             ->middleware('auth')
             ->name('logout');
 
-        // Handling of email verification
-        Route::get('/email/verify/{id}/{hash}', 'verifyEmail')
-            ->middleware(['auth', 'signed',  UnverifiedMiddleware::class])
-            ->name('verification.verify');
-
-        Route::post('/email/verification-notification', 'sendVerificationEmail')
-            ->middleware(['auth', 'throttle:6,1',  UnverifiedMiddleware::class])
-            ->name('verification.send');
-
-        Route::get('/email/verify', 'verificationNotice')
-            ->middleware(['auth', UnverifiedMiddleware::class])
-            ->name('verification.notice');
-
         // Password reset
         Route::get('/zapomenute-heslo', 'forgotPasswordPage')
             ->middleware('guest')
@@ -74,6 +64,22 @@ Route::controller(AuthController::class)
         Route::post('/reset-password', 'resetPassword')
             ->middleware('guest')
             ->name('password.update');
+    });
+
+Route::controller(AuthController::class)
+    ->group(function () {
+        // Handling of email verification
+        Route::get('/email/verify/{id}/{hash}', 'verifyEmail')
+            ->middleware(['auth', 'signed',  UnverifiedMiddleware::class])
+            ->name('verification.verify');
+
+        Route::post('/email/verification-notification', 'sendVerificationEmail')
+            ->middleware(['auth', 'throttle:6,1',  UnverifiedMiddleware::class])
+            ->name('verification.send');
+
+        Route::get('/email/verify', 'verificationNotice')
+            ->middleware(['auth', UnverifiedMiddleware::class])
+            ->name('verification.notice');
     });
 
 Route::prefix('/profil')

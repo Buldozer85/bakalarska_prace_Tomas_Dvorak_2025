@@ -4,13 +4,13 @@
             selectedTab: window.location.hash.replace('#', '').length > 0 ? window.location.hash.replace('#', '') : 'general'
         }">
 
-        <div>
+        <div class="2xl:max-w-[200px]">
             <x-admin.button :route="route('administration.reservation.index')" type="black" >
                 Zpět
             </x-admin.button>
         </div>
 
-        <div class="flex justify-between">
+        <div class="flex flex-col md:justify-between gap-y-4">
             <ul class="flex flex-wrap -mb-px flex-[3]">
                 <x-admin.tab tab-name="general">Obecné</x-admin.tab>
                 <x-admin.tab tab-name="customerInfo">Osobní údaje</x-admin.tab>
@@ -21,9 +21,9 @@
             </ul>
 
             @if(!inPast($reservation->date, now()))
-                <div class="space-x-4 flex flex-row gap-x-4 items-center">
-                    <div class="flex-1">
-                        <x-admin.button data-modal-target="cancelReservationModal" data-modal-toggle="cancelReservationModal" type="danger">Zrušit</x-admin.button>
+                <div class="xl:space-x-4 flex flex-col xl:flex-row gap-y-4 gap-x-4 xl:items-center">
+                    <div class="flex-1 w-full">
+                        <x-admin.button class="w-full" data-modal-target="cancelReservationModal" data-modal-toggle="cancelReservationModal" type="danger">Zrušit</x-admin.button>
                     </div>
 
                     @if(is_null($reservation->cancelled))

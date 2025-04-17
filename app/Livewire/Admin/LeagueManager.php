@@ -61,7 +61,7 @@ class LeagueManager extends Component
         $this->league->players()->attach($user);
         $this->usersInLeague = $this->league->players;
         $this->refreshUsers();
-
+        flash('Hráč '.$user->full_name.' byl přidán');
         $this->dispatch('player-added', selectedUser: array_key_first($this->users))->self();
     }
 
@@ -70,6 +70,7 @@ class LeagueManager extends Component
         $this->league->players()->detach($user);
         $this->usersInLeague = $this->league->players;
         $this->refreshUsers();
+        flash('Hráč '.$user->full_name.' byl odebrán', 'error');
     }
 
     public function render()

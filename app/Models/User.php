@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Roles;
+use App\Notifications\Web\ResetPasswordNotification;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -136,5 +137,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(League::class, 'league_players', 'user_id', 'league_id')
             ->whereHas('rounds');
+    }
+
+    /**
+     * Send a password reset notification to the user.
+     *
+     * @param  string  $token
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $url = route('password.reset', ['token' => $token]);
+
+        $this->notify(new ResetPasswordNotification($url));
     }
 }

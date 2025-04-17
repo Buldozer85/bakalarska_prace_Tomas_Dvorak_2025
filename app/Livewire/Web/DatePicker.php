@@ -4,7 +4,6 @@ namespace App\Livewire\Web;
 
 use Carbon\Carbon;
 use Livewire\Attributes\Reactive;
-use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 class DatePicker extends Component
@@ -18,16 +17,22 @@ class DatePicker extends Component
 
     public string $printDate = '';
 
+    public Carbon $iteratedDay;
+
     public function mount(): void
     {
         $this->date = $this->selectDate->copy();
         $firstDayOfMonth = $this->selectDate->copy()->startOfMonth();
         $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
+        // $this->iteratedDay = $this->firstDayOfCalendar->copy();
     }
 
     public function boot()
     {
+        $firstDayOfMonth = $this->selectDate->copy()->startOfMonth();
+        $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
         $this->printDate = $this->selectDate->format('j.n.Y');
+        $this->iteratedDay = $this->firstDayOfCalendar->copy();
     }
 
     public function render()
@@ -60,9 +65,9 @@ class DatePicker extends Component
 
     public function printDay()
     {
-        $day = $this->firstDayOfCalendar->day;
+        $day = $this->iteratedDay->day;
 
-        $this->firstDayOfCalendar->addDay();
+        $this->iteratedDay->addDay();
 
         return $day;
 
@@ -70,15 +75,15 @@ class DatePicker extends Component
 
     public function getFormattedDate(): string
     {
-        return "{$this->firstDayOfCalendar->format('j.n.Y')}";
+        return "{$this->iteratedDay->format('j.n.Y')}";
     }
 
-    #[Renderless]
     protected function setFirstDayOfCalendar(): void
     {
         $firstDayOfMonth = $this->date->copy()->firstOfMonth();
 
         $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
+        $this->iteratedDay = $this->firstDayOfCalendar->copy();
     }
 
     public function setDate($date): void
@@ -99,6 +104,7 @@ class DatePicker extends Component
         $this->printDate = $this->date->format('j.n.Y');
         $firstDayOfMonth = $this->selectDate->copy()->startOfMonth();
         $this->firstDayOfCalendar = $firstDayOfMonth->subDays($firstDayOfMonth->dayOfWeekIso - 1);
+        $this->iteratedDay = $this->firstDayOfCalendar->copy();
     }
 
     public function formatedSelectedDate(): string

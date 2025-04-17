@@ -42,11 +42,32 @@ class LeaguePlayer extends Model
 
     public function rank(): Attribute
     {
-
         return Attribute::make(get: function () {
             return $this->league->rankedLeaguePlayers->search(function (LeaguePlayer $item) {
                 return $item->id === $this->id;
             }) + 1;
         });
+    }
+
+    public function rankAfterRound(int $roundNumber): int
+    {
+        $collection = collect();
+
+        $this->league->rounds->where('number', '<=', $roundNumber)->each(function (LeagueRound $round) use ($collection) {
+            foreach ($round->rankedLeaguePlayers as $player) {
+                $score = $player->pivot->score;
+
+                if ($collection->has($player->id)) {
+                    $score = $collection->get($player->id) + $score;
+                }
+                $collection->put($player->id, $score);
+            }
+        });
+
+        $collection = $collection->sortByDesc(fn ($value, $key) => $value);
+
+        $keys = $collection->keys();
+
+        return $keys->search($this->id) + 1;
     }
 }

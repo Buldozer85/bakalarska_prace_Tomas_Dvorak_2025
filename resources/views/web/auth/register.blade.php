@@ -17,22 +17,27 @@
                                        :value="old('email')" required/>
                     <div class="flex flex-row gap-5 justify-between">
                         <div class="flex-1">
-                            <x-web.form.input label="Jméno" id="first_name" name="first_name" type="text" required/>
+                            <x-web.form.input label="Jméno" id="first_name" name="first_name" type="text" :value="old('first_name')" required/>
                         </div>
 
                         <div class="flex-1">
-                            <x-web.form.input label="Příjmení" id="last_name" name="last_name" type="text" required/>
+                            <x-web.form.input label="Příjmení" id="last_name" name="last_name" type="text" :value="old('last_name')" required/>
                         </div>
 
 
                     </div>
-                    <x-web.form.input label="Telefon" id="phone" name="phone" type="text" required/>
+                    <x-web.form.input label="Telefon" id="phone" name="phone" type="text" :value="old('phone')" required/>
                     <x-web.form.input label="Heslo" id="password" name="password" type="password" required/>
                     <x-web.form.input label="Heslo znovu" id="password_confirmation" name="password_confirmation" type="password"
                                        required/>
-                    <x-web.form.check-box id="gdpr_agreement" name="gdpr_agreement">Souhlasím s prohlášením o ochraně
-                        osobních údajů
-                    </x-web.form.check-box>
+
+                        <x-web.form.check-box id="gdpr_agreement" name="gdpr_agreement">Souhlasím s prohlášením o ochraně
+                            osobních údajů.
+                            <a class="underline text-sm" href="{{ route('about-web') }}" target="_blank">Více zde</a>
+                        </x-web.form.check-box>
+
+
+
                     <div class="flex items-center justify-between">
                         <div class="text-sm">
                             <a href="{{ route('show-login-page') }}"

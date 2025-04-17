@@ -26,4 +26,9 @@ class PageController extends Controller
     {
         return view('web.league');
     }
+
+    public function aboutWeb(): View
+    {
+        return view('web.about-web');
+    }
 }

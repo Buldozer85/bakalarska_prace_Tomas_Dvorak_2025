@@ -26,6 +26,7 @@ class ReservationController extends Controller
     {
         $reservation->on_company = $request->get('on_company') ?? false;
         $reservation->type = $request->get('reservation_type');
+        $reservation->note = $request->get('note') ?? '';
 
         $reservation->address->street = $request->get('street');
         $reservation->address->number = $request->get('number');

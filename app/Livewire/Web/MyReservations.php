@@ -64,6 +64,11 @@ class MyReservations extends Component
         $this->status = '';
         $this->orderBy = 'created_at';
         $this->direction = 'desc';
+        $this->dispatch('page-updated');
+    }
 
+    public function updated()
+    {
+        $this->dispatch('page-updated');
     }
 }

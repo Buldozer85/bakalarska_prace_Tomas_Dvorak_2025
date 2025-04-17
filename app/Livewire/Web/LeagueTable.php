@@ -15,6 +15,8 @@ class LeagueTable extends AbstractBaseLeagueManager
 
     public ?int $selectedRound;
 
+    public ?int $selectedRoundNumber;
+
     public string $name = '';
 
     public function mount()
@@ -23,12 +25,12 @@ class LeagueTable extends AbstractBaseLeagueManager
         $this->leagueModel = $this->leagues->first();
         $this->selectedLeague = $this->leagueModel?->id;
         $this->selectedRound = $this->leagueModel?->rounds->first()?->id;
-
+        $this->selectedRoundNumber = $this->leagueModel?->rounds->first()?->number;
     }
 
     public function render()
     {
-        $leagueRounds = $this->leagueModel?->rounds;
+        $leagueRounds = $this->leagueModel?->orderedRounds;
 
         return view('livewire.web.league-table')->with([
             'leagueRounds' => $leagueRounds,
@@ -50,6 +52,7 @@ class LeagueTable extends AbstractBaseLeagueManager
     {
         $this->leagueModel = $this->leagues->where('id', $this->selectedLeague)->first();
         $this->selectedRound = $this->leagueModel->rounds->first()?->id;
+        $this->selectedRoundNumber = $this->leagueModel?->rounds->first()?->number;
     }
 
     public function getRoundPlayers(): \Illuminate\Support\Collection
@@ -60,7 +63,7 @@ class LeagueTable extends AbstractBaseLeagueManager
                 ->where('id', $this->selectedRound)
                 ->first()
                 ?->leaguePlayers
-                ->sortByDesc(fn ($player) => $player->pivot->score) ?? collect();
+                ->sortByDesc(fn ($player) => $player->getScoreToRound($this->selectedRound)) ?? collect();
         }
 
         $nameExploded = explode(' ', $this->name);
@@ -105,8 +108,9 @@ class LeagueTable extends AbstractBaseLeagueManager
 
     }
 
-    public function setSelectedRound(int $round): void
+    public function setSelectedRound(int $roundId, int $roundNumber): void
     {
-        $this->selectedRound = $round;
+        $this->selectedRound = $roundId;
+        $this->selectedRoundNumber = $roundNumber;
     }
 }

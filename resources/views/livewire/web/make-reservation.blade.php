@@ -1,6 +1,6 @@
-<div class="max-w-nav 2xl:mx-auto space-y-12 mx-8 pb-12" >
+<div class="max-w-nav 2xl:mx-auto space-y-12 pb-12" >
 
-    <div class="flex lg:flex-row flex-col gap-x-4 max-w-[1200px] mx-auto justify-center mt-12 space-y-4">
+    <div class="flex lg:flex-row flex-col gap-x-4 max-w-[1200px] mx-6 justify-center mt-12 space-y-4 xl:mx-auto">
         <x-web.stepper.step :selected="$this->getSelectedStep() === 1" wire:click="setSelectedStep(1)" class="flex-1"
                             label="Výběr časů" number="1"/>
 
@@ -29,7 +29,7 @@
 
                 <div class="flex-[2] 2xl:flex-[4] shadow-lg p-12 space-y-12">
 
-                    <div class="grid grid-cols-2 gap-4 items-center">
+                    <div class="grid xl:grid-cols-2 gap-4 items-center">
                         <x-web.form.input wire:model.blur="first_name" id="first_name" label="Jméno*" name="first_name"/>
                         <x-web.form.input wire:model.blur="last_name" id="last_name" label="Příjmení*" name="last_name"/>
                         <x-web.form.input wire:model.blur="email" id="email" label="E-mail*" name="email"/>
@@ -40,7 +40,7 @@
 
                     <div class="p-[1px] rounded-md bg-gray-200 max-w-[600px] mx-auto"></div>
 
-                    <div class="grid grid-cols-2 gap-4 items-center">
+                    <div class="grid xl:grid-cols-2 gap-4 items-center">
                         <x-web.form.input wire:model="street" name="street" id="street" label="Ulice*"/>
                         <x-web.form.input wire:model="number" name="number" id="number" label="Č.P.*"/>
                         <x-web.form.input wire:model="town" name="town" id="town" label="Město*"/>
@@ -56,11 +56,11 @@
                     @if($on_company)
                         <div class="p-[1px] rounded-md bg-gray-200 max-w-[600px] mx-auto"></div>
 
-                        <div class="grid grid-cols-2 gap-4 items-center">
-                            <x-web.form.input wire:model.blur="company_name" id="company_name" label="Název firmy"
+                        <div class="grid xl:grid-cols-2 gap-4 items-center">
+                            <x-web.form.input wire:model.blur="company_name" id="company_name" label="Název firmy*"
                                               name="company_name"/>
-                            <x-web.form.input wire:model.blur="ico" id="ico" label="IČO" name="ico"/>
-                            <x-web.form.input wire:model.blur="company_address" id="company_address" label="Sídlo"
+                            <x-web.form.input wire:model.blur="ico" id="ico" label="IČO*" name="ico"/>
+                            <x-web.form.input wire:model.blur="company_address" id="company_address" label="Sídlo*"
                                               name="company_address"/>
                         </div>
                     @endif
@@ -298,7 +298,6 @@
     @script
     <script>
         $wire.on('date-changed', ()=> {
-            console.log('lol')
             setTimeout( function () {
                 initFlowbiteTooltips();
             }, 50)

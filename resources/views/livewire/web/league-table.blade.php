@@ -3,7 +3,7 @@
 }">
 
 
-    <div class="max-w-[350px] max-md:mx-auto">
+    <div class="max-w-[350px]">
         <x-web.form.select wire:model.live="selectedLeague" id="years" name="years" label="Ročník" :options="$this->getLeagueSelect()"></x-web.form.select>
     </div>
     <div class="max-lg:flex max-lg:flex-row max-lg:justify-center">
@@ -13,14 +13,14 @@
     <div x-show="selectedTab === 'weekly'">
         <div class="hidden md:flex flex-row gap-x-4">
             @foreach($leagueRounds as $round)
-                <x-web.league-round wire:click="setSelectedRound({{ $round->number }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->number }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
+                <x-web.league-round wire:click="setSelectedRound({{ $round->id }}, {{ $round->number }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->id }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
             @endforeach
 
         </div>
 
-        <div class="md:hidden max-[280px]:gap-x-1 max-[280px]:flex-wrap gap-y-4 flex flex-row gap-x-4">
+        <div class="md:hidden max-[280px]:gap-x-1 max-[280px]:flex-wrap gap-y-4 flex flex-row gap-x-4 justify-center sm:justify-start">
             @if($this->roundGroup !== 0)
-            <div class="w-24 h-24 flex-wrap flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="previousRoundGroup">
+            <div class="w-16 h-24 flex-wrap flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="previousRoundGroup">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
@@ -28,11 +28,11 @@
             @endif
 
             @foreach($this->splitRounds[$roundGroup] as $round)
-                <x-web.league-round wire:click="setSelectedRound({{ $round->id }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->id }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
+                <x-web.league-round wire:click="setSelectedRound({{ $round->id }}, {{ $round->number }})" :selected="$round->id === $selectedRound"  number="{{ $round->number }}" id="{{ $round->id }}" date="{{ $round->from_to }}" year="{{ $round->from->year }}" />
             @endforeach
 
                 @if($this->roundGroup != count($this->splitRounds) - 1)
-                <div class="w-24 h-24 flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="nextRoundGroup">
+                <div class="w-16 h-24 flex flex-col shadow-xl items-center justify-center  p-1 py-1 cursor-pointer rounded-md bg-white text-brand-black" wire:click="nextRoundGroup">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>
@@ -81,11 +81,12 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 @foreach($this->getRoundPlayers() as $player)
                     @if($player->pivot->confirmed)
                     <tr class="bg-white border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                           {{ $loop->index + 1 }}.
+                           {{ $player->rankAfterRound($this->selectedRoundNumber) }}.
                         </th>
                         <td class="px-6 py-4">
                            {{ $player->user->full_name }}
@@ -94,7 +95,7 @@
                             {{$player->pivot->score}}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $player->getScoreToRound($this->selectedRound) }}
+                            {{ $player->getScoreToRound($this->selectedRoundNumber) }}
                         </td>
                     </tr>
                     @endif

@@ -17,7 +17,7 @@ class ReservationPolicy
 
     public function viewOnProfile(User $user, Reservation $reservation): bool
     {
-        return $user->id == $reservation->user_id;
+        return $user->id == $reservation->user_id && is_null($reservation->cancelled);
     }
 
     public function update(User $user, Reservation $reservation): bool

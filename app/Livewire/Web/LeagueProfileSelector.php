@@ -37,7 +37,7 @@ class LeagueProfileSelector extends Component
             ]);
         }
 
-        $previousRound = $league->rounds->where('number', '<', $currentRound->number)->first();
+        $previousRound = $league->rounds->where('number', '=', $currentRound->number - 1)->first();
 
         return view('livewire.web.league-profile-selector')->with([
             'currentRound' => $currentRound,
